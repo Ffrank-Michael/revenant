@@ -48,11 +48,12 @@ export type RugCase = {
   evidence: { kind: string; digest: string; at: string; suiAmount: number; coinAmount: number }[];
   // Added later; old memories do not have them.
   confirmedBy?: { by: string; how: string; at: string }; // a human checked it (not just Revenant's own check)
+  dex?: string; // the exchange (pool) the liquidity was pulled from, e.g. "Cetus" or "Turbos"
   reviewStatus?: "auto_verified_awaiting_review"; // Revenant's own on-chain check only; no human has confirmed it yet
   coinObjects?: CoinObjectRef[]; // SUI coin objects touched by the pull; a fingerprint for tracking the money
 };
 
-export type CaseExtras = Pick<RugCase, "confirmedBy" | "coinObjects" | "reviewStatus">;
+export type CaseExtras = Pick<RugCase, "confirmedBy" | "coinObjects" | "reviewStatus" | "dex">;
 
 const short = (a: string) => `${a.slice(0, 8)}…${a.slice(-4)}`;
 const fmt = (n: number) => n.toLocaleString("en", { maximumFractionDigits: 2 });
@@ -95,6 +96,7 @@ export function buildRugCase(trace: TraceResult, verify: VerifyResult, extras: C
     evidence: verify.evidence.map((e) => ({ kind: e.kind, digest: e.digest, at: e.at, suiAmount: e.suiAmount, coinAmount: e.coinAmount })),
     ...(extras.confirmedBy ? { confirmedBy: extras.confirmedBy } : {}),
     ...(extras.reviewStatus ? { reviewStatus: extras.reviewStatus } : {}),
+    ...(extras.dex ? { dex: extras.dex } : {}),
     ...(extras.coinObjects?.length ? { coinObjects: extras.coinObjects } : {}),
   };
 }
@@ -107,6 +109,7 @@ export function rugCaseToMemoryText(c: RugCase): string {
   const sentence =
     `${c.reviewStatus ? "AUTO-VERIFIED RUG, awaiting investigator review (Revenant's own on-chain check, no human confirmation yet)" : "CONFIRMED RUG"}: Sui coin ${c.symbol ?? "unknown"} (${c.coinType}), published ${c.publishedAt.slice(0, 10)} by creator ${c.creator}, rugged: ${how}. ` +
     `The creator put in ${fmt(c.suiPutIn)} SUI and took out ${fmt(c.suiTaken)} SUI (net ${fmt(c.netSuiGained)} SUI). ` +
+    `${c.dex ? `The liquidity was pulled from ${c.dex}. ` : ""}` +
     `${relays ? `Its funding passed through ${relays} relay wallets. ` : ""}${proof ? `Proof transactions: ${proof}. ` : ""}` +
     `${c.confirmedBy ? `Confirmed by ${c.confirmedBy.by} (${c.confirmedBy.how}) on ${c.confirmedBy.at.slice(0, 10)}. ` : ""}` +
     `${c.coinObjects?.length ? `${c.coinObjects.length} SUI coin objects from the pull are recorded as a fingerprint. ` : ""}` +

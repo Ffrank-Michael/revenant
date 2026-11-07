@@ -1,6 +1,706 @@
 {
- "savedAt": "2026-11-07T23:11:43.983Z",
+ "savedAt": "2026-11-07T23:49:44.275Z",
  "cases": [
+  {
+   "v": 1,
+   "coinType": "0xbde8cce444761bbb0d1dbc72baacc0c4fe9a10b249c605785636180613326d85::brrr::BRRR",
+   "symbol": "BRRR",
+   "publishedAt": "2026-11-04T10:09:14.166Z",
+   "confirmedAt": "2026-11-07T23:48:49.948Z",
+   "methods": [
+    "liquidity_pull"
+   ],
+   "creator": "0x93f00a54f34d2650ddd6d0625327e2e684efdab3f154c355ec24c50a249bc13e",
+   "controller": null,
+   "wallets": [
+    {
+     "address": "0x93f00a54f34d2650ddd6d0625327e2e684efdab3f154c355ec24c50a249bc13e",
+     "role": "creator",
+     "hop": 0
+    },
+    {
+     "address": "0xf55c684f1de79e498bc59e853d1328765656db31aae24c3c71cd7aac88138ad7",
+     "role": "funder",
+     "hop": 1
+    },
+    {
+     "address": "0x601eb5d68afba867bd0f73955eb6e9b9a25464fec7733c082b7d94b0f6d8306a",
+     "role": "funder",
+     "hop": 2
+    },
+    {
+     "address": "0xfbc566d6b0ea28149ccec4362accba6cdcda169b69fe465882177a153309d9dc",
+     "role": "funder",
+     "hop": 3
+    }
+   ],
+   "suiPutIn": 6500.05924886,
+   "suiTaken": 7993.07084784,
+   "netSuiGained": 1493.0115989800006,
+   "firstRugAt": "2026-11-05T02:08:17.421Z",
+   "evidence": [
+    {
+     "kind": "liquidity_add",
+     "digest": "EtWQ3yjQa43XvSvce1xMtcGfQVTWuacWkSikyC5sv1Px",
+     "at": "2026-11-04T10:09:25.966Z",
+     "suiAmount": 6500.037101161,
+     "coinAmount": 999999899.9999998
+    },
+    {
+     "kind": "liquidity_remove",
+     "digest": "6sA6UxqdzuMjSeLyoEyBe9ifppFr1tHKs92RipxHMDTf",
+     "at": "2026-11-05T02:08:17.421Z",
+     "suiAmount": 7993.07084784,
+     "coinAmount": 813216719.9741337
+    }
+   ],
+   "confirmedBy": {
+    "by": "investigator",
+    "how": "checked on Suiscan",
+    "at": "2026-11-07T23:48:49.947Z"
+   },
+   "dex": "Turbos",
+   "coinObjects": [
+    {
+     "id": "0x17ce6f852952dbb46944f429eb5413fbfbb2101ad79fabed1adf11304b129fa2",
+     "role": "gas_coin",
+     "digest": "6sA6UxqdzuMjSeLyoEyBe9ifppFr1tHKs92RipxHMDTf"
+    },
+    {
+     "id": "0x550c98be9889e7640e514ad9fd09acf5d34e3d8a21b5b58da19025aed9c00bf9",
+     "role": "pull_output",
+     "digest": "6sA6UxqdzuMjSeLyoEyBe9ifppFr1tHKs92RipxHMDTf"
+    },
+    {
+     "id": "0xfb5935123ee84931a2ed0fd82f99aaac158b29d6c5ccb9334b7b5949b0822e8f",
+     "role": "pull_output",
+     "digest": "6sA6UxqdzuMjSeLyoEyBe9ifppFr1tHKs92RipxHMDTf"
+    },
+    {
+     "id": "0xf8b003ca55603094fd41ef38a1bd5a9b5bfd403b9f16ca91c82896ac0e0be012",
+     "role": "gas_coin",
+     "digest": "6sA6UxqdzuMjSeLyoEyBe9ifppFr1tHKs92RipxHMDTf"
+    }
+   ]
+  },
+  {
+   "v": 1,
+   "coinType": "0xa182f81fe4e2bcc07f1b7e71b74eab51990e8669797eb337a8eb6b3173787e6c::safu::SAFU",
+   "symbol": "SAFU",
+   "publishedAt": "2026-10-30T16:08:40.198Z",
+   "confirmedAt": "2026-11-07T23:48:22.489Z",
+   "methods": [
+    "liquidity_pull"
+   ],
+   "creator": "0xf8a70b39cf73da61f5ceeb969a78804bc5a13a606ed6927989fb944e879a0272",
+   "controller": null,
+   "wallets": [
+    {
+     "address": "0xf8a70b39cf73da61f5ceeb969a78804bc5a13a606ed6927989fb944e879a0272",
+     "role": "creator",
+     "hop": 0
+    },
+    {
+     "address": "0xf6ed8afbf4c28263aa3298094d385664e148f5351386cc8696aff01d3accdc37",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x819f0f8a72d29bdd7407a9ebd5a9f24b8822db290883beb8686c9c385e1fd6b4",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xf60097584b5f0efbc4397db9938171d44919e41aff117a2cbfc6bcd1b5f75c9b",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xbdcc668877d7c6547e07ed1861b36085c5ddb733674d84d12f104d80d90fcd50",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x1d7c7672d00d65ff6d198e2e2dfff1f70f11999e1ceb847f36a4f44a97f9d448",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x214ba66a91d39e496372d6216fe1eae1330308a0e84fb839c20d2d1d960efc03",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x492f0ab383f5a56f286151e6923e1088f0d1fa0e41f34dd7c6c375dcfea41223",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x77d29137a380cac166c1f01b602e45c934a3b18197588e3cd0026850e6fdc372",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x85b167972429ca18a8924058f177b547a518d4a276af8daf8f31f4b4fbe85040",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x63ebe8b8784126be67afa9eb499cdb84914a826786a0ab47f155f0c6e8f09130",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xad3c9e53f2efa624f7aa89a7ba561ad528d4a9ac19dced9e2c7d2de7a06b0b21",
+     "role": "funder",
+     "hop": 1
+    },
+    {
+     "address": "0xfcec9c9b3c311c8aa5aa686d76b7b6d69ad7185eab716c70eae5d3ac5af9d13c",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xa87291aa7962b8fd78c0d1b7a12e71b21ec02d6be79368ed28a2e6ccb310295f",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x27dc801a02f620a911b045c5427204b36a54a091b60d7ac87db8910fb9ebf465",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x2c7eea7307e303f5c322e6eb32d4d411fdd38363990d87c0e7649103e33cfc9c",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x74c6ff128f6a7208b73b01c049f61a0d1af3b826d7848186a0c251ab6106c23b",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xeb55859a666e7c92dbcce82bf1e56235a12fed93eb7c0b3e3c4a413385df004f",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xb362991022d240feb5ec23a8ef5622aebd9e4c5336a121f2d66d1cbca832072c",
+     "role": "profit",
+     "hop": null
+    }
+   ],
+   "suiPutIn": 9500.046998612,
+   "suiTaken": 14296.005789051,
+   "netSuiGained": 4795.958790438999,
+   "firstRugAt": "2026-11-01T04:38:45.759Z",
+   "evidence": [
+    {
+     "kind": "liquidity_add",
+     "digest": "FK4HDX96zJjk1HSrb2zdBGiC8x97xNxThWqoubEQG44",
+     "at": "2026-10-30T16:08:53.493Z",
+     "suiAmount": 9500.024630513,
+     "coinAmount": 999999900
+    },
+    {
+     "kind": "liquidity_remove",
+     "digest": "FPLaigDRCu9XdrF1cJGELY7vRb6of7zpq8EWfmNmLqqR",
+     "at": "2026-11-01T04:38:45.759Z",
+     "suiAmount": 14296.005789051,
+     "coinAmount": 664768405.6670322
+    }
+   ],
+   "confirmedBy": {
+    "by": "investigator",
+    "how": "checked on Suiscan",
+    "at": "2026-11-07T23:48:22.489Z"
+   },
+   "dex": "Cetus",
+   "coinObjects": [
+    {
+     "id": "0x7f129b94a4597156f9bd28237f5dd0d8f6de723237c0ace497bd637812e682e2",
+     "role": "gas_coin",
+     "digest": "FPLaigDRCu9XdrF1cJGELY7vRb6of7zpq8EWfmNmLqqR"
+    },
+    {
+     "id": "0xa308ebc822ad5c9c58041268671c376402db33d0ad409cf3c996f7d6799bd1c0",
+     "role": "pull_output",
+     "digest": "FPLaigDRCu9XdrF1cJGELY7vRb6of7zpq8EWfmNmLqqR"
+    },
+    {
+     "id": "0xbe6ab62808362d80d5d3ccb643e524417d5a0f92043d2516ef2be377173f6050",
+     "role": "gas_coin",
+     "digest": "FPLaigDRCu9XdrF1cJGELY7vRb6of7zpq8EWfmNmLqqR"
+    }
+   ]
+  },
+  {
+   "v": 1,
+   "coinType": "0xe9c728a2d04d89b83be614085b60dc54cd6d34d6053c9fd2aa8b7b03bba8ef45::shadow::SHADOW",
+   "symbol": "SHADOW",
+   "publishedAt": "2026-10-25T05:21:56.056Z",
+   "confirmedAt": "2026-11-07T23:47:45.306Z",
+   "methods": [
+    "liquidity_pull"
+   ],
+   "creator": "0x36919f2f496c9aedd7e4a795aa1f0ef9bafd91da7c8db7173dce3f752a72eca0",
+   "controller": null,
+   "wallets": [
+    {
+     "address": "0x36919f2f496c9aedd7e4a795aa1f0ef9bafd91da7c8db7173dce3f752a72eca0",
+     "role": "creator",
+     "hop": 0
+    },
+    {
+     "address": "0x4b872c254f2ba37b0f4d8f7b4995d4a94d74132bc97e957dc32a785eb1b8c116",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x03f97fe44351dde15d3b840723e0d7a2459247a410ecf11b7e30f56ab174abe6",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x1ffdcafa4108cc9f6c2f2ca2bddebef81c316ba9984fd062be9c0ae9c9c9aca9",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x4ec2289d9005581a50d20276a0eada7fbde41d0c10022ad02a8bcef06c27b066",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x9cfd94dad2b2ba4c064c73a763b7c4b9d3231f08a15f39a7ef3ab0c0307a32c5",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x83af6cd7c92f942f42cd4ecd0389ecbde4559e8b5e3829fe45048264555c5c68",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x4b05f3a87f55d69d4483e4590e96ba5345fab2be620112ec7eb873a110aa16f7",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xcfd4e1acfe3ea77768196bfe49d5b397ce1bef7cc3ff207ab6aba77800a52ef7",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x4d77c2eb8c1afcbdd7e3495894f905fc16ae0e588f0104eeb1663b7fbd42991f",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x21be6acd0b2296bb5c5de30d3205f9b2d583be7f693699da1261754479e9d7f5",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x30eb2aa3eb8c124b2a13331f1427928af35e4387c40f06ef257851a68b7115f6",
+     "role": "funder",
+     "hop": 1
+    },
+    {
+     "address": "0xd15acf80881391c2bab7adae23f19310a8af6f78d2aa2d7ac2d8a53e7881cae6",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x89b7449e4ff341ce2df0fb49a8d61c5c029d40f5502ea62b488bab21703f0cb4",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xf2ca13b5486e16b93a1fd2f515078b4d21c370e921f32fe87fde2da602bd2e9f",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xa08b6f9fe40097b991733747863ae41dfb70ba116bb9d424dfefdeedb19f2cbe",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x69dbb322d8c9baab38c91d6318b81a83313fda2b7c9340f55a3ff7dc2525b4c9",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x910226eb77db6f3fa907d25c87efa2a4c0b011e3f070103d3f70f52b5d11cfbc",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xece1d19034eae1cedd8c7344cd75067a371e2a499427c15361901536697ab0c0",
+     "role": "profit",
+     "hop": null
+    }
+   ],
+   "suiPutIn": 9500.047469812,
+   "suiTaken": 13948.37225766,
+   "netSuiGained": 4448.324787848,
+   "firstRugAt": "2026-10-26T14:47:30.106Z",
+   "evidence": [
+    {
+     "kind": "liquidity_add",
+     "digest": "AscG8CahM8fXVPqXJJL4wiEuDpAVdcBVzQR1H8y4W5HJ",
+     "at": "2026-10-25T05:22:13.545Z",
+     "suiAmount": 9500.024888913,
+     "coinAmount": 999999900
+    },
+    {
+     "kind": "liquidity_remove",
+     "digest": "DaePzDthGbrNQYygkshKGuWmp3AZaUmpD5tjNwARjVvK",
+     "at": "2026-10-26T14:47:30.106Z",
+     "suiAmount": 13948.37225766,
+     "coinAmount": 681281957.3772932
+    }
+   ],
+   "confirmedBy": {
+    "by": "investigator",
+    "how": "checked on Suiscan",
+    "at": "2026-11-07T23:47:45.306Z"
+   },
+   "dex": "Cetus",
+   "coinObjects": [
+    {
+     "id": "0x45f64bd7de0eae83da3476832116aea512ff7158e7c93639572b58c8acc6a247",
+     "role": "pull_output",
+     "digest": "DaePzDthGbrNQYygkshKGuWmp3AZaUmpD5tjNwARjVvK"
+    },
+    {
+     "id": "0xf56d07c088b1ddc10d739c7c9bb2cbdf8d9fccd403318c49ce288d3e24bd322b",
+     "role": "gas_coin",
+     "digest": "DaePzDthGbrNQYygkshKGuWmp3AZaUmpD5tjNwARjVvK"
+    },
+    {
+     "id": "0x1bb8aaeae9807d69c25cca18101898034f0393279356f96d096a5c3ae8b3c855",
+     "role": "gas_coin",
+     "digest": "DaePzDthGbrNQYygkshKGuWmp3AZaUmpD5tjNwARjVvK"
+    }
+   ]
+  },
+  {
+   "v": 1,
+   "coinType": "0x5e7b4b2d29c03745c9a78c15b008d5790ca5f2ba76b714c6132e5182e200ee6d::king::KING",
+   "symbol": "KING",
+   "publishedAt": "2026-10-17T14:05:42.592Z",
+   "confirmedAt": "2026-11-07T23:47:05.008Z",
+   "methods": [
+    "liquidity_pull"
+   ],
+   "creator": "0xdea5b915bea2c439d3a176067a901b7de6a4f640a7a8edb2655f03a18f4b3b75",
+   "controller": null,
+   "wallets": [
+    {
+     "address": "0xdea5b915bea2c439d3a176067a901b7de6a4f640a7a8edb2655f03a18f4b3b75",
+     "role": "creator",
+     "hop": 0
+    },
+    {
+     "address": "0x0930336e0a6a49d2b5eefa76e7dda7a5f1df26b27dfa9e11e1842a59dbeb6426",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x358b14b74afdfacd67a90e01b7101c0f601f7e6d65206b91c79d17a59f4029dd",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x0673d678f542c6ce1ed5cd74773fe93b248a3eb432a4ff26f269bc84991717c2",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x8189a1c48159c02c3ea11c2d3adef617909cdc7a9236996561ffb9684da37b16",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xe0af0254f0a67d442dfd47b5c0e353bcf376e2f60ca3fbc7ad57da4b07dd69fc",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xcaca5556af25517738c4b94b0fd6bb7496681602186a640ec717002d668b88c4",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x03ce69595a3e185566e78170194400403e3fbb30ddcbf99046e32e6ee3918557",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xed83e924ec06a8c75d9536e331a7f970f5b823cd5d67fc20d17d5746a4ddfe48",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xd5488a06c35b7554468fcc74824ea651a55e445041cab06887b96ba2aa8fd9c0",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x8025ea520231aa7d757e897e1b324fb5f65dd54297906b5cd5de419ea9b632f2",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x105dbd6b3293de928cbcf5b4db17fa508fbeb1dd5bb38ba6799eab3fdb7643bc",
+     "role": "funder",
+     "hop": 1
+    },
+    {
+     "address": "0xa9ed4a1fbea754e0020a10dc868c677e9ceb7d6ca3a87733f20be6132508a281",
+     "role": "funder",
+     "hop": 2
+    },
+    {
+     "address": "0x974b967b521ba75d24ee43a508482ea6488dcca6dd753b29ca63f8a6f48e0656",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xa923d35df7d95b39d36851750570be90e4fd387d8c2a0a20b970da1a171553c8",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x696bc4145adbebe8ba856ffb019b8d6fa3abe560ae8bbc3732f898ca1a66d4c7",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x1daa2c10d76cefd430dcfe9faef40be8c0c2d00fd2b320c74208d5f6138c8879",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x0f8006ddb68bf3a3fdb3ea9895259a2002960d2ae460c87e655e0992198d231b",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xd4161940cadfc1c3ff7c959128cda51a6282d059bae9548bb41492c276868237",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x0d4d525881139cb3ec63e289c7c23ae24fe76ee50c108eae211d29b4053510c9",
+     "role": "profit",
+     "hop": null
+    }
+   ],
+   "suiPutIn": 6500.052669237,
+   "suiTaken": 14491.495463357,
+   "netSuiGained": 7991.442794119999,
+   "firstRugAt": "2026-10-18T08:36:04.066Z",
+   "evidence": [
+    {
+     "kind": "liquidity_add",
+     "digest": "3ymyF5Qxypf5kFKDQwRM7urAbiv6TkJ6RCxSYXD2zZUn",
+     "at": "2026-10-17T14:06:02.174Z",
+     "suiAmount": 6500.025224338,
+     "coinAmount": 999999900
+    },
+    {
+     "kind": "liquidity_remove",
+     "digest": "AUECgF5nUQkUTenueVGfR4WJs1icZwzLnif1m5TKYtWK",
+     "at": "2026-10-18T08:36:04.066Z",
+     "suiAmount": 14491.495463357,
+     "coinAmount": 448648106.2045574
+    }
+   ],
+   "confirmedBy": {
+    "by": "investigator",
+    "how": "checked on Suiscan",
+    "at": "2026-11-07T23:47:05.008Z"
+   },
+   "dex": "Cetus",
+   "coinObjects": [
+    {
+     "id": "0x3b17fe9584d9ab75ad3c57b58907d391227255a812b85dfa0c7edcb1ac07355c",
+     "role": "gas_coin",
+     "digest": "AUECgF5nUQkUTenueVGfR4WJs1icZwzLnif1m5TKYtWK"
+    },
+    {
+     "id": "0x890ca235ec4e823e0d50c83af559516f6786edf74502a031b60e4191f35e3bc0",
+     "role": "pull_output",
+     "digest": "AUECgF5nUQkUTenueVGfR4WJs1icZwzLnif1m5TKYtWK"
+    },
+    {
+     "id": "0x211957629d9bf34c3a35bc29efca808c314b6c41664c266f4ee793acfe84d9cc",
+     "role": "gas_coin",
+     "digest": "AUECgF5nUQkUTenueVGfR4WJs1icZwzLnif1m5TKYtWK"
+    }
+   ]
+  },
+  {
+   "v": 1,
+   "coinType": "0xcf577ff4cf86d7bfdcb1b57700334b5df5a8af11da42b6f269b9eeeed75c8e1b::vapor::VAPOR",
+   "symbol": "VAPOR",
+   "publishedAt": "2026-10-12T13:56:34.308Z",
+   "confirmedAt": "2026-11-07T23:46:18.289Z",
+   "methods": [
+    "liquidity_pull"
+   ],
+   "creator": "0xff1c6cb2f9cbbbabcef08f6152b908a2967e9b7c2df5ca348add32ac75d478fc",
+   "controller": null,
+   "wallets": [
+    {
+     "address": "0xff1c6cb2f9cbbbabcef08f6152b908a2967e9b7c2df5ca348add32ac75d478fc",
+     "role": "creator",
+     "hop": 0
+    },
+    {
+     "address": "0xc22ec43e3d70a04c44fe7e9abf3e09094640acdd9a61c1ef543d138cc69a8419",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x7450ba80cf1dfd407cc971f5aaa3c15f029083dbd3d46257dd6a1a05c6a8e857",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x1b3ad0625efd2e9f72b2575240d38ddcbd43c8016421e1f6325054d18dd2ab02",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xd5cb4538c08274063d8abbc54922c6b836fa922ea97fd81fd058fb6a6b085140",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x2a4be11e7fa8f560bbf4afd3f6d349815ea288ea9f2e2b6dead7b49d98208f04",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x1de6dbf0b9b6085523b08e23e6dea5c1331c0f058898f128829c39195c5bf26e",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x5726ac26278638575e5d61816ab1f93d1e3c3e95be8ca4dfb3d361aaff7af0dc",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xa32b741ea060380ad573ce90aa2b41b281b6ce45eb699958878846cbf0941033",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x7b02ea253028e500376b2d8f28f15674113270b10809025832def54c7f029445",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xd7d39e4429a6cb3f2c2eb0b1aba69608ee5844d0c51e4f257f01829145c1be0a",
+     "role": "funder",
+     "hop": 1
+    },
+    {
+     "address": "0x0a001600664719e057341b5d3c658ad397d7293e6e9b53900d25c2cb36529d20",
+     "role": "funder",
+     "hop": 2
+    },
+    {
+     "address": "0x18a2c050b91539433be7691f18809435773899372d84fd571c1e50a5e61cdbe4",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xe70056c610f6bb230bcbba66cf1700150df8e2ecb76fc4320f76850b0f72b2d0",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x976e5cd6118bd2a3afc1152195707eb973c75b25443eb1a9dab1ce3b0398311e",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xbfedbaec969597c3e26b8ed9df39f592087ae87b5868c8cdc57656d94a3eb60d",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xff8734241de277084042f35c94aa031484233c6ca22e1cafa6c5e5e50c0c9adb",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xeddbaa94658b6edfb88ceda4223c0f02ca2a26f196f9a752c44faed7d43d4a3f",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x5ec9f060816dc7b2a2f83db21422c3aaaeff43c7f664bc10c2811287528d2b57",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xb9f5c531c3c1938c12c9300ef1df4f4781e20870f3cb29e93257f4dca7f95562",
+     "role": "profit",
+     "hop": null
+    }
+   ],
+   "suiPutIn": 10500.047046785,
+   "suiTaken": 13863.716603577,
+   "netSuiGained": 3363.6695567920015,
+   "firstRugAt": "2026-10-13T05:04:37.835Z",
+   "evidence": [
+    {
+     "kind": "liquidity_add",
+     "digest": "Epp6GfCmRqLxWGv9jgJRMa2QX2yuMCoUJ3Mevn1TCp8p",
+     "at": "2026-10-12T13:56:50.183Z",
+     "suiAmount": 10500.024587486,
+     "coinAmount": 999999900
+    },
+    {
+     "kind": "liquidity_remove",
+     "digest": "JBPpKiFaWybYTSE5JA3LjwU46feSc12D1L8wSsrzVWHN",
+     "at": "2026-10-13T05:04:37.835Z",
+     "suiAmount": 13863.716603577,
+     "coinAmount": 757601944.4556226
+    }
+   ],
+   "confirmedBy": {
+    "by": "investigator",
+    "how": "checked on Suiscan",
+    "at": "2026-11-07T23:46:18.285Z"
+   },
+   "dex": "Cetus",
+   "coinObjects": [
+    {
+     "id": "0x10660367e84c941f90dcf57009ecd59b21699aed88108579163f0ae76aec895a",
+     "role": "gas_coin",
+     "digest": "JBPpKiFaWybYTSE5JA3LjwU46feSc12D1L8wSsrzVWHN"
+    },
+    {
+     "id": "0x38aad23d2b86cf8f1a204862136068e8c0d322195c3703a7c0c2a7a2ac337720",
+     "role": "pull_output",
+     "digest": "JBPpKiFaWybYTSE5JA3LjwU46feSc12D1L8wSsrzVWHN"
+    },
+    {
+     "id": "0x76167afdb70c67114c065914f96a637f4784f40c2a7566347114653b9c37eae0",
+     "role": "gas_coin",
+     "digest": "JBPpKiFaWybYTSE5JA3LjwU46feSc12D1L8wSsrzVWHN"
+    }
+   ]
+  },
   {
    "v": 1,
    "coinType": "0xefb1d695f458aff3f583a4b2d1808b69ddd22579fe0dd459da28ae07dc1052fe::veto::VETO",
