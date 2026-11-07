@@ -1,0 +1,490 @@
+{
+ "name": "VETO",
+ "coinType": "0xefb1d695f458aff3f583a4b2d1808b69ddd22579fe0dd459da28ae07dc1052fe::veto::VETO",
+ "capturedAt": "2026-11-07T22:48:23.267Z",
+ "trace": {
+  "ok": true,
+  "coin": {
+   "type": "0xefb1d695f458aff3f583a4b2d1808b69ddd22579fe0dd459da28ae07dc1052fe::veto::VETO",
+   "packageId": "0xefb1d695f458aff3f583a4b2d1808b69ddd22579fe0dd459da28ae07dc1052fe",
+   "name": "Mr. Veto",
+   "symbol": "VETO",
+   "decimals": 9,
+   "supply": "1000000000000000000"
+  },
+  "creator": {
+   "address": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+   "publishedAt": "2026-11-06T02:45:20.342Z",
+   "publishDigest": "3f1aPivj98Qe9dp6xdaMGpvS6bgLVzYotvdnpqVZsZFU",
+   "gasSponsor": null,
+   "controller": null
+  },
+  "trail": {
+   "wallets": [
+    {
+     "address": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+     "role": "creator",
+     "hop": 0,
+     "isRelay": false,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 8,
+      "moreExist": false,
+      "spanMinutes": 1302,
+      "perHour": 0
+     },
+     "firstSeenAt": "2026-11-06T02:43:29.377Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x5dd1aa10d4eaf440c78a765cc466b57f5861811b04cd2feeaf7231d473da1cf3",
+      "amountSui": 9336.811187927,
+      "at": "2026-11-06T02:43:29.377Z",
+      "digest": "5jTaDmYaRdeTBKW8A2eiM11wVHP7cn64CLv6hfzJE232"
+     }
+    },
+    {
+     "address": "0x5dd1aa10d4eaf440c78a765cc466b57f5861811b04cd2feeaf7231d473da1cf3",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:43:22.256Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0xa8444a7479886f4800df6a0fe0f9b8e8a1baffec199053fa386fa4a4c333e880",
+      "amountSui": 9336.811288026,
+      "at": "2026-11-06T02:43:22.256Z",
+      "digest": "GZ3ZNvucyBgvAgM7uNWCJKHyEWtYDu3PrM3hEVLXuX5b"
+     }
+    },
+    {
+     "address": "0xa8444a7479886f4800df6a0fe0f9b8e8a1baffec199053fa386fa4a4c333e880",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:43:14.189Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x3b3647f019490c1f176c339305935b02607b527ece9e0375ccafe9fdb09f2f97",
+      "amountSui": 9336.811388125,
+      "at": "2026-11-06T02:43:14.189Z",
+      "digest": "5avEwQuDbggbeJgD28L5kyVVB8NtPQnLnZxC9oBdQfQa"
+     }
+    },
+    {
+     "address": "0x3b3647f019490c1f176c339305935b02607b527ece9e0375ccafe9fdb09f2f97",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:43:07.383Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x2b9ce5d6ec61a9f5901fd0a887678b48333a699206b7cf55a590f470e2d9da67",
+      "amountSui": 9336.811488224,
+      "at": "2026-11-06T02:43:07.383Z",
+      "digest": "9AqV3m116mNcbeAb3H6FjyPNtcyMeZ8St8W248QDCJ4N"
+     }
+    },
+    {
+     "address": "0x2b9ce5d6ec61a9f5901fd0a887678b48333a699206b7cf55a590f470e2d9da67",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:42:59.227Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x36c60511d6a01177e53dc635ee849c1ee45daf728d3b55caa47f012c437c7370",
+      "amountSui": 9336.811588323,
+      "at": "2026-11-06T02:42:59.227Z",
+      "digest": "kSkApdwjiNrfYC7wid2pbXkuo1ehA3wGGa7dN14ESEH"
+     }
+    },
+    {
+     "address": "0x36c60511d6a01177e53dc635ee849c1ee45daf728d3b55caa47f012c437c7370",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:42:51.060Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x265cd4bbad3e515739486c6e5087a8fe69e26407700104a924bcdd3e677744c2",
+      "amountSui": 9336.811688422,
+      "at": "2026-11-06T02:42:51.060Z",
+      "digest": "2p9JSTM9eUz47d6oujM7aTtU1xX6L6zpRdNmpmwSu2Rw"
+     }
+    },
+    {
+     "address": "0x265cd4bbad3e515739486c6e5087a8fe69e26407700104a924bcdd3e677744c2",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:42:43.687Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0xd6f051198833c7f1065ef4d258c05f93925c6c71a5c414c2d5c23266bc15751b",
+      "amountSui": 9336.811788521,
+      "at": "2026-11-06T02:42:43.687Z",
+      "digest": "Aekac3Zv4YM7yme8WLV8c2oCZYnBiFBN1egGrqPbbNhi"
+     }
+    },
+    {
+     "address": "0xd6f051198833c7f1065ef4d258c05f93925c6c71a5c414c2d5c23266bc15751b",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:42:36.386Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x9b02ad93e9840b353ffc81ab73cc17a8b9c1517193459acab7d18ce57a3b83ce",
+      "amountSui": 9336.81188862,
+      "at": "2026-11-06T02:42:36.386Z",
+      "digest": "26SNXgXnu2DBJxNjT3Di5YcTEhVVmBvrqovCQdpmCFvn"
+     }
+    },
+    {
+     "address": "0x9b02ad93e9840b353ffc81ab73cc17a8b9c1517193459acab7d18ce57a3b83ce",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:42:28.236Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x8cd1e85f4326e8628632b96459e7f452a9d455abed53d018c657cd43f0ba6165",
+      "amountSui": 9336.811988719,
+      "at": "2026-11-06T02:42:28.236Z",
+      "digest": "onmXzEPwWNU6uwWYsVGZuNFxj1G9tvwaYVpQ5Ea1idW"
+     }
+    },
+    {
+     "address": "0x8cd1e85f4326e8628632b96459e7f452a9d455abed53d018c657cd43f0ba6165",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:42:20.741Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0xa2ae9a008dfa5ad94401b920eaca56ff2aae4e534cfa31c12227bbe765f01b65",
+      "amountSui": 9336.812088818,
+      "at": "2026-11-06T02:42:20.741Z",
+      "digest": "2P6g7tCYviwTmM9o64BE7KhbqSsUqWc63x525eqiWr2x"
+     }
+    },
+    {
+     "address": "0xa2ae9a008dfa5ad94401b920eaca56ff2aae4e534cfa31c12227bbe765f01b65",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 4.7,
+      "perHour": 26
+     },
+     "firstSeenAt": "2026-11-06T02:37:39.793Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x265f2c35b2f6dff0c664f11f4bf0e89a2c19945492f129a9f8d2f32f97891a6a",
+      "amountSui": 9336.812188917,
+      "at": "2026-11-06T02:37:39.793Z",
+      "digest": "GFgCte16w4h4DiWn8fd7ZPcsF6VkqkaXNyYxUyFfnJbG"
+     }
+    },
+    {
+     "address": "0x265f2c35b2f6dff0c664f11f4bf0e89a2c19945492f129a9f8d2f32f97891a6a",
+     "role": "funder",
+     "hop": 1,
+     "isRelay": false,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 8,
+      "moreExist": false,
+      "spanMinutes": 2223.9,
+      "perHour": 0
+     },
+     "firstSeenAt": "2026-11-04T13:33:46.991Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x583d53dacd19b5a34065180a0f6976ae7fe2b4bede2ae5ea91bd39aa7dd06f34",
+      "amountSui": 8800.909432893,
+      "at": "2026-11-04T13:33:46.991Z",
+      "digest": "HMbcZX9m3aPPdnJgTmyfsQnPyUi73KGZoSNP7E8m6rxs"
+     }
+    },
+    {
+     "address": "0x583d53dacd19b5a34065180a0f6976ae7fe2b4bede2ae5ea91bd39aa7dd06f34",
+     "role": "funder",
+     "hop": 2,
+     "isRelay": false,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 8,
+      "moreExist": false,
+      "spanMinutes": 336.9,
+      "perHour": 1
+     },
+     "firstSeenAt": "2026-11-04T07:56:59.369Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x0f027960311f4cce5f6edd81a8d52100396eb8911c5088edd4f993da8ef27cfe",
+      "amountSui": 9005.558482013,
+      "at": "2026-11-04T07:56:59.369Z",
+      "digest": "DT1koZvUJk4y5yNjd3ZM5VVJ69FNq2vkzotxrnubUovq"
+     }
+    },
+    {
+     "address": "0x0f027960311f4cce5f6edd81a8d52100396eb8911c5088edd4f993da8ef27cfe",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 3,
+      "moreExist": false,
+      "spanMinutes": 0.2,
+      "perHour": 180
+     },
+     "firstSeenAt": "2026-11-04T07:56:50.914Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0xf8330e7e309468a4eac5a5fa5834cf131dc6b15f9bece14b62ef5538d4674f48",
+      "amountSui": 9005.558582112,
+      "at": "2026-11-04T07:56:50.914Z",
+      "digest": "AsnyAxoFdbnaCJ2wueLQqcf7ybczocnF1CPQRSQxhgKn"
+     }
+    },
+    {
+     "address": "0xf8330e7e309468a4eac5a5fa5834cf131dc6b15f9bece14b62ef5538d4674f48",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 3,
+      "moreExist": false,
+      "spanMinutes": 0.2,
+      "perHour": 180
+     },
+     "firstSeenAt": "2026-11-04T07:56:43.667Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x54885d752d49b580208cc6ee6854e04be6e63f2b5bfbda3fa54bbcac07f95ae4",
+      "amountSui": 9005.558682211,
+      "at": "2026-11-04T07:56:43.667Z",
+      "digest": "Et8gRFxW5Qbh8HGjsLV8AcWNNNKRMEhThv9FANMLfjJD"
+     }
+    }
+   ],
+   "stoppedBecause": {
+    "code": "relay_cap",
+    "message": "Stopped after 12 pass-through wallets without reaching the end of the trail."
+   }
+  },
+  "controllerTrail": null,
+  "warnings": [
+   {
+    "code": "RELAY_CHAIN",
+    "severity": "warning",
+    "message": "Funded through a relay chain: the creator's money passed through 12 pass-through wallets (each held the same amount for only seconds or minutes before forwarding it). This is a common way to hide where money came from."
+   },
+   {
+    "code": "FRESH_CREATOR_WALLET",
+    "severity": "info",
+    "message": "The creator wallet was brand new: its first activity was less than 24 hours before it published the coin."
+   }
+  ],
+  "summary": [
+   "VETO was published by 0xe1f989…be49 on 2026-11-06 02:45:20 UTC.",
+   "Creator 0xe1f989…be49 got its first 9,336.81 SUI from 0x5dd1aa…1cf3 on 2026-11-06 02:43:29 UTC.",
+   "Relay wallet 0x5dd1aa…1cf3 got its first 9,336.81 SUI from 0xa8444a…e880 on 2026-11-06 02:43:22 UTC.",
+   "Relay wallet 0xa8444a…e880 got its first 9,336.81 SUI from 0x3b3647…2f97 on 2026-11-06 02:43:14 UTC.",
+   "Relay wallet 0x3b3647…2f97 got its first 9,336.81 SUI from 0x2b9ce5…da67 on 2026-11-06 02:43:07 UTC.",
+   "Relay wallet 0x2b9ce5…da67 got its first 9,336.81 SUI from 0x36c605…7370 on 2026-11-06 02:42:59 UTC.",
+   "Relay wallet 0x36c605…7370 got its first 9,336.81 SUI from 0x265cd4…44c2 on 2026-11-06 02:42:51 UTC.",
+   "Relay wallet 0x265cd4…44c2 got its first 9,336.81 SUI from 0xd6f051…751b on 2026-11-06 02:42:43 UTC.",
+   "Relay wallet 0xd6f051…751b got its first 9,336.81 SUI from 0x9b02ad…83ce on 2026-11-06 02:42:36 UTC.",
+   "Relay wallet 0x9b02ad…83ce got its first 9,336.81 SUI from 0x8cd1e8…6165 on 2026-11-06 02:42:28 UTC.",
+   "Relay wallet 0x8cd1e8…6165 got its first 9,336.81 SUI from 0xa2ae9a…1b65 on 2026-11-06 02:42:20 UTC.",
+   "Relay wallet 0xa2ae9a…1b65 got its first 9,336.81 SUI from 0x265f2c…1a6a on 2026-11-06 02:37:39 UTC.",
+   "Hop 1 wallet 0x265f2c…1a6a got its first 8,800.91 SUI from 0x583d53…6f34 on 2026-11-04 13:33:46 UTC.",
+   "Hop 2 wallet 0x583d53…6f34 got its first 9,005.56 SUI from 0x0f0279…7cfe on 2026-11-04 07:56:59 UTC.",
+   "Relay wallet 0x0f0279…7cfe got its first 9,005.56 SUI from 0xf8330e…4f48 on 2026-11-04 07:56:50 UTC.",
+   "Relay wallet 0xf8330e…4f48 got its first 9,005.56 SUI from 0x54885d…5ae4 on 2026-11-04 07:56:43 UTC.",
+   "Trail stopped: Stopped after 12 pass-through wallets without reaching the end of the trail."
+  ],
+  "stats": {
+   "graphqlCalls": 33,
+   "seconds": 13
+  }
+ },
+ "verify": {
+  "ok": true,
+  "asOf": "2026-11-07T22:48:56.544Z",
+  "coin": {
+   "type": "0xefb1d695f458aff3f583a4b2d1808b69ddd22579fe0dd459da28ae07dc1052fe::veto::VETO",
+   "symbol": "VETO",
+   "name": "Mr. Veto",
+   "supply": 1000000000,
+   "decimals": 9
+  },
+  "creator": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+  "controller": null,
+  "publishedAt": "2026-11-06T02:45:20.342Z",
+  "verdict": "rugged",
+  "methods": [
+   "liquidity_pull"
+  ],
+  "reasons": [
+   "The creator put 8,000.02 SUI into a trading pool and took 10,290.28 SUI back out (129% of it).",
+   "In total the creator came out 2,290.23 SUI ahead (took out 10,290.28 SUI, put in or spent 8,000.05 SUI)."
+  ],
+  "numbers": {
+   "soldPctOfSupply": 0,
+   "movedPctOfSupply": 0,
+   "creatorHoldingPctOfSupply": 77.75,
+   "suiTakenFromSales": 0,
+   "liquidityAddedSui": 8000.024839594,
+   "liquidityRemovedSui": 10290.27753496,
+   "totalSuiTaken": 10290.27753496,
+   "suiSpentBuying": 0.022360499,
+   "netSuiGained": 2290.230334867
+  },
+  "firstRugAt": "2026-11-07T00:11:17.810Z",
+  "evidence": [
+   {
+    "digest": "6HZH9dB775RYKM34qXqzPJN3Xt8i76aAvAnvibSCdm5a",
+    "at": "2026-11-06T02:45:37.846Z",
+    "wallet": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+    "kind": "liquidity_add",
+    "coinAmount": 999999900,
+    "suiAmount": 8000.024839594,
+    "note": "Put 8,000.02 SUI and 999,999,900 coins into a pool."
+   },
+   {
+    "digest": "D4ABGoXhv94z8Rk2jGHYs3WC1JEuMyzYQs2a9U2egMty",
+    "at": "2026-11-07T00:11:17.810Z",
+    "wallet": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+    "kind": "liquidity_remove",
+    "coinAmount": 777596203.1479445,
+    "suiAmount": 10290.27753496,
+    "note": "Took 10,290.28 SUI (and 777,596,203 coins) back out of the pool."
+   }
+  ],
+  "movedTo": [],
+  "profitDestinations": [
+   {
+    "address": "0xd4498a0784a88b54e6371a2b2f0bc37baa968ec32a8f5dc63807f20fd00b8632",
+    "suiAmount": 8949.574452284
+   },
+   {
+    "address": "0xc51eb270bf8a6176100697397f4158260f7345db8b47876a6b035286261862c2",
+    "suiAmount": 119.178081223
+   },
+   {
+    "address": "0x063c377a3b843bffacb3f5ec8a23c7d3a7b0aa6210aebde49efa209ef838e9d5",
+    "suiAmount": 118.270098584
+   },
+   {
+    "address": "0x232fe8d679bcd82dec7da7ec14a3e093282b71d08e075f0d8b6d04479d7bdb5f",
+    "suiAmount": 117.13821571
+   },
+   {
+    "address": "0x4e23f294af34071185b23fc24194a6fea5427285416132e1f325cd4ae380bcda",
+    "suiAmount": 116.452055177
+   }
+  ],
+  "unclassifiedEvents": [],
+  "scan": {
+   "transactionsChecked": 6,
+   "complete": true
+  },
+  "summary": [
+   "VETO was published by 0xe1f989…be49 on 2026-11-06 02:45:20 UTC.",
+   "Verdict: RUGGED (liquidity pulled).",
+   "The creator put 8,000.02 SUI into a trading pool and took 10,290.28 SUI back out (129% of it).",
+   "In total the creator came out 2,290.23 SUI ahead (took out 10,290.28 SUI, put in or spent 8,000.05 SUI).",
+   "After taking the money, the creator sent SUI on to 0xd4498a…8632 (8,949.57 SUI), 0xc51eb2…62c2 (119.18 SUI), 0x063c37…e9d5 (118.27 SUI), 0x232fe8…db5f (117.14 SUI), 0x4e23f2…bcda (116.45 SUI)."
+  ],
+  "stats": {
+   "graphqlCalls": 5,
+   "seconds": 2
+  }
+ }
+}

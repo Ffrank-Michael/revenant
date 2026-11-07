@@ -1,0 +1,438 @@
+{
+ "name": "BUBBLES",
+ "coinType": "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0::bubbles::BUBBLES",
+ "capturedAt": "2026-11-07T22:48:23.267Z",
+ "trace": {
+  "ok": true,
+  "coin": {
+   "type": "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0::bubbles::BUBBLES",
+   "packageId": "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0",
+   "name": "Bubbles",
+   "symbol": "Bubbles",
+   "decimals": 9,
+   "supply": "1000000000000000000"
+  },
+  "creator": {
+   "address": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+   "publishedAt": "2026-11-07T00:28:12.977Z",
+   "publishDigest": "9U1NnDTKChaTfhsDtGrJ44KhcDJZvBNPfWGYaj52tDxb",
+   "gasSponsor": null,
+   "controller": null
+  },
+  "trail": {
+   "wallets": [
+    {
+     "address": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+     "role": "creator",
+     "hop": 0,
+     "isRelay": false,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 4,
+      "moreExist": false,
+      "spanMinutes": 371.4,
+      "perHour": 1
+     },
+     "firstSeenAt": "2026-11-07T00:27:55.164Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x1e8cb67d7a29730bd81a27f576d57618c2158602be3fe4d6a10e29b02c79cc7c",
+      "amountSui": 8949.573451294,
+      "at": "2026-11-07T00:27:55.164Z",
+      "digest": "2ViU5kjRYSkfPARz91cQqukEGxg2ikGEUKoBbRAN7dVw"
+     }
+    },
+    {
+     "address": "0x1e8cb67d7a29730bd81a27f576d57618c2158602be3fe4d6a10e29b02c79cc7c",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-07T00:27:46.702Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x2e888815cfd94046db6979d0074722d2744f93b4f92c73d339e4b6c05f7f6219",
+      "amountSui": 8949.573551393,
+      "at": "2026-11-07T00:27:46.702Z",
+      "digest": "4y4z97VduEs5bb58L6nwncjGGqPND6YqRdjLJJfzN8td"
+     }
+    },
+    {
+     "address": "0x2e888815cfd94046db6979d0074722d2744f93b4f92c73d339e4b6c05f7f6219",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-07T00:27:39.191Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x28f0761d96882c6cf0f24a5cad8b81a01ecb4c6a0a1b15ae912681729bc74bad",
+      "amountSui": 8949.573651492,
+      "at": "2026-11-07T00:27:39.191Z",
+      "digest": "AYPZaVConpGR7VPYQJRh68W63XYvHkj7gpMVrH6PLDTn"
+     }
+    },
+    {
+     "address": "0x28f0761d96882c6cf0f24a5cad8b81a01ecb4c6a0a1b15ae912681729bc74bad",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-07T00:27:30.756Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x664875d4617875827bdf7b42f3ad87c57b589cf7ef003a7222c4385634fbdd1a",
+      "amountSui": 8949.573751591,
+      "at": "2026-11-07T00:27:30.756Z",
+      "digest": "HERZAgk983W3tGWPG4pecWSFstTn11v7YJ6eJ6s3mV6b"
+     }
+    },
+    {
+     "address": "0x664875d4617875827bdf7b42f3ad87c57b589cf7ef003a7222c4385634fbdd1a",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-07T00:27:22.316Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x3bd47888bbd68bf6731d1ff0f9f4815a3bbb1418f2a28e4733e4f8a841fee4a5",
+      "amountSui": 8949.57385169,
+      "at": "2026-11-07T00:27:22.316Z",
+      "digest": "9kkBvcbZ1bmCgfcXfxzHXgzTFwMRxsRmKwWQmUK78DkX"
+     }
+    },
+    {
+     "address": "0x3bd47888bbd68bf6731d1ff0f9f4815a3bbb1418f2a28e4733e4f8a841fee4a5",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-07T00:27:15.127Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x2b14320070570f1b48c44296d41bc126ba9b18f26a1181ccd8109df92753dc29",
+      "amountSui": 8949.573951789,
+      "at": "2026-11-07T00:27:15.127Z",
+      "digest": "AhoJoFXjCpsMX6dotXcRAokW6HFYCkZT3JEEK5txGYBQ"
+     }
+    },
+    {
+     "address": "0x2b14320070570f1b48c44296d41bc126ba9b18f26a1181ccd8109df92753dc29",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-07T00:27:07.196Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0xe7a1fe6c3845582e4fef8a2d143d9db1ef9ca7b796297534b8de48136aa62753",
+      "amountSui": 8949.574051888,
+      "at": "2026-11-07T00:27:07.196Z",
+      "digest": "F7EFqe2J9SW4aHEtcStTDpRkpTumpsYvSZShh1YyPUpj"
+     }
+    },
+    {
+     "address": "0xe7a1fe6c3845582e4fef8a2d143d9db1ef9ca7b796297534b8de48136aa62753",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-07T00:26:59.753Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0xac8ea6096f172e155b5b06c925570a1d440f2508f383a4591353e9d98f9d2cd4",
+      "amountSui": 8949.574151987,
+      "at": "2026-11-07T00:26:59.753Z",
+      "digest": "3kFN6ENpkNSzTPo7jeCCZzGoxKEVuTk2TfiX4kCHB2tp"
+     }
+    },
+    {
+     "address": "0xac8ea6096f172e155b5b06c925570a1d440f2508f383a4591353e9d98f9d2cd4",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.2,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-07T00:26:49.107Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x5b97d7f52a876a210d040f26e97e7cead0ed13482ae252433e2935426ceecdb9",
+      "amountSui": 8949.574252086,
+      "at": "2026-11-07T00:26:49.107Z",
+      "digest": "o3eDqfD7h1SAkGgUMgJpPWg61TZZCuA33b5LryzANFC"
+     }
+    },
+    {
+     "address": "0x5b97d7f52a876a210d040f26e97e7cead0ed13482ae252433e2935426ceecdb9",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.2,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-07T00:26:39.496Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0xd4498a0784a88b54e6371a2b2f0bc37baa968ec32a8f5dc63807f20fd00b8632",
+      "amountSui": 8949.574352185,
+      "at": "2026-11-07T00:26:39.496Z",
+      "digest": "FyTooxRwL3S8bGFjwPsA2Z7vDkTzc1oPhEgU7Wvmsu6v"
+     }
+    },
+    {
+     "address": "0xd4498a0784a88b54e6371a2b2f0bc37baa968ec32a8f5dc63807f20fd00b8632",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 1.2,
+      "perHour": 103
+     },
+     "firstSeenAt": "2026-11-07T00:25:29.290Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+      "amountSui": 8949.574452284,
+      "at": "2026-11-07T00:25:29.290Z",
+      "digest": "DFVkgk7p7SSujNupF6ExGvnkZ6GjuWj18WpvjSFvcqCQ"
+     }
+    },
+    {
+     "address": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+     "role": "funder",
+     "hop": 1,
+     "isRelay": false,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 8,
+      "moreExist": false,
+      "spanMinutes": 1302,
+      "perHour": 0
+     },
+     "firstSeenAt": "2026-11-06T02:43:29.377Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x5dd1aa10d4eaf440c78a765cc466b57f5861811b04cd2feeaf7231d473da1cf3",
+      "amountSui": 9336.811187927,
+      "at": "2026-11-06T02:43:29.377Z",
+      "digest": "5jTaDmYaRdeTBKW8A2eiM11wVHP7cn64CLv6hfzJE232"
+     }
+    },
+    {
+     "address": "0x5dd1aa10d4eaf440c78a765cc466b57f5861811b04cd2feeaf7231d473da1cf3",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:43:22.256Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0xa8444a7479886f4800df6a0fe0f9b8e8a1baffec199053fa386fa4a4c333e880",
+      "amountSui": 9336.811288026,
+      "at": "2026-11-06T02:43:22.256Z",
+      "digest": "GZ3ZNvucyBgvAgM7uNWCJKHyEWtYDu3PrM3hEVLXuX5b"
+     }
+    },
+    {
+     "address": "0xa8444a7479886f4800df6a0fe0f9b8e8a1baffec199053fa386fa4a4c333e880",
+     "role": "funder",
+     "hop": null,
+     "isRelay": true,
+     "exchange": null,
+     "isBusy": false,
+     "activity": {
+      "txCount": 2,
+      "moreExist": false,
+      "spanMinutes": 0.1,
+      "perHour": 120
+     },
+     "firstSeenAt": "2026-11-06T02:43:14.189Z",
+     "mayBeOlder": false,
+     "firstFunding": {
+      "from": "0x3b3647f019490c1f176c339305935b02607b527ece9e0375ccafe9fdb09f2f97",
+      "amountSui": 9336.811388125,
+      "at": "2026-11-06T02:43:14.189Z",
+      "digest": "5avEwQuDbggbeJgD28L5kyVVB8NtPQnLnZxC9oBdQfQa"
+     }
+    }
+   ],
+   "stoppedBecause": {
+    "code": "relay_cap",
+    "message": "Stopped after 12 pass-through wallets without reaching the end of the trail."
+   }
+  },
+  "controllerTrail": null,
+  "warnings": [
+   {
+    "code": "RELAY_CHAIN",
+    "severity": "warning",
+    "message": "Funded through a relay chain: the creator's money passed through 12 pass-through wallets (each held the same amount for only seconds or minutes before forwarding it). This is a common way to hide where money came from."
+   },
+   {
+    "code": "FRESH_CREATOR_WALLET",
+    "severity": "info",
+    "message": "The creator wallet was brand new: its first activity was less than 24 hours before it published the coin."
+   }
+  ],
+  "summary": [
+   "Bubbles was published by 0xeb1a41…0b89 on 2026-11-07 00:28:12 UTC.",
+   "Creator 0xeb1a41…0b89 got its first 8,949.57 SUI from 0x1e8cb6…cc7c on 2026-11-07 00:27:55 UTC.",
+   "Relay wallet 0x1e8cb6…cc7c got its first 8,949.57 SUI from 0x2e8888…6219 on 2026-11-07 00:27:46 UTC.",
+   "Relay wallet 0x2e8888…6219 got its first 8,949.57 SUI from 0x28f076…4bad on 2026-11-07 00:27:39 UTC.",
+   "Relay wallet 0x28f076…4bad got its first 8,949.57 SUI from 0x664875…dd1a on 2026-11-07 00:27:30 UTC.",
+   "Relay wallet 0x664875…dd1a got its first 8,949.57 SUI from 0x3bd478…e4a5 on 2026-11-07 00:27:22 UTC.",
+   "Relay wallet 0x3bd478…e4a5 got its first 8,949.57 SUI from 0x2b1432…dc29 on 2026-11-07 00:27:15 UTC.",
+   "Relay wallet 0x2b1432…dc29 got its first 8,949.57 SUI from 0xe7a1fe…2753 on 2026-11-07 00:27:07 UTC.",
+   "Relay wallet 0xe7a1fe…2753 got its first 8,949.57 SUI from 0xac8ea6…2cd4 on 2026-11-07 00:26:59 UTC.",
+   "Relay wallet 0xac8ea6…2cd4 got its first 8,949.57 SUI from 0x5b97d7…cdb9 on 2026-11-07 00:26:49 UTC.",
+   "Relay wallet 0x5b97d7…cdb9 got its first 8,949.57 SUI from 0xd4498a…8632 on 2026-11-07 00:26:39 UTC.",
+   "Relay wallet 0xd4498a…8632 got its first 8,949.57 SUI from 0xe1f989…be49 on 2026-11-07 00:25:29 UTC.",
+   "Hop 1 wallet 0xe1f989…be49 got its first 9,336.81 SUI from 0x5dd1aa…1cf3 on 2026-11-06 02:43:29 UTC.",
+   "Relay wallet 0x5dd1aa…1cf3 got its first 9,336.81 SUI from 0xa8444a…e880 on 2026-11-06 02:43:22 UTC.",
+   "Relay wallet 0xa8444a…e880 got its first 9,336.81 SUI from 0x3b3647…2f97 on 2026-11-06 02:43:14 UTC.",
+   "Trail stopped: Stopped after 12 pass-through wallets without reaching the end of the trail."
+  ],
+  "stats": {
+   "graphqlCalls": 31,
+   "seconds": 12.7
+  }
+ },
+ "verify": {
+  "ok": true,
+  "asOf": "2026-11-07T22:49:11.255Z",
+  "coin": {
+   "type": "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0::bubbles::BUBBLES",
+   "symbol": "Bubbles",
+   "name": "Bubbles",
+   "supply": 1000000000,
+   "decimals": 9
+  },
+  "creator": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+  "controller": null,
+  "publishedAt": "2026-11-07T00:28:12.977Z",
+  "verdict": "not_rugged",
+  "methods": [],
+  "reasons": [
+   "The creator still holds 0% of the supply.",
+   "The creator put 8,000.03 SUI into a trading pool and has not taken it out.",
+   "The creator has not sold any of the coin.",
+   "No sign of a rug yet. This can change, so it is only true as of now."
+  ],
+  "numbers": {
+   "soldPctOfSupply": 0,
+   "movedPctOfSupply": 0,
+   "creatorHoldingPctOfSupply": 0,
+   "suiTakenFromSales": 0,
+   "liquidityAddedSui": 8000.025021998,
+   "liquidityRemovedSui": 0,
+   "totalSuiTaken": 0,
+   "suiSpentBuying": 0.022626499,
+   "netSuiGained": -8000.0476484969995
+  },
+  "firstRugAt": null,
+  "evidence": [
+   {
+    "digest": "GNUj7cHVwjKCNxRPxmX73dpYE2aHibnPGoUNwiGwgPAt",
+    "at": "2026-11-07T00:28:28.518Z",
+    "wallet": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+    "kind": "liquidity_add",
+    "coinAmount": 999999900,
+    "suiAmount": 8000.025021998,
+    "note": "Put 8,000.03 SUI and 999,999,900 coins into a pool."
+   }
+  ],
+  "movedTo": [],
+  "profitDestinations": [],
+  "unclassifiedEvents": [],
+  "scan": {
+   "transactionsChecked": 2,
+   "complete": true
+  },
+  "summary": [
+   "Bubbles was published by 0xeb1a41…0b89 on 2026-11-07 00:28:12 UTC.",
+   "Verdict: NOT RUGGED.",
+   "The creator still holds 0% of the supply.",
+   "The creator put 8,000.03 SUI into a trading pool and has not taken it out.",
+   "The creator has not sold any of the coin.",
+   "No sign of a rug yet. This can change, so it is only true as of now."
+  ],
+  "stats": {
+   "graphqlCalls": 5,
+   "seconds": 2
+  }
+ }
+}
