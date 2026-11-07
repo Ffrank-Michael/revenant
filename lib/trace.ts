@@ -86,7 +86,8 @@ export type WarningCode =
   | "FUNDED_BY_BUSY_WALLET"
   | "TYPE_DEFINED_IN_UPGRADE"
   | "HISTORY_LIMIT"
-  | "NO_FUNDING_FOUND";
+  | "NO_FUNDING_FOUND"
+  | "MATCHES_PAST_RUG";
 
 export type Warning = { code: WarningCode; severity: "info" | "warning"; message: string };
 

@@ -1,0 +1,273 @@
+{
+ "savedAt": "2026-11-07T22:55:08.759Z",
+ "cases": [
+  {
+   "v": 1,
+   "coinType": "0xefb1d695f458aff3f583a4b2d1808b69ddd22579fe0dd459da28ae07dc1052fe::veto::VETO",
+   "symbol": "VETO",
+   "publishedAt": "2026-11-06T02:45:20.342Z",
+   "confirmedAt": "2026-11-07T22:54:13.516Z",
+   "methods": [
+    "liquidity_pull"
+   ],
+   "creator": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+   "controller": null,
+   "wallets": [
+    {
+     "address": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+     "role": "creator",
+     "hop": 0
+    },
+    {
+     "address": "0x5dd1aa10d4eaf440c78a765cc466b57f5861811b04cd2feeaf7231d473da1cf3",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xa8444a7479886f4800df6a0fe0f9b8e8a1baffec199053fa386fa4a4c333e880",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x3b3647f019490c1f176c339305935b02607b527ece9e0375ccafe9fdb09f2f97",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x2b9ce5d6ec61a9f5901fd0a887678b48333a699206b7cf55a590f470e2d9da67",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x36c60511d6a01177e53dc635ee849c1ee45daf728d3b55caa47f012c437c7370",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x265cd4bbad3e515739486c6e5087a8fe69e26407700104a924bcdd3e677744c2",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xd6f051198833c7f1065ef4d258c05f93925c6c71a5c414c2d5c23266bc15751b",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x9b02ad93e9840b353ffc81ab73cc17a8b9c1517193459acab7d18ce57a3b83ce",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x8cd1e85f4326e8628632b96459e7f452a9d455abed53d018c657cd43f0ba6165",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xa2ae9a008dfa5ad94401b920eaca56ff2aae4e534cfa31c12227bbe765f01b65",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x265f2c35b2f6dff0c664f11f4bf0e89a2c19945492f129a9f8d2f32f97891a6a",
+     "role": "funder",
+     "hop": 1
+    },
+    {
+     "address": "0x583d53dacd19b5a34065180a0f6976ae7fe2b4bede2ae5ea91bd39aa7dd06f34",
+     "role": "funder",
+     "hop": 2
+    },
+    {
+     "address": "0x0f027960311f4cce5f6edd81a8d52100396eb8911c5088edd4f993da8ef27cfe",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xf8330e7e309468a4eac5a5fa5834cf131dc6b15f9bece14b62ef5538d4674f48",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xd4498a0784a88b54e6371a2b2f0bc37baa968ec32a8f5dc63807f20fd00b8632",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xc51eb270bf8a6176100697397f4158260f7345db8b47876a6b035286261862c2",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x063c377a3b843bffacb3f5ec8a23c7d3a7b0aa6210aebde49efa209ef838e9d5",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x232fe8d679bcd82dec7da7ec14a3e093282b71d08e075f0d8b6d04479d7bdb5f",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x4e23f294af34071185b23fc24194a6fea5427285416132e1f325cd4ae380bcda",
+     "role": "profit",
+     "hop": null
+    }
+   ],
+   "suiPutIn": 8000.047200092999,
+   "suiTaken": 10290.27753496,
+   "netSuiGained": 2290.230334867,
+   "firstRugAt": "2026-11-07T00:11:17.810Z",
+   "evidence": [
+    {
+     "kind": "liquidity_add",
+     "digest": "6HZH9dB775RYKM34qXqzPJN3Xt8i76aAvAnvibSCdm5a",
+     "at": "2026-11-06T02:45:37.846Z",
+     "suiAmount": 8000.024839594,
+     "coinAmount": 999999900
+    },
+    {
+     "kind": "liquidity_remove",
+     "digest": "D4ABGoXhv94z8Rk2jGHYs3WC1JEuMyzYQs2a9U2egMty",
+     "at": "2026-11-07T00:11:17.810Z",
+     "suiAmount": 10290.27753496,
+     "coinAmount": 777596203.1479445
+    }
+   ]
+  },
+  {
+   "v": 1,
+   "coinType": "0x4953ffe3e905abbbf882c08ba9be7ea0ffcee831c3688a9397c22a466458fb4e::axis::AXIS",
+   "symbol": "AXIS",
+   "publishedAt": "2026-11-04T13:36:07.273Z",
+   "confirmedAt": "2026-11-07T22:53:46.639Z",
+   "methods": [
+    "liquidity_pull"
+   ],
+   "creator": "0x265f2c35b2f6dff0c664f11f4bf0e89a2c19945492f129a9f8d2f32f97891a6a",
+   "controller": null,
+   "wallets": [
+    {
+     "address": "0x265f2c35b2f6dff0c664f11f4bf0e89a2c19945492f129a9f8d2f32f97891a6a",
+     "role": "creator",
+     "hop": 0
+    },
+    {
+     "address": "0x583d53dacd19b5a34065180a0f6976ae7fe2b4bede2ae5ea91bd39aa7dd06f34",
+     "role": "funder",
+     "hop": 1
+    },
+    {
+     "address": "0x0f027960311f4cce5f6edd81a8d52100396eb8911c5088edd4f993da8ef27cfe",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xf8330e7e309468a4eac5a5fa5834cf131dc6b15f9bece14b62ef5538d4674f48",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x54885d752d49b580208cc6ee6854e04be6e63f2b5bfbda3fa54bbcac07f95ae4",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x046bf71c209da61ff45802319efa10c0fce3b6d240876aa1fdf5052ae1edf21b",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xfd4b555cf3e06effa13363a2f5c810248adcaa9dbe950e84e0894b27b811d2aa",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xa68496300459884e095e41e2efb927bbaa8c671f91bcc7226b62a4392e1990da",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x497bacf6f854bd383156ed3bb5c960d3675c8f9d9ba3d07f6df2cb7d3aecc364",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xd2312738858e40da2de0e369824901bba7daad5c4a8a5bb6f5b640919ed24b30",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xb375a9b811ce0a22fb386436415388699bbb370485540cd7c1a7313560079cfd",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x8e6759757652034d7e9d170e7e06bd9a3e9142de5dae4b6133498e8b094577d0",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xf4e3072c7a014cf18fb38d1096e2c4473630aa6f77a54bcd3547734d1340f06c",
+     "role": "funder",
+     "hop": 2
+    },
+    {
+     "address": "0x35abea7838abf6b519fa1f7f4684a8d6ea50893dc7d7137caaca6939fc2056ce",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x45772d17ed63d360687b2d8a7f130507b05b6699ab94cac9131abd256c5b30b2",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xa2ae9a008dfa5ad94401b920eaca56ff2aae4e534cfa31c12227bbe765f01b65",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x8d96e83eb220efbe110c5b01572ac7ffd4c4c125a42f78430f69df81a7579940",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0xf60a1a2de67ace76772350f951c36ddb6008a55c44dea537f33c114c605c1417",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x14dbf35ea5142beafe81d029fe79992933ea7ea8cfab0270214cf6bfea17221c",
+     "role": "profit",
+     "hop": null
+    },
+    {
+     "address": "0x9b2d96a2ac8067d604ea30105d0fbb536325a1dda2673237d4eb6232c94f92f2",
+     "role": "profit",
+     "hop": null
+    }
+   ],
+   "suiPutIn": 8000.047215296,
+   "suiTaken": 14662.331824672,
+   "netSuiGained": 6662.284609375999,
+   "firstRugAt": "2026-11-06T00:13:27.793Z",
+   "evidence": [
+    {
+     "kind": "liquidity_add",
+     "digest": "5a2U8odTbjkmMsrmvhcbC67XL53eyYRJhscXPj44xPnV",
+     "at": "2026-11-04T13:36:23.030Z",
+     "suiAmount": 8000.024839597,
+     "coinAmount": 999999900
+    },
+    {
+     "kind": "liquidity_remove",
+     "digest": "7PFLoV6U6nQadpWiP1C971PJ6xSPK5U9tZWSacZDnWvv",
+     "at": "2026-11-06T00:13:27.793Z",
+     "suiAmount": 14662.331824672,
+     "coinAmount": 545942934.7679253
+    }
+   ]
+  }
+ ]
+}
