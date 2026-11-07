@@ -17,7 +17,13 @@ const MIN_GAP_MS = 400; // 1000ms / 400ms = 2.5 requests per second, under the f
 const MAX_429_RETRIES = 6;
 
 // The "next free slot" is kept on globalThis so every route in the app shares one queue.
-const shared = globalThis as unknown as { __tatumNextSlot?: number };
+const shared = globalThis as unknown as { __tatumNextSlot?: number; __tatumRequests?: number };
+
+// How many requests we have sent to Tatum since the server started (counts every try,
+// including ones answered with 429). Handy for staying inside a budget.
+export function getTatumRequestCount(): number {
+  return shared.__tatumRequests ?? 0;
+}
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -53,6 +59,7 @@ export async function suiGraphQL<T = unknown>(
   return withRetry("Tatum Sui GraphQL", async () => {
     for (let attempt = 0; ; attempt++) {
       await waitForSlot();
+      shared.__tatumRequests = (shared.__tatumRequests ?? 0) + 1;
 
       const res = await fetch(TATUM_SUI_GRAPHQL_URL, {
         method: "POST",
