@@ -28,6 +28,9 @@ export async function GET(request: Request) {
   try {
     return Response.json(await addRugMemory(result));
   } catch (e) {
-    return Response.json({ ...result, rugMatches: [], coinObjectMatches: [], memory: { status: "unavailable", rugsKnown: 0, note: e instanceof Error ? e.message : String(e) } });
+    // Show the REAL cause in the answer and in the server log (not just "unavailable").
+    console.error("[api/trace] the rug-memory step failed:", e);
+    const cause = e instanceof Error ? { name: e.name, message: e.message, where: e.stack?.split("\n")[1]?.trim() ?? null } : { name: "unknown", message: String(e), where: null };
+    return Response.json({ ...result, rugMatches: [], coinObjectMatches: [], memory: { status: "unavailable", rugsKnown: 0, note: `${cause.name}: ${cause.message}`, cause } });
   }
 }

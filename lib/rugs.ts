@@ -48,10 +48,11 @@ export type RugCase = {
   evidence: { kind: string; digest: string; at: string; suiAmount: number; coinAmount: number }[];
   // Added later; old memories do not have them.
   confirmedBy?: { by: string; how: string; at: string }; // a human checked it (not just Revenant's own check)
+  reviewStatus?: "auto_verified_awaiting_review"; // Revenant's own on-chain check only; no human has confirmed it yet
   coinObjects?: CoinObjectRef[]; // SUI coin objects touched by the pull; a fingerprint for tracking the money
 };
 
-export type CaseExtras = Pick<RugCase, "confirmedBy" | "coinObjects">;
+export type CaseExtras = Pick<RugCase, "confirmedBy" | "coinObjects" | "reviewStatus">;
 
 const short = (a: string) => `${a.slice(0, 8)}…${a.slice(-4)}`;
 const fmt = (n: number) => n.toLocaleString("en", { maximumFractionDigits: 2 });
@@ -93,6 +94,7 @@ export function buildRugCase(trace: TraceResult, verify: VerifyResult, extras: C
     firstRugAt: verify.firstRugAt,
     evidence: verify.evidence.map((e) => ({ kind: e.kind, digest: e.digest, at: e.at, suiAmount: e.suiAmount, coinAmount: e.coinAmount })),
     ...(extras.confirmedBy ? { confirmedBy: extras.confirmedBy } : {}),
+    ...(extras.reviewStatus ? { reviewStatus: extras.reviewStatus } : {}),
     ...(extras.coinObjects?.length ? { coinObjects: extras.coinObjects } : {}),
   };
 }
@@ -103,7 +105,7 @@ export function rugCaseToMemoryText(c: RugCase): string {
   const proof = c.evidence.filter((e) => e.kind === "liquidity_remove" || e.kind === "sell").map((e) => e.digest.slice(0, 12) + "…").join(", ");
   const relays = c.wallets.filter((w) => w.role === "relay").length;
   const sentence =
-    `CONFIRMED RUG: Sui coin ${c.symbol ?? "unknown"} (${c.coinType}), published ${c.publishedAt.slice(0, 10)} by creator ${c.creator}, rugged: ${how}. ` +
+    `${c.reviewStatus ? "AUTO-VERIFIED RUG, awaiting investigator review (Revenant's own on-chain check, no human confirmation yet)" : "CONFIRMED RUG"}: Sui coin ${c.symbol ?? "unknown"} (${c.coinType}), published ${c.publishedAt.slice(0, 10)} by creator ${c.creator}, rugged: ${how}. ` +
     `The creator put in ${fmt(c.suiPutIn)} SUI and took out ${fmt(c.suiTaken)} SUI (net ${fmt(c.netSuiGained)} SUI). ` +
     `${relays ? `Its funding passed through ${relays} relay wallets. ` : ""}${proof ? `Proof transactions: ${proof}. ` : ""}` +
     `${c.confirmedBy ? `Confirmed by ${c.confirmedBy.by} (${c.confirmedBy.how}) on ${c.confirmedBy.at.slice(0, 10)}. ` : ""}` +
@@ -140,6 +142,12 @@ type IndexState = {
 
 const g = globalThis as unknown as { __rugIndex?: IndexState };
 function state(): IndexState {
+  // A dev server that reloaded this file keeps the OLD index object in memory. If it lacks a newer
+  // part, rebuild it instead of crashing (this is what broke the first trace after the last update).
+  if (g.__rugIndex && !(g.__rugIndex.byCoinObject instanceof Map)) {
+    g.__rugIndex.byCoinObject = new Map();
+    setCases(g.__rugIndex, [...g.__rugIndex.cases.values()]);
+  }
   if (!g.__rugIndex) g.__rugIndex = { cases: new Map(), byWallet: new Map(), byCoinObject: new Map(), loadedAt: 0, status: "unavailable", note: "not loaded yet", refreshing: null };
   return g.__rugIndex;
 }
@@ -209,11 +217,12 @@ export async function refreshRugIndex(): Promise<void> {
         : `Walrus listed ${listed.memories.length} memories but recall returned ${recalled.results.length}; merged with the snapshot.`;
       writeSnapshot(s);
     } catch (e) {
+      console.warn("[rugs] could not load the rugs from Walrus:", e);
       const snap = readSnapshot();
       if (s.cases.size === 0) setCases(s, snap);
       s.loadedAt = Date.now() - REFRESH_AFTER_MS + 60_000; // try Walrus again in a minute
       s.status = s.cases.size > 0 ? "stale_snapshot" : "unavailable";
-      s.note = `Walrus could not be reached (${e instanceof Error ? e.message.slice(0, 80) : e}); using ${s.cases.size} cases from the snapshot file.`;
+      s.note = `Walrus could not be reached (${e instanceof Error ? `${e.name}: ${e.message.slice(0, 120)}` : e}); using ${s.cases.size} cases from the snapshot file.`;
     } finally {
       s.refreshing = null;
     }
@@ -222,10 +231,22 @@ export async function refreshRugIndex(): Promise<void> {
 }
 
 // Makes sure the index is loaded. First load waits; later loads serve the cache and refresh in the background.
+const FIRST_LOAD_WAIT_MS = 15_000; // a trace never waits longer than this for Walrus to load the index
+
 async function ensureIndex(): Promise<IndexState> {
   const s = state();
-  if (s.loadedAt === 0) await refreshRugIndex();
-  else if (Date.now() - s.loadedAt > REFRESH_AFTER_MS) void refreshRugIndex();
+  if (s.loadedAt === 0) {
+    const loading = refreshRugIndex();
+    const done = await Promise.race([loading.then(() => true), new Promise<false>((r) => setTimeout(() => r(false), FIRST_LOAD_WAIT_MS))]);
+    if (!done) {
+      // Walrus is slow: answer from the snapshot file now; the load keeps going in the background.
+      if (s.cases.size === 0) setCases(s, readSnapshot());
+      s.status = s.cases.size > 0 ? "stale_snapshot" : "unavailable";
+      s.loadedAt = Date.now() - REFRESH_AFTER_MS + 30_000; // serve the snapshot to the next requests without waiting again
+      s.note = `Walrus did not answer within ${FIRST_LOAD_WAIT_MS / 1000}s; using ${s.cases.size} cases from the snapshot file. The load continues in the background.`;
+      console.warn(`[rugs] ${s.note}`);
+    }
+  } else if (Date.now() - s.loadedAt > REFRESH_AFTER_MS) void refreshRugIndex();
   return s;
 }
 
