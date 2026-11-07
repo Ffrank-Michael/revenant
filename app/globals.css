@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
+/* Case-file theme: near-black, one warning colour (amber). Dark only, on purpose. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --ink: #0b0b0a; /* page */
+  --paper: #131311; /* panels */
+  --line: #2a2a26; /* thin rules */
+  --text: #e8e6df;
+  --dim: #8d8a80;
+  --warn: #f2a900; /* the only accent: used for warnings and the main action */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-dim: var(--dim);
+  --color-warn: var(--warn);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: ui-serif, Georgia, "Times New Roman", serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--warn);
+  color: var(--ink);
+}
+
+/* Keyboard focus is always visible */
+:focus-visible {
+  outline: 2px solid var(--warn);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
