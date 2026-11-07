@@ -15,6 +15,7 @@ import { withRetry } from "./retry";
 import { normalizeSuiAddress } from "./sui";
 import type { TraceResult, Trail, Warning } from "./trace";
 import type { RugMethod, VerifyResult } from "./verify";
+import { walletCoinObjects, type CoinObjectRef } from "./coinobjects";
 
 export const RUGS_NAMESPACE = "revenant-rugs";
 const MARKER = "REVENANT_RUG_V1";
@@ -45,13 +46,18 @@ export type RugCase = {
   netSuiGained: number;
   firstRugAt: string | null;
   evidence: { kind: string; digest: string; at: string; suiAmount: number; coinAmount: number }[];
+  // Added later; old memories do not have them.
+  confirmedBy?: { by: string; how: string; at: string }; // a human checked it (not just Revenant's own check)
+  coinObjects?: CoinObjectRef[]; // SUI coin objects touched by the pull; a fingerprint for tracking the money
 };
+
+export type CaseExtras = Pick<RugCase, "confirmedBy" | "coinObjects">;
 
 const short = (a: string) => `${a.slice(0, 8)}…${a.slice(-4)}`;
 const fmt = (n: number) => n.toLocaleString("en", { maximumFractionDigits: 2 });
 
 // Builds the case from a trace and a rug check. Returns null if the check did not say "rugged".
-export function buildRugCase(trace: TraceResult, verify: VerifyResult): RugCase | null {
+export function buildRugCase(trace: TraceResult, verify: VerifyResult, extras: CaseExtras = {}): RugCase | null {
   if (verify.verdict !== "rugged") return null;
 
   const wallets = new Map<string, RugWallet>();
@@ -86,6 +92,8 @@ export function buildRugCase(trace: TraceResult, verify: VerifyResult): RugCase 
     netSuiGained: verify.numbers.netSuiGained,
     firstRugAt: verify.firstRugAt,
     evidence: verify.evidence.map((e) => ({ kind: e.kind, digest: e.digest, at: e.at, suiAmount: e.suiAmount, coinAmount: e.coinAmount })),
+    ...(extras.confirmedBy ? { confirmedBy: extras.confirmedBy } : {}),
+    ...(extras.coinObjects?.length ? { coinObjects: extras.coinObjects } : {}),
   };
 }
 
@@ -98,6 +106,8 @@ export function rugCaseToMemoryText(c: RugCase): string {
     `CONFIRMED RUG: Sui coin ${c.symbol ?? "unknown"} (${c.coinType}), published ${c.publishedAt.slice(0, 10)} by creator ${c.creator}, rugged: ${how}. ` +
     `The creator put in ${fmt(c.suiPutIn)} SUI and took out ${fmt(c.suiTaken)} SUI (net ${fmt(c.netSuiGained)} SUI). ` +
     `${relays ? `Its funding passed through ${relays} relay wallets. ` : ""}${proof ? `Proof transactions: ${proof}. ` : ""}` +
+    `${c.confirmedBy ? `Confirmed by ${c.confirmedBy.by} (${c.confirmedBy.how}) on ${c.confirmedBy.at.slice(0, 10)}. ` : ""}` +
+    `${c.coinObjects?.length ? `${c.coinObjects.length} SUI coin objects from the pull are recorded as a fingerprint. ` : ""}` +
     `Remember these wallets: ${c.wallets.length} wallets are linked to this rug.`;
   return `${sentence}\n${MARKER} ${JSON.stringify(c)}`;
 }
@@ -121,6 +131,7 @@ export type IndexStatus = "fresh" | "stale_snapshot" | "partial" | "unavailable"
 type IndexState = {
   cases: Map<string, RugCase>; // by coin type
   byWallet: Map<string, { coinType: string; role: RugWallet["role"]; hop: number | null }[]>;
+  byCoinObject: Map<string, { coinType: string; role: CoinObjectRef["role"]; digest: string }[]>;
   loadedAt: number; // when the index was last rebuilt from Walrus (0 = never)
   status: IndexStatus;
   note: string;
@@ -129,7 +140,7 @@ type IndexState = {
 
 const g = globalThis as unknown as { __rugIndex?: IndexState };
 function state(): IndexState {
-  if (!g.__rugIndex) g.__rugIndex = { cases: new Map(), byWallet: new Map(), loadedAt: 0, status: "unavailable", note: "not loaded yet", refreshing: null };
+  if (!g.__rugIndex) g.__rugIndex = { cases: new Map(), byWallet: new Map(), byCoinObject: new Map(), loadedAt: 0, status: "unavailable", note: "not loaded yet", refreshing: null };
   return g.__rugIndex;
 }
 
@@ -145,6 +156,14 @@ function setCases(s: IndexState, cases: RugCase[]) {
       const list = s.byWallet.get(w.address) ?? [];
       list.push({ coinType: c.coinType, role: w.role, hop: w.hop });
       s.byWallet.set(w.address, list);
+    }
+  }
+  s.byCoinObject = new Map();
+  for (const c of s.cases.values()) {
+    for (const o of c.coinObjects ?? []) {
+      const list = s.byCoinObject.get(o.id) ?? [];
+      list.push({ coinType: c.coinType, role: o.role, digest: o.digest });
+      s.byCoinObject.set(o.id, list);
     }
   }
 }
@@ -213,9 +232,11 @@ async function ensureIndex(): Promise<IndexState> {
 // ---------------------------------------------------------------------------
 // Saving a confirmed rug
 // ---------------------------------------------------------------------------
-export async function saveRugCase(c: RugCase): Promise<{ status: "saved" | "already_known"; blobId?: string }> {
+// A coin already in memory is skipped, unless replace is true: then a NEW version is saved
+// (Walrus keeps the old one; the index uses the version with the latest confirmedAt).
+export async function saveRugCase(c: RugCase, opts: { replace?: boolean } = {}): Promise<{ status: "saved" | "already_known"; blobId?: string }> {
   const s = await ensureIndex();
-  if (s.cases.has(c.coinType)) return { status: "already_known" };
+  if (s.cases.has(c.coinType) && !opts.replace) return { status: "already_known" };
   const m = getMemWal(RUGS_NAMESPACE);
   const saved = await withRetry("save rug", () =>
     m.rememberAndWait(rugCaseToMemoryText(c), RUGS_NAMESPACE, { timeoutMs: MEMWAL_SAVE_WAIT_MS }),
@@ -235,8 +256,19 @@ export type RugMatch = {
   pastRugs: { coinType: string; symbol: string | null; roleInThatRug: string; confirmedAt: string }[];
 };
 
+// The strongest signal: the very same SUI coin object (same ID) was in a past rug's pull
+// and is now in this token creator's wallet. Money that moved whole keeps its ID.
+export type CoinObjectMatch = {
+  objectId: string;
+  heldBy: string; // which wallet of this token: creator or controller
+  how: "holds now" | "seen in a transaction";
+  pastRug: { coinType: string; symbol: string | null; role: string; digest: string };
+};
+
 export type TraceWithMemory = TraceResult & {
   rugMatches: RugMatch[];
+  coinObjectMatches: CoinObjectMatch[];
+  coinObjectCheck: { checked: number; note: string }; // how many coin objects of the creator were compared
   alreadyConfirmedRug: boolean; // this very coin is in the memory
   memory: { status: IndexStatus; rugsKnown: number; note: string };
 };
@@ -266,8 +298,44 @@ export async function addRugMemory(trace: TraceResult): Promise<TraceWithMemory>
   scan(trace.trail, "creator trail");
   scan(trace.controllerTrail, "controller trail");
 
+  // Compare the creator's (and controller's) SUI coin objects with the pull coins of past rugs.
+  // Best effort: if this check fails, the wallet matches above still stand.
+  const coinMatches: CoinObjectMatch[] = [];
+  const coinCheck = { checked: 0, note: s.byCoinObject.size ? "" : "no past rug has coin objects recorded yet" };
+  if (s.byCoinObject.size) {
+    try {
+      const owners = [trace.creator.address, ...(trace.creator.controller ? [trace.creator.controller] : [])];
+      for (const [i, owner] of owners.entries()) {
+        const coins = await walletCoinObjects(owner);
+        coinCheck.checked += coins.size;
+        for (const [id, how] of coins) {
+          for (const h of (s.byCoinObject.get(id) ?? []).filter((x) => x.coinType !== own)) {
+            coinMatches.push({
+              objectId: id,
+              heldBy: i === 0 ? "creator" : "controller",
+              how,
+              pastRug: { coinType: h.coinType, symbol: s.cases.get(h.coinType)?.symbol ?? null, role: h.role === "gas_coin" ? "was a gas coin in the pull of" : "was created or changed by the pull of", digest: h.digest },
+            });
+          }
+        }
+      }
+      coinCheck.note = coinMatches.length ? "" : `compared ${coinCheck.checked} coin objects of the creator; none is known from a past rug`;
+    } catch (e) {
+      coinCheck.note = `coin object check failed: ${e instanceof Error ? e.message.slice(0, 80) : e}`;
+    }
+  }
+
   const warnings: Warning[] = [...trace.warnings];
   const summary = [...trace.summary];
+  if (coinMatches.length) {
+    const names = [...new Set(coinMatches.map((m) => m.pastRug.symbol ?? short(m.pastRug.coinType.split("::")[0])))];
+    warnings.unshift({
+      code: "SAME_COIN_OBJECT_AS_PAST_RUG",
+      severity: "warning",
+      message: `${coinMatches.length} SUI coin object${coinMatches.length > 1 ? "s" : ""} in this creator's wallet ${coinMatches.length > 1 ? "were" : "was"} also in the pull of a past confirmed rug (${names.join(", ")}). The same money, with the same coin ID, moved from that rug to this creator.`,
+    });
+    for (const m of coinMatches) summary.push(`COIN MATCH: the ${m.heldBy} ${m.how} coin ${short(m.objectId)}, which ${m.pastRug.role} ${m.pastRug.symbol ?? short(m.pastRug.coinType.split("::")[0])} (tx ${m.pastRug.digest.slice(0, 10)}…).`);
+  }
   const alreadyConfirmedRug = s.cases.has(own);
   if (alreadyConfirmedRug) {
     warnings.unshift({ code: "MATCHES_PAST_RUG", severity: "warning", message: "This coin is itself a confirmed rug in Revenant's memory." });
@@ -286,5 +354,5 @@ export async function addRugMemory(trace: TraceResult): Promise<TraceWithMemory>
     }
   }
 
-  return { ...trace, warnings, summary, rugMatches: matches, alreadyConfirmedRug, memory: { status: s.status, rugsKnown: s.cases.size, note: s.note } };
+  return { ...trace, warnings, summary, rugMatches: matches, coinObjectMatches: coinMatches, coinObjectCheck: coinCheck, alreadyConfirmedRug, memory: { status: s.status, rugsKnown: s.cases.size, note: s.note } };
 }

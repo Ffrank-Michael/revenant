@@ -1,12 +1,12 @@
 {
- "savedAt": "2026-11-07T22:55:08.759Z",
+ "savedAt": "2026-11-07T23:11:43.983Z",
  "cases": [
   {
    "v": 1,
    "coinType": "0xefb1d695f458aff3f583a4b2d1808b69ddd22579fe0dd459da28ae07dc1052fe::veto::VETO",
    "symbol": "VETO",
    "publishedAt": "2026-11-06T02:45:20.342Z",
-   "confirmedAt": "2026-11-07T22:54:13.516Z",
+   "confirmedAt": "2026-11-07T23:08:51.319Z",
    "methods": [
     "liquidity_pull"
    ],
@@ -133,6 +133,28 @@
      "suiAmount": 10290.27753496,
      "coinAmount": 777596203.1479445
     }
+   ],
+   "confirmedBy": {
+    "by": "project owner",
+    "how": "checked the transactions on Suiscan",
+    "at": "2026-11-07T23:08:51.319Z"
+   },
+   "coinObjects": [
+    {
+     "id": "0x89793646a6e195fcf33ff5e7915481f9a077a38174703fae6d2740d1b896763e",
+     "role": "pull_output",
+     "digest": "D4ABGoXhv94z8Rk2jGHYs3WC1JEuMyzYQs2a9U2egMty"
+    },
+    {
+     "id": "0xe664eea59c7a4b9576ad4409b7975aa33ac125ee760bbb4bf4b6641816e1484e",
+     "role": "gas_coin",
+     "digest": "D4ABGoXhv94z8Rk2jGHYs3WC1JEuMyzYQs2a9U2egMty"
+    },
+    {
+     "id": "0x59eae24d7956e024b8c88ec3d09146b13415a6b1077d84344ca32d4f790d1802",
+     "role": "gas_coin",
+     "digest": "D4ABGoXhv94z8Rk2jGHYs3WC1JEuMyzYQs2a9U2egMty"
+    }
    ]
   },
   {
@@ -140,7 +162,7 @@
    "coinType": "0x4953ffe3e905abbbf882c08ba9be7ea0ffcee831c3688a9397c22a466458fb4e::axis::AXIS",
    "symbol": "AXIS",
    "publishedAt": "2026-11-04T13:36:07.273Z",
-   "confirmedAt": "2026-11-07T22:53:46.639Z",
+   "confirmedAt": "2026-11-07T23:08:21.228Z",
    "methods": [
     "liquidity_pull"
    ],
@@ -266,6 +288,28 @@
      "at": "2026-11-06T00:13:27.793Z",
      "suiAmount": 14662.331824672,
      "coinAmount": 545942934.7679253
+    }
+   ],
+   "confirmedBy": {
+    "by": "project owner",
+    "how": "checked the transactions on Suiscan",
+    "at": "2026-11-07T23:08:21.227Z"
+   },
+   "coinObjects": [
+    {
+     "id": "0x43fb7948aef201e28d920d85b0edd8e7158bc25567252067bdaad0ef4d18d3c1",
+     "role": "gas_coin",
+     "digest": "7PFLoV6U6nQadpWiP1C971PJ6xSPK5U9tZWSacZDnWvv"
+    },
+    {
+     "id": "0xe664eea59c7a4b9576ad4409b7975aa33ac125ee760bbb4bf4b6641816e1484e",
+     "role": "pull_output",
+     "digest": "7PFLoV6U6nQadpWiP1C971PJ6xSPK5U9tZWSacZDnWvv"
+    },
+    {
+     "id": "0x8ee46a7cf7c95ea0d0bda1720d2f6a0b73a98d8c51ac83ccbe38d066b83e5123",
+     "role": "gas_coin",
+     "digest": "7PFLoV6U6nQadpWiP1C971PJ6xSPK5U9tZWSacZDnWvv"
     }
    ]
   }

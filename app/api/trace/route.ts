@@ -28,6 +28,6 @@ export async function GET(request: Request) {
   try {
     return Response.json(await addRugMemory(result));
   } catch (e) {
-    return Response.json({ ...result, rugMatches: [], memory: { status: "unavailable", rugsKnown: 0, note: e instanceof Error ? e.message : String(e) } });
+    return Response.json({ ...result, rugMatches: [], coinObjectMatches: [], memory: { status: "unavailable", rugsKnown: 0, note: e instanceof Error ? e.message : String(e) } });
   }
 }

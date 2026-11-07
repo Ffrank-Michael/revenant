@@ -87,7 +87,8 @@ export type WarningCode =
   | "TYPE_DEFINED_IN_UPGRADE"
   | "HISTORY_LIMIT"
   | "NO_FUNDING_FOUND"
-  | "MATCHES_PAST_RUG";
+  | "MATCHES_PAST_RUG"
+  | "SAME_COIN_OBJECT_AS_PAST_RUG";
 
 export type Warning = { code: WarningCode; severity: "info" | "warning"; message: string };
 
