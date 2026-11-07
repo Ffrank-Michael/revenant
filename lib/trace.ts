@@ -124,11 +124,11 @@ export type TraceFailure = {
 // ---------------------------------------------------------------------------
 // Talking to Tatum
 // ---------------------------------------------------------------------------
-type Ctx = { calls: number };
+export type Ctx = { calls: number };
 
 // Runs a GraphQL query. Counts calls, and if Tatum says "data below earliest available;
 // lowest available checkpoint is N" it learns N and tries once more.
-async function q<T>(ctx: Ctx, query: string, vars: Record<string, unknown> = {}): Promise<T> {
+export async function q<T>(ctx: Ctx, query: string, vars: Record<string, unknown> = {}): Promise<T> {
   for (let attempt = 0; ; attempt++) {
     ctx.calls++;
     try {
@@ -372,6 +372,7 @@ type PublishTx = {
   gasInput: { gasSponsor: { address: string } | null } | null;
   effects: {
     timestamp: string;
+    checkpoint: { sequenceNumber: number } | null;
     objectChanges: {
       nodes: {
         idCreated: boolean;
@@ -385,6 +386,90 @@ type PublishTx = {
     };
   };
 };
+
+export type PublishInfo = {
+  coin: TraceResult["coin"];
+  creator: string;
+  publishedAt: string;
+  publishDigest: string;
+  checkpoint: number | null; // the checkpoint the coin was published in
+  sponsor: string | null; // who paid the fee (may be the creator)
+  controller: string | null; // who got the TreasuryCap, only if not the publisher
+  typeDefinedInUpgrade: boolean;
+};
+
+// Finds who published the coin and when. Shared by the trace and the rug check.
+export async function getPublishInfo(
+  ctx: Ctx,
+  parsed: NonNullable<ReturnType<typeof parseCoinType>>,
+): Promise<PublishInfo | TraceFailure> {
+  // The coin's package, and the first version of it (version 1 = the original publish).
+  const [meta, pkg] = await Promise.all([
+    q<{ coinMetadata: { name: string | null; symbol: string | null; decimals: number | null; supply: string | null } | null }>(
+      ctx,
+      `query($t:String!){ coinMetadata(coinType:$t){ name symbol decimals supply } }`,
+      { t: parsed.coinType },
+    ),
+    q<{ packageVersions: { nodes: { address: string; version: number; previousTransaction: { digest: string } | null }[] } }>(
+      ctx,
+      `query($a:SuiAddress!){ packageVersions(address:$a, first:1){
+         nodes{ address version previousTransaction{ digest } } } }`,
+      { a: parsed.packageId },
+    ),
+  ]);
+
+  const first = pkg.packageVersions.nodes[0];
+  if (!first?.previousTransaction) {
+    return { ok: false, code: "package_not_found", message: `No package found at ${parsed.packageId}. Check the coin type.` };
+  }
+
+  const publish = (
+    await q<{ transaction: PublishTx | null }>(
+      ctx,
+      `query($d:String!){ transaction(digest:$d){
+         sender{ address }
+         gasInput{ gasSponsor{ address } }
+         effects{ timestamp checkpoint{ sequenceNumber }
+           objectChanges(first:50){ nodes{ idCreated outputState{ asMoveObject{
+             contents{ type{ repr } }
+             owner{ __typename ... on AddressOwner{ address{ address } } } } } } } } } }`,
+      { d: first.previousTransaction.digest },
+    )
+  ).transaction;
+
+  if (!publish?.sender) {
+    return { ok: false, code: "package_not_found", message: "Could not read the transaction that published this package." };
+  }
+
+  const creator = normalizeSuiAddress(publish.sender.address);
+  const sponsor = publish.gasInput?.gasSponsor ? normalizeSuiAddress(publish.gasInput.gasSponsor.address) : null;
+
+  // Who got the TreasuryCap (the key that can mint more coins) when it was created?
+  const caps = publish.effects.objectChanges.nodes
+    .filter((c) => c.idCreated && c.outputState?.asMoveObject?.contents?.type.repr.includes("::coin::TreasuryCap<"))
+    .map((c) => c.outputState!.asMoveObject!);
+  const myCap = caps.find((c) => c.contents!.type.repr.toLowerCase().includes(`<${parsed.coinType.toLowerCase()}>`)) ?? caps[0];
+  const controllerRaw = myCap?.owner?.__typename === "AddressOwner" ? myCap.owner.address?.address ?? null : null;
+  const controller = controllerRaw && normalizeSuiAddress(controllerRaw) !== creator ? normalizeSuiAddress(controllerRaw) : null;
+
+  return {
+    coin: {
+      type: parsed.coinType,
+      packageId: parsed.packageId,
+      name: meta.coinMetadata?.name ?? null,
+      symbol: meta.coinMetadata?.symbol ?? null,
+      decimals: meta.coinMetadata?.decimals ?? null,
+      supply: meta.coinMetadata?.supply ?? null,
+    },
+    creator,
+    publishedAt: publish.effects.timestamp,
+    publishDigest: first.previousTransaction.digest,
+    checkpoint: publish.effects.checkpoint?.sequenceNumber ?? null,
+    sponsor,
+    controller,
+    typeDefinedInUpgrade: normalizeSuiAddress(first.address) !== parsed.packageId,
+  };
+}
 
 export async function traceCoin(rawCoinType: string): Promise<TraceResult | TraceFailure> {
   const started = Date.now();
@@ -400,61 +485,9 @@ export async function traceCoin(rawCoinType: string): Promise<TraceResult | Trac
   }
 
   try {
-    // The coin's package, and the first version of it (version 1 = the original publish).
-    const [meta, pkg] = await Promise.all([
-      q<{ coinMetadata: { name: string | null; symbol: string | null; decimals: number | null; supply: string | null } | null }>(
-        ctx,
-        `query($t:String!){ coinMetadata(coinType:$t){ name symbol decimals supply } }`,
-        { t: parsed.coinType },
-      ),
-      q<{ packageVersions: { nodes: { address: string; version: number; previousTransaction: { digest: string } | null }[] } }>(
-        ctx,
-        `query($a:SuiAddress!){ packageVersions(address:$a, first:1){
-           nodes{ address version previousTransaction{ digest } } } }`,
-        { a: parsed.packageId },
-      ),
-    ]);
-
-    const first = pkg.packageVersions.nodes[0];
-    if (!first?.previousTransaction) {
-      return {
-        ok: false,
-        code: "package_not_found",
-        message: `No package found at ${parsed.packageId}. Check the coin type.`,
-      };
-    }
-
-    const publish = (
-      await q<{ transaction: PublishTx | null }>(
-        ctx,
-        `query($d:String!){ transaction(digest:$d){
-           sender{ address }
-           gasInput{ gasSponsor{ address } }
-           effects{ timestamp
-             objectChanges(first:50){ nodes{ idCreated outputState{ asMoveObject{
-               contents{ type{ repr } }
-               owner{ __typename ... on AddressOwner{ address{ address } } } } } } } } } }`,
-        { d: first.previousTransaction.digest },
-      )
-    ).transaction;
-
-    if (!publish?.sender) {
-      return { ok: false, code: "package_not_found", message: "Could not read the transaction that published this package." };
-    }
-
-    const creator = normalizeSuiAddress(publish.sender.address);
-    const publishedAt = publish.effects.timestamp;
-    const sponsor = publish.gasInput?.gasSponsor ? normalizeSuiAddress(publish.gasInput.gasSponsor.address) : null;
-
-    // Who got the TreasuryCap (the key that can mint more coins) when it was created?
-    const caps = publish.effects.objectChanges.nodes
-      .filter((c) => c.idCreated && c.outputState?.asMoveObject?.contents?.type.repr.includes("::coin::TreasuryCap<"))
-      .map((c) => c.outputState!.asMoveObject!);
-    const myCap = caps.find((c) => c.contents!.type.repr.toLowerCase().includes(`<${parsed.coinType.toLowerCase()}>`)) ?? caps[0];
-    const controllerRaw =
-      myCap?.owner?.__typename === "AddressOwner" ? myCap.owner.address?.address ?? null : null;
-    const controller =
-      controllerRaw && normalizeSuiAddress(controllerRaw) !== creator ? normalizeSuiAddress(controllerRaw) : null;
+    const info = await getPublishInfo(ctx, parsed);
+    if (!("creator" in info)) return info;
+    const { creator, controller, sponsor, publishedAt } = info;
 
     // Follow the creator's money (and the controller's, when it is a different wallet).
     const publishedAtMs = Date.parse(publishedAt);
@@ -468,23 +501,16 @@ export async function traceCoin(rawCoinType: string): Promise<TraceResult | Trac
       publishedAtMs,
       trail,
       controllerTrail,
-      typeDefinedInUpgrade: normalizeSuiAddress(first.address) !== parsed.packageId,
+      typeDefinedInUpgrade: info.typeDefinedInUpgrade,
     });
 
     const result: TraceResult = {
       ok: true,
-      coin: {
-        type: parsed.coinType,
-        packageId: parsed.packageId,
-        name: meta.coinMetadata?.name ?? null,
-        symbol: meta.coinMetadata?.symbol ?? null,
-        decimals: meta.coinMetadata?.decimals ?? null,
-        supply: meta.coinMetadata?.supply ?? null,
-      },
+      coin: info.coin,
       creator: {
         address: creator,
         publishedAt,
-        publishDigest: first.previousTransaction.digest,
+        publishDigest: info.publishDigest,
         gasSponsor: sponsor && sponsor !== creator ? sponsor : null,
         controller,
       },

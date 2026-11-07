@@ -31,6 +31,11 @@ export function isRetryableNetworkError(err: unknown, depth = 0): boolean {
     errors?: unknown[];
   };
 
+  // The Walrus SDK tries Sui's gRPC server first and falls back to a JSON-RPC server that is
+  // dead (it answers 404 to everything). If the gRPC try hiccups, that fake 404 is all we see.
+  // A real "not found" never comes from this Sui client, so treat it as a temporary glitch.
+  if (e.name === "SuiHTTPStatusError" && e.status === 404) return true;
+
   // A waiting-for-job timeout means "the job may still finish" - re-sending the save could duplicate it.
   if (e.jobId) return false;
 
