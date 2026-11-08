@@ -46,7 +46,13 @@ export function buildVerdict(t: TraceWithMemory): Verdict {
     else byCoin.set(key, { rug: m.pastRug, n: 1 });
   }
   for (const { rug } of byCoin.values()) {
-    reasons.push(`The creator was paid with money that came out of the ${rugName(rug)}${onDate(rug)}. The same SUI coin moved from that pull to the creator's wallet.`);
+    // Money can only have come out of a pull that happened before this token was published.
+    const earlier = !rug.pulledAt || Date.parse(rug.pulledAt) <= Date.parse(t.creator.publishedAt);
+    reasons.push(
+      earlier
+        ? `The creator was paid with money that came out of the ${rugName(rug)}${onDate(rug)}. The same SUI coin moved from that pull to the creator's wallet.`
+        : `The same SUI coin was in the creator's wallet and in the ${rugName(rug)}${onDate(rug)}. The money moved between the two.`,
+    );
   }
 
   // Wallets in the trail that were also seen in a past rug pull.

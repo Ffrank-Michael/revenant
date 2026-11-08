@@ -18,6 +18,7 @@ export const SECTION = "border-t border-line pt-6 lg:pt-10";
 const TITLE = "font-serif text-2xl leading-tight text-text";
 const BODY = "text-base leading-7 text-dim";
 
+const TABLE_ROWS = 5;
 const num = (n: number) => Math.round(n).toLocaleString("en-US");
 
 const putTakeSentence = (putIn: number, taken: number, at: string | null) =>
@@ -80,6 +81,7 @@ function watchedFace(w: BoardWatched, links: BoardLink[]): CardFace {
 export function CaseBoard() {
   const { state, reload } = useBoard();
   const [open, setOpen] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false); // the table shows the newest 5 rows until this is turned on
   const lastOpen = useRef<string | null>(null); // remembered so a closing panel keeps its content while it shrinks
 
   if (state.name === "loading")
@@ -108,7 +110,7 @@ export function CaseBoard() {
   rugs.forEach((r) => items.set(r.symbol, { rug: r }));
   watched.forEach((w) => items.set(w.symbol, { watched: w }));
   const chain = chainOrder(links).filter((n) => items.has(n));
-  const rest = rugs.filter((r) => !chain.includes(r.symbol)).sort((a, b) => (a.pulledAt ?? "").localeCompare(b.pulledAt ?? ""));
+  const rest = rugs.filter((r) => !chain.includes(r.symbol)).sort((a, b) => (b.pulledAt ?? "").localeCompare(a.pulledAt ?? "")); // newest first
   const toggle = (k: string) => setOpen((cur) => (cur === k ? null : k));
   if (open) lastOpen.current = open;
 
@@ -129,7 +131,7 @@ export function CaseBoard() {
       {chain.length > 1 && (
         <section className={SECTION}>
           <div className="flex flex-col gap-2">
-            <h2 className={TITLE}>Rugs we caught: AXIS, VETO and BUBBLES</h2>
+            <h2 className={TITLE}>Rugs we caught: {chain.slice(0, -1).join(", ")} and {chain[chain.length - 1]}</h2>
             <p className={`${BODY} max-w-[70ch] text-pretty`}>
               A rug pull is when the creators empty a token's trading pool so nobody can sell the token for real money anymore.
             </p>
@@ -187,7 +189,7 @@ export function CaseBoard() {
         <section className={SECTION}>
           <h2 className={TITLE}>Other rug pulls Revenant remembers</h2>
           <p className={`${BODY} mt-2 max-w-[70ch] text-pretty`}>
-            We found no exact token link between these five saved rugs. Similar tricks alone do not show that one person is behind them.
+            Some of these rugs are linked by exact SUI coins. Money from one pull later sat in wallets in the trail of another: SOH with BLACKTOBER, BLACKTOBER with SIS and BRRR, SIS with BRRR, and SHADOW with ANT. KING, VAPOR, SAFU, ANAKIN and OWLDACITY have no exact coin link to any other saved rug. A link shows that money moved. It does not show that one person is behind these rugs.
           </p>
 
           {/* A table: one row per rug, thin rules between the rows */}
@@ -201,8 +203,8 @@ export function CaseBoard() {
                 <span className="sr-only">Proof</span>
               </span>
             </div>
-            {rest.map((r) => (
-              <div key={r.symbol} role="row" className="border-b border-line last:border-b-0">
+            {(showAll ? rest : rest.slice(0, TABLE_ROWS)).map((r) => (
+              <div key={r.coinType} role="row" className="border-b border-line last:border-b-0">
                 <div className="grid grid-cols-[5.5rem_1fr_1fr] items-center gap-x-3 gap-y-4 px-4 py-4 sm:grid-cols-[1.2fr_1fr_1fr_1fr_8.5rem] sm:gap-x-4 sm:gap-y-0">
                   <span role="cell" className="col-span-2 font-serif text-2xl leading-none text-text sm:col-span-1">
                     {r.symbol}
@@ -227,6 +229,18 @@ export function CaseBoard() {
                 </Collapse>
               </div>
             ))}
+            {rest.length > TABLE_ROWS && (
+              <div className="border-t border-line p-4">
+                <button
+                  type="button"
+                  onClick={() => setShowAll((v) => !v)}
+                  aria-expanded={showAll}
+                  className="rounded-full border border-warn/60 px-4 py-2 font-mono text-xs uppercase tracking-wider text-warn transition-colors hover:bg-warn hover:text-ink"
+                >
+                  {showAll ? "Show fewer" : `Show all ${rest.length}`}
+                </button>
+              </div>
+            )}
           </div>
         </section>
       )}

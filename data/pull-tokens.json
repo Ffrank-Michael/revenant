@@ -1,4 +1,54 @@
 {
+ "0xcb12982a6985a3892ace1e14aaf37b99507838e323e1361440dfaddbcf279ac3::owldacity::OWLDACITY": {
+  "symbol": "OWLDACITY",
+  "removed": null,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "G7Ein7pqqcXic2AwuaREbKTatd5EBz5YewNLNZecuQ1m",
+  "note": "no remove-liquidity event found"
+ },
+ "0xc6aaa8ce261f2823f24991935ca92231885887fd9d9ce5dd84361cafb3babb62::soh::SOH": {
+  "symbol": "SOH",
+  "removed": 690307531.2987862,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "7gEYeq8pgrcNGXkvhK9b54FJLfESMAGT2JZ1vKKzpcyj"
+ },
+ "0x09a127fb2f8de6e67e9c95250b8397383fc23744aea733cf6bd7b2d8683ae6ef::blacktober::BLACKTOBER": {
+  "symbol": "BLACKTOBER",
+  "removed": 809118577.4633666,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "H79jkmJb4tZKSYwQaQehfoLCfoZxLZjzPTTiRzAYyksy"
+ },
+ "0x4954ffbc628dd2f44f7603db3f315fd4da4c787159f00412c42bfa3b8049cc04::ant::ANT": {
+  "symbol": "ANT",
+  "removed": 735218136.7018806,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "6gcyYtF6nQMVtsUWMnZWENU974a1p7471PcEBcuHqwD8"
+ },
+ "0x687ab354a27109810c080a2c93e7c42f4dea5425efd4347538d8db0fbfd03a65::sis::SIS": {
+  "symbol": "SIS",
+  "removed": 61356338.29075364,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "AMWsVQ67L5VFDumuzL83V4GZGMyNprAS68VmF38ZRBUo"
+ },
+ "0x3b51a2ea74f7846068e171e91c6d1f49c4fd7ae07376d3dabcdca7cb619e0b08::anakin::ANAKIN": {
+  "symbol": "ANAKIN",
+  "removed": 489331380.0930022,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "4mDkMTj1a1cgz3St7FjKfkG4PUYz9PMmWXPxuApnW8FZ"
+ },
+ "0x9706913202f008ec125a8e922141922136afb9888f6f52bedce593331594b0e8::eve::EVE": {
+  "symbol": "EVE",
+  "removed": 905513183.7972318,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "DNr9nkTgGwnS6isL7X97W9jvtiU835es3rEg8vyPHSyg"
+ },
  "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0::bubbles::BUBBLES": {
   "symbol": "Bubbles",
   "removed": 627335120.3134449,

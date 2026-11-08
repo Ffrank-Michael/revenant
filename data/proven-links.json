@@ -1,7 +1,73 @@
 {
- "generatedAt": "2026-11-08T00:22:56.580Z",
+ "generatedAt": "2026-11-08T11:23:09.485Z",
  "method": "exact SUI coin object ID followed through its ownership history",
  "links": [
+  {
+   "from": "BUBBLES",
+   "to": "EVE",
+   "coinId": "0x72941d12516c2326bac2b9a24a26e6e9cef725591a658ad983b589abb19b0863",
+   "relayCount": 10,
+   "fromCreator": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+   "toCreator": "0xc635e1fd3105208a1b2304b7aa797dd2b88ed06ff44c71d66eae44f9db25ea5a",
+   "leftAt": "2026-11-08T03:15:44.034Z",
+   "arrivedAt": "2026-11-08T03:17:10.205Z",
+   "seconds": 86,
+   "leftTx": "8v2wtZXmjFg9rZZyRR4PPh8ehKA3cm9238qKVgtiZJ5N",
+   "arrivedTx": "2TiDVjUTqmb3GDtYgGxbWv98Dt5o6tSMJgAR1NLpPhat",
+   "pullTx": "Ek2rSa3fox6JKmDggDckyU2MPfJHJi2BtLnupJZsnXBw",
+   "hops": [
+    {
+     "address": "0x9c70c23634e60c1ae2855e48e6fb0881acab4b10c64c6fb0c036aa83651d2743",
+     "arrivedAt": "2026-11-08T03:15:44.034Z",
+     "tx": "8v2wtZXmjFg9rZZyRR4PPh8ehKA3cm9238qKVgtiZJ5N"
+    },
+    {
+     "address": "0xd2a201aca1a690ad377d0dea930cc7ff44bf48871173d13a4f1a48df9bbff89e",
+     "arrivedAt": "2026-11-08T03:16:05.676Z",
+     "tx": "7StSutQRifwHMnX99gC9gNABGysxSKjcJK2d6F8C2x7j"
+    },
+    {
+     "address": "0x223ecfbe04b0df2f4e6baf8282b1d1aed1e15b1cb358f481800e2dbf8cf4cd41",
+     "arrivedAt": "2026-11-08T03:16:12.712Z",
+     "tx": "EpMyw43SJQthmYmTaiAjj65X3Ysrhxsm6cBBEK7qbkZk"
+    },
+    {
+     "address": "0x5839e76ea788339edf65387d4789fe17b04be864ecd1240f1e51ead75cd2b82d",
+     "arrivedAt": "2026-11-08T03:16:19.941Z",
+     "tx": "AhwAg4AMMt6EtuL9KhF47oD51NZVED3UduTeVpVp43u3"
+    },
+    {
+     "address": "0x63ceb84ff88d3a15fbf16bcc18798ba9469f6269d6df61f44b781b7c799a9af7",
+     "arrivedAt": "2026-11-08T03:16:26.918Z",
+     "tx": "55yitMXb6kmYE2rwgZQXw3YzCnMjHzRhArhuAngwH4dh"
+    },
+    {
+     "address": "0xe199d01812efacbc3c98ef6caca11e88782594b91b1b31a762e4e5d0f6c02be7",
+     "arrivedAt": "2026-11-08T03:16:33.787Z",
+     "tx": "Bmcghpdz2QajxR422zce2AeGBuNneK6Viud7qzNcEJEE"
+    },
+    {
+     "address": "0xbac4f031a2c89a2ced8489160a95bfdc207d97a0e6f0ff24da7204265074226a",
+     "arrivedAt": "2026-11-08T03:16:41.067Z",
+     "tx": "rjH9nqooTUKPfuobTy6sFejY8JEziAe5KswznJfyCdp"
+    },
+    {
+     "address": "0xb68f36525ff7a066bb0f30673cb3a8b59d74c880ffa8e645c1971df5b9f6d668",
+     "arrivedAt": "2026-11-08T03:16:49.099Z",
+     "tx": "Bs6UMeswvAK2SVpiHSNhXr61VyWdiZsyDotRsqzfcikS"
+    },
+    {
+     "address": "0x39271e148b329c9913d037ed516801a08bcd35529790eff865b3ad1e984e0358",
+     "arrivedAt": "2026-11-08T03:16:56.036Z",
+     "tx": "5MZtiuTM3Qrg3QdDfzLBreCbupKp75QxEMaN8pknK7M5"
+    },
+    {
+     "address": "0xe817d7711483d10753e971a5ca7c599d412ccf25412210488390dceaad480df0",
+     "arrivedAt": "2026-11-08T03:17:02.994Z",
+     "tx": "EBu67iedabV9dQB4zgmT6tq4aXxqVwWJKbdqED5JqmDd"
+    }
+   ]
+  },
   {
    "from": "VETO",
    "to": "BUBBLES",

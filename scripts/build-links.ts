@@ -15,7 +15,7 @@ async function main() {
   const links: object[] = [];
 
   for (const r of rugs) {
-    const from = r.symbol ?? r.coinType;
+    const from = byCreator.get(r.creator) ?? r.symbol ?? r.coinType;
     for (const coin of (r.coinObjects ?? []).filter((c) => c.role === "pull_output")) {
       const owners = await ownersOfObject(coin.id);
       const start = owners.findIndex((o) => o.address === r.creator);
