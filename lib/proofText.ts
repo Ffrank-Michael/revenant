@@ -2,7 +2,7 @@
 // Two short sentences, plus one sentence when there is a proven link to another coin.
 // No em dashes. Pure functions, no network.
 
-import { fmtDate, fmtDateTime, fmtSui } from "./format";
+import { fmtDate, fmtDateTime, fmtSui, fmtTime } from "./format";
 import type { BoardLink, BoardRug, BoardWatched } from "./board";
 
 // "1 day 2 hours", "18 hours 30 min", "40 min"
@@ -19,6 +19,20 @@ export function fmtSpan(ms: number): string {
 
 const sui = fmtSui; // "7,991 SUI"
 
+// Whole numbers in short form: 448 million, 1 billion, 1.5 billion (cut down, never rounded up)
+function shortNum(n: number): string {
+  if (n >= 1e9) {
+    const v = Math.floor((n / 1e9) * 10) / 10;
+    return `${Number.isInteger(v) ? v : v.toFixed(1)} billion`;
+  }
+  if (n >= 1e6) return `${Math.floor(n / 1e6)} million`;
+  if (n >= 1e3) return `${Math.floor(n / 1e3)} thousand`;
+  return String(Math.floor(n));
+}
+// Left out when the supply or the pool amount could not be read for this coin.
+const tokenSentence = (name: string, t: { removed: number; supply: number } | null) =>
+  t ? `The pull also took ${shortNum(t.removed)} of ${name}'s ${shortNum(t.supply)} tokens out of the pool.` : "";
+
 // The proven links on either side of this coin (one sentence each), or nothing when there is none.
 function linkSentence(name: string, links: BoardLink[]): string {
   const out = links.find((l) => l.from === name);
@@ -32,20 +46,22 @@ function linkSentence(name: string, links: BoardLink[]): string {
 // "[COIN] was rug pulled on [date], [time] after it launched, on [exchange]. The creator put in [X] and took out [Y]."
 export function rugSummary(rug: BoardRug, links: BoardLink[]): string {
   const name = rug.symbol;
-  const lasted = rug.pulledAt ? `, ${fmtSpan(Date.parse(rug.pulledAt) - Date.parse(rug.publishedAt))} after the coin launched` : "";
-  const first = rug.pulledAt ? `${name} was rug pulled on ${fmtDate(rug.pulledAt)}${lasted}${rug.exchange ? `, on ${rug.exchange}` : ""}.` : `${name} was launched on ${fmtDate(rug.publishedAt)}.`;
+  const lasted = rug.pulledAt ? `, ${fmtSpan(Date.parse(rug.pulledAt) - Date.parse(rug.publishedAt))} after the token launched` : "";
+  const first = rug.pulledAt ? `${name} was rug pulled on ${fmtDate(rug.pulledAt)} at ${fmtTime(rug.pulledAt)}${lasted}${rug.exchange ? `, on ${rug.exchange}` : ""}.` : `${name} was launched on ${fmtDate(rug.publishedAt)}.`;
   const second = `The creator put in ${sui(rug.suiPutIn)} and took out ${sui(rug.suiTaken)}.`;
   const pct = rug.coinsTakenBackPct !== null ? Math.round(rug.coinsTakenBackPct) : null;
   const coins = pct !== null ? `The creator also took back ${pct}% of the coins they had put in the pool. Buyers hold the rest and can no longer sell them for real money.` : "";
-  return [first, second, coins, linkSentence(name, links)].filter(Boolean).join(" ");
+  return [first, second, tokenSentence(name, rug.pullTokens), coins, linkSentence(name, links)].filter(Boolean).join(" ");
 }
 
 export function watchedSummary(w: BoardWatched, links: BoardLink[], nowMs: number): string {
   const parts: string[] = [];
   if (w.status === "pulled" && w.pull) {
     const ms = Date.parse(w.pull.at) - Date.parse(w.publishedAt);
-    parts.push(`${w.symbol} was rug pulled on ${fmtDate(w.pull.at)}, ${fmtSpan(ms)} after the coin launched.`);
+    parts.push(`${w.symbol} was rug pulled on ${fmtDate(w.pull.at)} at ${fmtTime(w.pull.at)}, ${fmtSpan(ms)} after the token launched.`);
     parts.push(`The creator put in ${sui(w.suiPutIn ?? 0)} and took out ${sui(w.pull.suiTaken)}.`);
+    const tk = tokenSentence(w.symbol, w.pullTokens);
+    if (tk) parts.push(tk);
   } else {
     const ms = nowMs - Date.parse(w.publishedAt);
     parts.push(`${w.symbol} has been live for ${fmtSpan(ms)}.`);

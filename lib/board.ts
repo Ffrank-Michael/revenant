@@ -94,6 +94,7 @@ export type BoardRug = {
   checkedBy: "project owner" | "investigator" | "revenant";
   pullDigests: string[];
   pullCoinObjects: { id: string; role: string }[];
+  pullTokens: { removed: number; supply: number } | null; // tokens the pool paid out at the pull, and the token's total supply (read from the chain)
 };
 export type BoardLink = {
   from: string;
@@ -122,6 +123,7 @@ export type BoardWatched = {
   lastCheckAt: string | null;
   warning: { flaggedAt: string; blobId: string | null } | null;
   pull: { at: string; digest: string; suiTaken: number; hoursAfterWarning: number | null } | null;
+  pullTokens: { removed: number; supply: number } | null;
 };
 export type BoardData = {
   rugs: BoardRug[];
@@ -133,6 +135,13 @@ export type BoardData = {
 
 // Exchange names found by reading the pull transaction (the same Cetus contract as the checked ones), for rugs saved without one.
 const EXCHANGE_FALLBACK = readJson<Record<string, string>>("data/pull-exchanges.json", {});
+
+// Tokens the pool paid out at each pull, and each token's total supply (data/pull-tokens.json, read from the chain).
+const PULL_TOKENS = readJson<Record<string, { removed: number | null; supply: number | null }>>("data/pull-tokens.json", {});
+const pullTokensFor = (coinType: string) => {
+  const t = PULL_TOKENS[coinType];
+  return t && t.removed !== null && t.supply !== null ? { removed: t.removed, supply: t.supply } : null;
+};
 
 function takenBackPct(c: RugCase): number | null {
   const put = c.evidence.find((e) => e.kind === "liquidity_add")?.coinAmount;
@@ -153,6 +162,7 @@ const toRug = (c: RugCase): BoardRug => ({
   checkedBy: c.reviewStatus ? "revenant" : c.confirmedBy?.by === "investigator" ? "investigator" : c.confirmedBy ? "project owner" : "revenant",
   pullDigests: c.evidence.filter((e) => e.kind === "liquidity_remove" || e.kind === "sell").map((e) => e.digest),
   pullCoinObjects: (c.coinObjects ?? []).map((o) => ({ id: o.id, role: o.role })),
+  pullTokens: pullTokensFor(c.coinType),
 });
 
 export async function getBoard(): Promise<BoardData> {
@@ -187,6 +197,7 @@ export async function getBoard(): Promise<BoardData> {
               hoursAfterWarning: warn ? (Date.parse(pullAt) - Date.parse(warn.flaggedAt)) / 3_600_000 : null,
             }
           : null,
+      pullTokens: done ? pullTokensFor(done.coinType) : null,
     };
   });
   const watchedTypes = new Set(defs.map((d) => d.coinType));

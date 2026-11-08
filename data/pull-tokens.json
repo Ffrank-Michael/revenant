@@ -1,0 +1,58 @@
+{
+ "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0::bubbles::BUBBLES": {
+  "symbol": "Bubbles",
+  "removed": 627335120.3134449,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "Ek2rSa3fox6JKmDggDckyU2MPfJHJi2BtLnupJZsnXBw"
+ },
+ "0xbde8cce444761bbb0d1dbc72baacc0c4fe9a10b249c605785636180613326d85::brrr::BRRR": {
+  "symbol": "BRRR",
+  "removed": 813210637.5045571,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "6sA6UxqdzuMjSeLyoEyBe9ifppFr1tHKs92RipxHMDTf"
+ },
+ "0xa182f81fe4e2bcc07f1b7e71b74eab51990e8669797eb337a8eb6b3173787e6c::safu::SAFU": {
+  "symbol": "SAFU",
+  "removed": 664633964.3208396,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "FPLaigDRCu9XdrF1cJGELY7vRb6of7zpq8EWfmNmLqqR"
+ },
+ "0xe9c728a2d04d89b83be614085b60dc54cd6d34d6053c9fd2aa8b7b03bba8ef45::shadow::SHADOW": {
+  "symbol": "SHADOW",
+  "removed": 681172794.8948432,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "DaePzDthGbrNQYygkshKGuWmp3AZaUmpD5tjNwARjVvK"
+ },
+ "0x5e7b4b2d29c03745c9a78c15b008d5790ca5f2ba76b714c6132e5182e200ee6d::king::KING": {
+  "symbol": "KING",
+  "removed": 448593480.88506985,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "AUECgF5nUQkUTenueVGfR4WJs1icZwzLnif1m5TKYtWK"
+ },
+ "0xcf577ff4cf86d7bfdcb1b57700334b5df5a8af11da42b6f269b9eeeed75c8e1b::vapor::VAPOR": {
+  "symbol": "VAPOR",
+  "removed": 757475582.8513774,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "JBPpKiFaWybYTSE5JA3LjwU46feSc12D1L8wSsrzVWHN"
+ },
+ "0xefb1d695f458aff3f583a4b2d1808b69ddd22579fe0dd459da28ae07dc1052fe::veto::VETO": {
+  "symbol": "VETO",
+  "removed": 777511657.8609747,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "D4ABGoXhv94z8Rk2jGHYs3WC1JEuMyzYQs2a9U2egMty"
+ },
+ "0x4953ffe3e905abbbf882c08ba9be7ea0ffcee831c3688a9397c22a466458fb4e::axis::AXIS": {
+  "symbol": "AXIS",
+  "removed": 545748467.481579,
+  "supply": 1000000000,
+  "decimals": 9,
+  "digest": "7PFLoV6U6nQadpWiP1C971PJ6xSPK5U9tZWSacZDnWvv"
+ }
+}
