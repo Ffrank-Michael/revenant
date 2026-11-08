@@ -31,7 +31,7 @@ function MoneyTrail({ link, direction }: { link: BoardLink; direction: "out" | "
         creator of {link.to}. It has the same ID the whole way, so this is not a guess.
       </p>
       <RelayChain link={link} />
-      <AddressText label="The SUI coin" value={link.coinId} />
+      <AddressText label="SUI coin that moved" value={link.coinId} />
       <AddressText label="Transaction where it left" value={link.leftTx} tx />
       <AddressText label="Transaction where it arrived" value={link.arrivedTx} tx />
       <p className="text-xs leading-5 text-dim">This shows the money moved. It does not show who is behind the wallets.</p>
@@ -65,9 +65,10 @@ export function RugProof({ rug, links }: { rug: BoardRug; links: BoardLink[] }) 
             <AddressText key={d} label={rug.pullDigests.length > 1 ? `Pull transaction ${i + 1}` : "Pull transaction"} value={d} tx />
           ))}
           <AddressText label="Creator wallet" value={rug.creator} />
-          <AddressText label="Coin type" value={rug.coinType} />
+          <AddressText label="Coin address" value={rug.coinType} coin />
+          <p className="-mt-2 max-w-3xl text-xs leading-5 text-dim">This is the coin&apos;s full address on Sui. Open it on Suiscan to see the coin, its supply and who holds it. Coins whose pool was closed will not show on DexScreener.</p>
           {rug.pullCoinObjects.map((o) => (
-            <AddressText key={o.id} label={o.role === "gas_coin" ? "SUI coin that paid the pull fees" : "SUI coin made by the pull"} value={o.id} />
+            <AddressText key={o.id} label={o.role === "gas_coin" ? "SUI coin that paid the fees" : "SUI coin from the pull"} value={o.id} />
           ))}
         </div>
       </div>
@@ -96,7 +97,8 @@ export function WatchedProof({ w, links }: { w: BoardWatched; links: BoardLink[]
           {w.warning?.blobId && <AddressText label="Our warning on Walrus" value={w.warning.blobId} />}
           {w.pull?.digest ? <AddressText label="Pull transaction" value={w.pull.digest} tx /> : <p className="text-sm leading-6 text-text">Not pulled yet, so there is no pull to check.</p>}
           <AddressText label="Creator wallet" value={w.creator} />
-          <AddressText label="Coin type" value={w.coinType} />
+          <AddressText label="Coin address" value={w.coinType} coin />
+          <p className="-mt-2 max-w-3xl text-xs leading-5 text-dim">This is the coin&apos;s full address on Sui. Open it on Suiscan to see the coin, its supply and who holds it. Coins whose pool was closed will not show on DexScreener.</p>
           {w.lastCheckAt && <p className="text-xs text-dim">Last checked {fmtDateTime(w.lastCheckAt)}. A link to earlier rug pulls is a warning sign, not proof.</p>}
         </div>
       </div>

@@ -32,7 +32,7 @@ export async function fetchTrace(coin: string, signal: AbortSignal): Promise<Tra
 
     console.error("[trace] the server said:", res.status, body);
     if (b?.code === "invalid_coin_type" || b?.code === "missing_coin") {
-      return { kind: "bad_input", message: "That does not look like a Sui coin type. It should have three parts joined by ::, like 0x123::coin::NAME." };
+      return { kind: "bad_input", message: "That does not look like a Sui coin address. It should have three parts joined by ::, like 0x123::coin::NAME." };
     }
     if (b?.code === "package_not_found") {
       return { kind: "bad_input", message: "We could not find that coin on Sui. Check that you copied all of it." };

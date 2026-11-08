@@ -4,7 +4,7 @@
 export function ErrorNotice({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
     <div role="alert" className="rounded-2xl border border-warn/40 bg-paper p-4 sm:p-5">
-      <p className="font-mono text-xs uppercase tracking-widest text-warn">{onRetry ? "Couldn't finish" : "Check the coin type"}</p>
+      <p className="font-mono text-xs uppercase tracking-widest text-warn">{onRetry ? "Couldn't finish" : "Check the coin address"}</p>
       <p className="mt-2 text-base leading-7 text-text">{message}</p>
       {onRetry && (
         <button

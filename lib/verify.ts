@@ -285,7 +285,7 @@ export async function verifyCoin(rawCoinType: string): Promise<VerifyResult | Ve
     return {
       ok: false,
       code: "invalid_coin_type",
-      message: "That does not look like a coin type. Expected something like 0x1234...::module::NAME",
+      message: "That does not look like a coin address. Expected something like 0x1234...::module::NAME",
     };
   }
 

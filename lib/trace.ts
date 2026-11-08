@@ -422,7 +422,7 @@ export async function getPublishInfo(
 
   const first = pkg.packageVersions.nodes[0];
   if (!first?.previousTransaction) {
-    return { ok: false, code: "package_not_found", message: `No package found at ${parsed.packageId}. Check the coin type.` };
+    return { ok: false, code: "package_not_found", message: `No package found at ${parsed.packageId}. Check the coin address.` };
   }
 
   const publish = (
@@ -482,7 +482,7 @@ export async function traceCoin(rawCoinType: string): Promise<TraceResult | Trac
     return {
       ok: false,
       code: "invalid_coin_type",
-      message: "That does not look like a coin type. Expected something like 0x1234...::module::NAME",
+      message: "That does not look like a coin address. Expected something like 0x1234...::module::NAME",
     };
   }
 
@@ -577,7 +577,7 @@ function buildWarnings(p: {
     w("FRESH_CREATOR_WALLET", "info", `The creator wallet was brand new: its first activity was less than ${TRACE_SETTINGS.freshCreatorHours} hours before it published the coin.`);
   }
   if (p.typeDefinedInUpgrade) {
-    w("TYPE_DEFINED_IN_UPGRADE", "info", "This coin type was added in an upgrade of the package, not in the original publish. The 'creator' shown is the original publisher, who may differ from whoever added the coin.");
+    w("TYPE_DEFINED_IN_UPGRADE", "info", "This coin address was added in an upgrade of the package, not in the original publish. The 'creator' shown is the original publisher, who may differ from whoever added the coin.");
   }
 
   for (const [label, trail] of [["creator", p.trail], ["controller", p.controllerTrail]] as const) {

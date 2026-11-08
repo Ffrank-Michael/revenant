@@ -16,7 +16,7 @@ export function SearchBox({
   onChange,
   onSubmit,
   disabled = false,
-  placeholder = "Paste a Sui coin type",
+  placeholder = "Paste a Sui coin address",
 }: {
   value: string;
   onChange: (v: string) => void;
@@ -103,7 +103,7 @@ export function SearchBox({
             if (e.key === "Escape" && !hasValue) setOpen(false);
           }}
           placeholder={placeholder}
-          aria-label="Sui coin type"
+          aria-label="Sui coin address"
           spellCheck={false}
           autoCapitalize="off"
           autoCorrect="off"

@@ -289,7 +289,7 @@ export type RugMatch = {
   address: string;
   foundIn: "creator trail" | "controller trail";
   roleInThisTrace: string; // "creator", "hop 1 funder", "relay wallet"
-  pastRugs: { coinType: string; symbol: string | null; roleInThatRug: string; confirmedAt: string }[];
+  pastRugs: { coinType: string; symbol: string | null; roleInThatRug: string; confirmedAt: string; pulledAt: string | null }[];
 };
 
 // The strongest signal: the very same SUI coin object (same ID) was in a past rug's pull
@@ -298,7 +298,7 @@ export type CoinObjectMatch = {
   objectId: string;
   heldBy: string; // which wallet of this token: creator or controller
   how: "holds now" | "seen in a transaction";
-  pastRug: { coinType: string; symbol: string | null; role: string; digest: string };
+  pastRug: { coinType: string; symbol: string | null; role: string; digest: string; pulledAt: string | null };
 };
 
 export type TraceWithMemory = TraceResult & {
@@ -327,6 +327,7 @@ export async function addRugMemory(trace: TraceResult): Promise<TraceWithMemory>
           symbol: s.cases.get(h.coinType)?.symbol ?? null,
           roleInThatRug: h.role === "profit" ? "received the profits of" : h.role === "creator" ? "created" : h.role === "controller" ? "held the mint key of" : h.role === "relay" ? "passed money along for" : "funded",
           confirmedAt: s.cases.get(h.coinType)?.confirmedAt ?? "",
+          pulledAt: s.cases.get(h.coinType)?.firstRugAt ?? null,
         })),
       });
     }
@@ -350,7 +351,7 @@ export async function addRugMemory(trace: TraceResult): Promise<TraceWithMemory>
               objectId: id,
               heldBy: i === 0 ? "creator" : "controller",
               how,
-              pastRug: { coinType: h.coinType, symbol: s.cases.get(h.coinType)?.symbol ?? null, role: h.role === "gas_coin" ? "was a gas coin in the pull of" : "was created or changed by the pull of", digest: h.digest },
+              pastRug: { coinType: h.coinType, symbol: s.cases.get(h.coinType)?.symbol ?? null, role: h.role === "gas_coin" ? "was a gas coin in the pull of" : "was created or changed by the pull of", digest: h.digest, pulledAt: s.cases.get(h.coinType)?.firstRugAt ?? null },
             });
           }
         }

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { SearchBox } from "./SearchBox";
 import { LoadingNotice } from "./LoadingNotice";
 import { ErrorNotice } from "./ErrorNotice";
+import { ResultCard } from "./ResultCard";
 import { fetchTrace } from "@/lib/traceClient";
 import type { TraceWithMemory } from "@/lib/rugs";
 
@@ -62,21 +63,7 @@ export function SearchPanel() {
       {view.name === "bad_input" && <ErrorNotice message={view.message} />}
       {view.name === "retry" && <ErrorNotice message={view.message} onRetry={() => run(coin.trim())} />}
 
-      {/* Step 2 only: proof that the answer arrived. The real verdict and trail come in steps 3 and 4. */}
-      {view.name === "done" && (
-        <div role="status" className="border-l-2 border-warn pl-3 text-sm leading-6 text-dim">
-          <p className="font-mono text-[11px] uppercase tracking-widest text-warn">Result (preview)</p>
-          <p className="mt-1 text-text">
-            {view.data.coin.symbol ?? "This coin"} was made by
-            <span className="mt-1 block break-all font-mono text-xs">{view.data.creator.address}</span>
-          </p>
-          <p className="mt-1">
-            {view.data.warnings.length} warning{view.data.warnings.length === 1 ? "" : "s"} found and{" "}
-            {view.data.rugMatches.length + view.data.coinObjectMatches.length} link
-            {view.data.rugMatches.length + view.data.coinObjectMatches.length === 1 ? "" : "s"} to past rug pulls. The full result comes next.
-          </p>
-        </div>
-      )}
+      {view.name === "done" && <ResultCard data={view.data} />}
     </section>
   );
 }
