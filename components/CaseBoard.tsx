@@ -141,7 +141,7 @@ export function CaseBoard() {
           <div className="flex flex-col gap-2">
             <h2 className={TITLE}>Rugs we caught: AXIS, VETO and BUBBLES</h2>
             <p className={`${BODY} max-w-[70ch] text-pretty`}>
-              A rug pull is when the creators empty a coin's trading pool, so nobody can sell it for real money anymore.
+              A rug pull is when the creators empty a coin's trading pool so nobody can sell it for real money anymore.
             </p>
           </div>
 

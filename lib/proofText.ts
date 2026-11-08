@@ -60,28 +60,20 @@ export function rugSummary(rug: BoardRug, links: BoardLink[]): string {
     opener = pick(name, [`${name} ran for ${fmtSpan(ms)}.`, `${name} stayed up for ${fmtSpan(ms)}, then the pool was emptied.`]);
   }
 
-  // 2. What the creator did with the money. The shape depends on the facts.
+  // 2. What the creator did with the money. The two fixed sentences are always the same words; the order and the lead-in vary.
   const where = ex ? ` on ${ex}` : "";
-  const back = pct !== null ? `${pct}% of the coins came back to the creator too.` : "";
-  const backShort = pct !== null ? `, and took ${pct}% of the coins back out of the pool` : "";
+  const coinsLine = pct !== null ? `${pct}% of all the coins were in the pool. The creator took them all back.` : "";
   let money: string;
   if (net <= 0) {
-    money = `The creator put in ${sui(rug.suiPutIn)} and took out ${sui(rug.suiTaken)}${where}${backShort}. That is ${sui(-net)} less than it put in, but the pool was still emptied.`;
-  } else if (pct !== null && pct >= 70) {
-    // the creator got most of the coins back as well as the SUI
-    money = pick(name, [
-      `The creator put in ${sui(rug.suiPutIn)}, then took ${sui(rug.suiTaken)} out${where}. That is ${sui(net)} more than it put in. ${back}`,
-      `The creator took back ${pct}% of the coins and ${sui(rug.suiTaken)}${where}. Only ${sui(rug.suiPutIn)} had gone in.`,
-      `${sui(rug.suiTaken)} came out of the pool${where}, ${sui(net)} more than the creator paid in. The creator also got ${pct}% of the coins back.`,
-    ]);
-  } else if (net >= 6000) {
-    // a large gain
-    money = `Its creator took out ${sui(net)} more than it put in${where}${backShort}.`;
+    money = [`The creator put in ${sui(rug.suiPutIn)} and took out ${sui(rug.suiTaken)}${where}. That is ${sui(-net)} less than it put in, but the pool was still emptied.`, coinsLine].filter(Boolean).join(" ");
   } else {
-    money = pick(name, [
-      `The creator put in ${sui(rug.suiPutIn)} and left with ${sui(rug.suiTaken)}${where}${backShort}. The gain was ${sui(net)}.`,
-      `It cost the creator ${sui(rug.suiPutIn)} to start. It took ${sui(rug.suiTaken)} out${where}, so it ended ${sui(net)} ahead. ${back}`,
+    const lead = pick(name, [
+      `The creator put in ${sui(rug.suiPutIn)}, then took ${sui(rug.suiTaken)} out${where}.`,
+      `Only ${sui(rug.suiPutIn)} had gone in, but ${sui(rug.suiTaken)} came out of the pool${where}.`,
+      `${sui(rug.suiTaken)} came out of the pool${where}. The creator had paid in ${sui(rug.suiPutIn)}.`,
     ]);
+    const extra = `The creator also took out ${sui(net)} more than it put in. That extra SUI came from buyers.`;
+    money = (pick(name + "o", [true, false]) ? [lead, coinsLine, extra] : [lead, extra, coinsLine]).filter(Boolean).join(" ");
   }
 
   const when = rug.pulledAt ? fmtDateTime(rug.pulledAt) : null;

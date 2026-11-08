@@ -22,7 +22,7 @@ export default function Home() {
                   Check a Sui coin before you buy it
                 </h1>
                 <p className="max-w-[70ch] text-pretty text-base leading-7 text-dim">
-                  Some people launch a coin, empty its trading pool, then use that money to launch the next one. Revenant remembers the ones it has caught and warns you when a new coin is funded by one of them.
+                  Some people launch a coin, wait for buyers, then empty its trading pool and use that money to launch the next one. Revenant remembers the ones it has caught and warns you when a new coin is funded by one of them.
                 </p>
               </div>
             }
