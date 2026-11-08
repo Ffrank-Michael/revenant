@@ -31,7 +31,7 @@ function shortNum(n: number): string {
 }
 // Left out when the supply or the pool amount could not be read for this coin.
 const tokenSentence = (name: string, t: { removed: number; supply: number } | null) =>
-  t ? `The pull also took ${shortNum(t.removed)} of ${name}'s ${shortNum(t.supply)} tokens out of the pool.` : "";
+  t && t.supply > 0 ? `The pull took ${shortNum(t.removed)} (${Math.round((t.removed / t.supply) * 100)}%) of ${name}'s ${shortNum(t.supply)} tokens out of the pool, leaving buyers with no pool to sell into.` : "";
 
 // The proven links on either side of this coin (one sentence each), or nothing when there is none.
 function linkSentence(name: string, links: BoardLink[]): string {
@@ -49,9 +49,7 @@ export function rugSummary(rug: BoardRug, links: BoardLink[]): string {
   const lasted = rug.pulledAt ? `, ${fmtSpan(Date.parse(rug.pulledAt) - Date.parse(rug.publishedAt))} after the token launched` : "";
   const first = rug.pulledAt ? `${name} was rug pulled on ${fmtDate(rug.pulledAt)} at ${fmtTime(rug.pulledAt)}${lasted}${rug.exchange ? `, on ${rug.exchange}` : ""}.` : `${name} was launched on ${fmtDate(rug.publishedAt)}.`;
   const second = `The creator put in ${sui(rug.suiPutIn)} and took out ${sui(rug.suiTaken)}.`;
-  const pct = rug.coinsTakenBackPct !== null ? Math.round(rug.coinsTakenBackPct) : null;
-  const coins = pct !== null ? `The creator also took back ${pct}% of the coins they had put in the pool. Buyers hold the rest and can no longer sell them for real money.` : "";
-  return [first, second, tokenSentence(name, rug.pullTokens), coins, linkSentence(name, links)].filter(Boolean).join(" ");
+  return [first, second, tokenSentence(name, rug.pullTokens), linkSentence(name, links)].filter(Boolean).join(" ");
 }
 
 export function watchedSummary(w: BoardWatched, links: BoardLink[], nowMs: number): string {
