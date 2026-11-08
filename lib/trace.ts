@@ -422,7 +422,7 @@ export async function getPublishInfo(
 
   const first = pkg.packageVersions.nodes[0];
   if (!first?.previousTransaction) {
-    return { ok: false, code: "package_not_found", message: `No package found at ${parsed.packageId}. Check the coin address.` };
+    return { ok: false, code: "package_not_found", message: `No package found at ${parsed.packageId}. Check the token address.` };
   }
 
   const publish = (
@@ -482,7 +482,7 @@ export async function traceCoin(rawCoinType: string): Promise<TraceResult | Trac
     return {
       ok: false,
       code: "invalid_coin_type",
-      message: "That does not look like a coin address. Expected something like 0x1234...::module::NAME",
+      message: "That does not look like a token address. Expected something like 0x1234...::module::NAME",
     };
   }
 

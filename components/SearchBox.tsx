@@ -16,7 +16,7 @@ export function SearchBox({
   onChange,
   onSubmit,
   disabled = false,
-  placeholder = "Paste a Sui coin address",
+  placeholder = "Paste a token address on Sui",
 }: {
   value: string;
   onChange: (v: string) => void;
@@ -81,7 +81,7 @@ export function SearchBox({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Open the coin search box"
+          aria-label="Open the token search box"
           tabIndex={open ? -1 : 0}
           className="absolute inset-0 px-4 text-left font-mono text-sm text-dim"
           style={{ opacity: open ? 0 : 1, pointerEvents: open ? "none" : "auto", transition: "opacity 0.25s" }}
@@ -103,7 +103,7 @@ export function SearchBox({
             if (e.key === "Escape" && !hasValue) setOpen(false);
           }}
           placeholder={placeholder}
-          aria-label="Sui coin address"
+          aria-label="Token address on Sui"
           spellCheck={false}
           autoCapitalize="off"
           autoCorrect="off"
@@ -123,7 +123,7 @@ export function SearchBox({
           onMouseDown={(e) => e.preventDefault()}
           onClick={submit}
           disabled={!hasValue || disabled}
-          aria-label="Check this coin"
+          aria-label="Check this token"
           className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-warn text-ink transition-all duration-300 disabled:bg-line disabled:text-dim"
           style={{ opacity: open ? 1 : 0, transform: open ? "scale(1)" : "scale(0.6)", pointerEvents: open ? "auto" : "none", transitionTimingFunction: SPRING }}
         >

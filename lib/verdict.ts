@@ -13,7 +13,7 @@ export type Verdict = {
 
 type PastRug = { symbol: string | null; pulledAt: string | null };
 
-const rugName = (r: PastRug) => `${r.symbol ?? "an earlier coin"} rug pull`;
+const rugName = (r: PastRug) => `${r.symbol ?? "an earlier token"} rug pull`;
 const onDate = (r: PastRug) => (r.pulledAt ? ` (pulled on ${fmtDate(r.pulledAt)})` : "");
 
 // Warnings that are about how the trail ended. The trail step explains these, so they are not reasons here.
@@ -23,18 +23,18 @@ const TRAIL_END_CODES = new Set(["FUNDED_BY_EXCHANGE", "FUNDED_BY_BUSY_WALLET", 
 const HANDLED_CODES = new Set(["MATCHES_PAST_RUG", "SAME_COIN_OBJECT_AS_PAST_RUG", "RELAY_CHAIN"]);
 
 const SIGN_TEXT: Record<string, string> = {
-  CREATOR_IS_BUSY_WALLET: "The wallet that published the coin is very busy. The wallet may be a launch service and not the person behind the coin.",
-  CONTROL_HANDED_OFF: "The wallet that published the coin gave control of the coin to a different wallet. That wallet may be the real owner.",
-  SPONSORED_PUBLISH: "Someone else paid the fee to publish this coin.",
-  FRESH_CREATOR_WALLET: "The creator's wallet was brand new. The wallet was less than 24 hours old when the creator published the coin.",
-  TYPE_DEFINED_IN_UPGRADE: "The coin was added in an update to the coin's package, so the creator shown may not be the one who added it.",
+  CREATOR_IS_BUSY_WALLET: "The wallet that published the token is very busy. The wallet may be a launch service and not the person behind the token.",
+  CONTROL_HANDED_OFF: "The wallet that published the token gave control of the token to a different wallet. That wallet may be the real owner.",
+  SPONSORED_PUBLISH: "Someone else paid the fee to publish this token.",
+  FRESH_CREATOR_WALLET: "The creator's wallet was brand new. The wallet was less than 24 hours old when the creator published the token.",
+  TYPE_DEFINED_IN_UPGRADE: "The token was added in an update to the token's package, so the creator shown may not be the one who added it.",
 };
 
 export function buildVerdict(t: TraceWithMemory): Verdict {
   const reasons: string[] = [];
 
   if (t.alreadyConfirmedRug) {
-    reasons.push("This coin is one of the rug pulls Revenant remembers.");
+    reasons.push("This token is one of the rug pulls Revenant remembers.");
   }
 
   // The same SUI coin moved from a past rug pull to this creator: the strongest sign.
@@ -84,7 +84,7 @@ export function buildVerdict(t: TraceWithMemory): Verdict {
   reasons.push(...signs);
 
   if (linked) {
-    return { level: "linked", headline: "This coin is linked to rug pulls we know", note: null, reasons };
+    return { level: "linked", headline: "This token is linked to rug pulls we know", note: null, reasons };
   }
   if (signs.length > 0 || relay) {
     return { level: "signs", headline: "We found some warning signs", note: null, reasons };
@@ -92,7 +92,7 @@ export function buildVerdict(t: TraceWithMemory): Verdict {
   return {
     level: "none",
     headline: "No links to rug pulls we know",
-    note: "This does not mean the coin is safe. We only know about the rug pulls we have caught.",
+    note: "This does not mean the token is safe. We only know about the rug pulls we have caught.",
     reasons: [],
   };
 }

@@ -17,10 +17,10 @@ const norm = (a: string) => a.toLowerCase();
 
 const ROLE_TEXT: Record<string, (rug: string) => string> = {
   "received the profits of": (r) => `This wallet received the profits of the ${r} rug pull.`,
-  created: (r) => `This wallet created ${r}, a coin that was rug pulled.`,
-  "held the mint key of": (r) => `This wallet controlled ${r}, a coin that was rug pulled.`,
+  created: (r) => `This wallet created ${r}, a token that was rug pulled.`,
+  "held the mint key of": (r) => `This wallet controlled ${r}, a token that was rug pulled.`,
   "passed money along for": (r) => `This wallet passed money along for the ${r} rug pull.`,
-  funded: (r) => `This wallet paid for ${r}, a coin that was rug pulled.`,
+  funded: (r) => `This wallet paid for ${r}, a token that was rug pulled.`,
 };
 
 // "about 8 seconds", "about 3 minutes"
@@ -64,7 +64,7 @@ export function Trail({ data, controller = false, title = "Where the creator's m
     const where = controller ? "controller trail" : "creator trail";
     if (m.foundIn !== where) continue;
     const list = linkOf.get(norm(m.address)) ?? [];
-    for (const p of m.pastRugs) list.push({ symbol: p.symbol ?? "an earlier coin", role: p.roleInThatRug });
+    for (const p of m.pastRugs) list.push({ symbol: p.symbol ?? "an earlier token", role: p.roleInThatRug });
     linkOf.set(norm(m.address), list);
   }
   const coinLinks = data.coinObjectMatches.filter((c) => (controller ? c.heldBy !== "creator" : c.heldBy === "creator"));
@@ -172,7 +172,7 @@ function WalletRow({
     <div className="flex min-w-0 flex-col gap-2">
       {isFirst ? (
         <p className="text-base leading-7 text-text">
-          {controller ? "Controls the coin. This wallet was given the coin's control key." : `Created the coin on ${fmtDateTime(data.creator.publishedAt)}.`}
+          {controller ? "Controls the token. This wallet was given the token's control key." : `Created the token on ${fmtDateTime(data.creator.publishedAt)}.`}
         </p>
       ) : w.isRelay ? (
         <p className="text-base leading-7 text-text">Passed the same money along.</p>

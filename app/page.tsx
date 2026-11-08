@@ -19,10 +19,10 @@ export default function Home() {
             intro={
               <div className="flex flex-col gap-4">
                 <h1 id="page-title" className="font-serif text-[2.5rem] leading-[1.1] text-balance text-text sm:text-4xl">
-                  Check a Sui coin before you buy it
+                  Check a token on Sui before you buy it
                 </h1>
                 <p className="max-w-[70ch] text-pretty text-base leading-7 text-dim">
-                  Some people launch a coin, wait for buyers, then empty its trading pool and use that money to launch the next one. Revenant remembers the ones it has caught and warns you when a new coin is funded by one of them.
+                  Some people launch a token, wait for buyers, then empty its trading pool and use that money to launch the next one. Revenant remembers the ones it has caught and warns you when a new token is funded by one of them.
                 </p>
               </div>
             }

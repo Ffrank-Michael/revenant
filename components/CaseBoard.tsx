@@ -140,7 +140,7 @@ export function CaseBoard() {
           <div className="flex flex-col gap-2">
             <h2 className={TITLE}>Rugs we caught: AXIS, VETO and BUBBLES</h2>
             <p className={`${BODY} max-w-[70ch] text-pretty`}>
-              A rug pull is when the creators empty a coin's trading pool so nobody can sell it for real money anymore.
+              A rug pull is when the creators empty a token's trading pool so nobody can sell the token for real money anymore.
             </p>
           </div>
 
@@ -196,13 +196,13 @@ export function CaseBoard() {
         <section className={SECTION}>
           <h2 className={TITLE}>Other rug pulls Revenant remembers</h2>
           <p className={`${BODY} mt-2 max-w-[70ch] text-pretty`}>
-            We found no exact coin link between these five saved rugs. Similar tricks alone do not show that one person is behind them.
+            We found no exact token link between these five saved rugs. Similar tricks alone do not show that one person is behind them.
           </p>
 
           {/* A table: one row per rug, thin rules between the rows */}
           <div className="mt-6 border border-line bg-paper" role="table" aria-label="Other rug pulls">
             <div role="row" className={`${LABEL} hidden grid-cols-[1.2fr_1fr_1fr_1fr_8.5rem] gap-4 border-b border-line px-4 py-2 sm:grid`}>
-              <span role="columnheader">Coin</span>
+              <span role="columnheader">Token</span>
               <span role="columnheader">Pulled on</span>
               <span role="columnheader">Put in (SUI)</span>
               <span role="columnheader">Took out (SUI)</span>
@@ -244,7 +244,7 @@ export function CaseBoard() {
         <dl className="grid grid-cols-3 gap-px border border-line bg-line">
           <Counter value={String(counters.rugsRemembered)} label="rug pulls remembered" />
           <Counter value={counters.memoriesOnWalrus !== null ? String(counters.memoriesOnWalrus) : "?"} label="memories saved on Walrus" />
-          <Counter value={String(counters.coinsChecked)} label="coins checked" sub={counters.coinsScreened ? `out of ${counters.coinsScreened} looked at` : undefined} />
+          <Counter value={String(counters.coinsChecked)} label="tokens checked" sub={counters.coinsScreened ? `out of ${counters.coinsScreened} looked at` : undefined} />
         </dl>
         {notes.length > 0 && <p className="mt-4 text-xs text-dim">{notes.join(" ")}</p>}
       </section>

@@ -14,7 +14,7 @@ import type { BoardWatched } from "@/lib/board";
 export function ResultCard({ data }: { data: TraceWithMemory }) {
   const v = buildVerdict(data);
   const linked = v.level === "linked";
-  const name = data.coin.symbol ?? "This coin";
+  const name = data.coin.symbol ?? "This token";
 
   // If we watch this coin, find the warning we saved about it (read-only, from the board data).
   const [watched, setWatched] = useState<BoardWatched | null>(null);
@@ -56,7 +56,7 @@ export function ResultCard({ data }: { data: TraceWithMemory }) {
 
       <Trail data={data} />
       {data.controllerTrail && data.creator.controller && (
-        <Trail data={data} controller title="Where the money of the wallet that controls the coin came from" />
+        <Trail data={data} controller title="Where the money of the wallet that controls the token came from" />
       )}
     </div>
   );

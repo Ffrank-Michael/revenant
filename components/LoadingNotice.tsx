@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 // What the trace is doing, in plain words. The server does not report live progress,
 // so these lines follow the usual order of the work and are timed, not measured.
 const STEPS = [
-  { from: 0, text: "Finding who made the coin" },
+  { from: 0, text: "Finding who made the token" },
   { from: 7, text: "Following where their first money came from" },
-  { from: 18, text: "Checking the coin against past rug pulls" },
+  { from: 18, text: "Checking the token against past rug pulls" },
   { from: 40, text: "Still working. This one is taking a bit longer" },
 ];
 

@@ -39,7 +39,7 @@ function linkSentence(name: string, links: BoardLink[]): string {
   const inc = links.find((l) => l.to === name);
   const parts: string[] = [];
   if (inc) parts.push(`${inc.from}'s money was sent to the wallet that launched ${name}.`);
-  if (out) parts.push(`That money was sent to the wallet that launched ${out.to}.`);
+  if (out) parts.push(`${name}'s money was sent to the wallet that launched ${out.to}.`);
   return parts.join(" ");
 }
 
@@ -73,10 +73,10 @@ export function watchedSummary(w: BoardWatched, links: BoardLink[], nowMs: numbe
   if (w.warning) {
     parts.push(
       w.status === "pulled" && w.pull?.hoursAfterWarning != null && w.pull.hoursAfterWarning >= 0
-        ? `We saved a warning about the coin ${fmtSpan(w.pull.hoursAfterWarning * 3_600_000)} before the pull.`
-        : `We saved a warning about the coin on ${fmtDateTime(w.warning.flaggedAt)}.`,
+        ? `We saved a warning about the token ${fmtSpan(w.pull.hoursAfterWarning * 3_600_000)} before the pull.`
+        : `We saved a warning about the token on ${fmtDateTime(w.warning.flaggedAt)}.`,
     );
   }
-  if (w.status !== "pulled") parts.push("Revenant checks the coin every 10 minutes.");
+  if (w.status !== "pulled") parts.push("Revenant checks the token every 10 minutes.");
   return parts.join(" ");
 }
