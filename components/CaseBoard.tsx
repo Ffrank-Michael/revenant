@@ -9,6 +9,7 @@ import { ErrorNotice } from "./ErrorNotice";
 import { useBoard } from "./BoardContext";
 import { chainOrder } from "@/lib/chain";
 import { fmtDay, fmtDuration, fmtSui } from "@/lib/format";
+import { fmtSpan } from "@/lib/proofText";
 import type { BoardLink, BoardRug, BoardWatched } from "@/lib/board";
 
 // Every block on the page is a section with a thin rule on top. The same spacing everywhere:
@@ -16,16 +17,6 @@ import type { BoardLink, BoardRug, BoardWatched } from "@/lib/board";
 export const SECTION = "border-t border-line pt-6 lg:pt-10";
 const TITLE = "font-serif text-2xl leading-tight text-text";
 const BODY = "text-base leading-7 text-dim";
-
-// "1d 10h", "21h 4m", "40m": short enough for a small cell
-function shortSpan(ms: number): string {
-  const mins = Math.max(0, Math.round(ms / 60_000));
-  const d = Math.floor(mins / 1440);
-  const h = Math.floor((mins % 1440) / 60);
-  if (d > 0) return h > 0 ? `${d}d ${h}h` : `${d}d`;
-  if (h > 0) return `${h}h ${mins % 60}m`;
-  return `${mins}m`;
-}
 
 const num = (n: number) => Math.round(n).toLocaleString("en-US");
 
@@ -52,7 +43,7 @@ function rugFace(r: BoardRug, links: BoardLink[]): CardFace {
       { label: "Put in (SUI)", value: num(r.suiPutIn) },
       { label: "Took out (SUI)", value: num(r.suiTaken) },
       { label: "Pulled on", value: r.pulledAt ? fmtDay(r.pulledAt) : "Not yet" },
-      { label: "Lasted", value: ms !== null ? shortSpan(ms) : "Not pulled yet" },
+      { label: "Lasted", value: ms !== null ? fmtSpan(ms) : "Not pulled yet" },
     ],
     wide: [
       ...(link ? [{ label: "Money trail", value: link }] : []),
@@ -79,7 +70,7 @@ function watchedFace(w: BoardWatched, links: BoardLink[]): CardFace {
       { label: "Put in (SUI)", value: num(putIn) },
       { label: "Took out (SUI)", value: num(out) },
       { label: "Pulled on", value: pulled && w.pull ? fmtDay(w.pull.at) : "Not yet" },
-      { label: pulled ? "Lasted" : "Live for", value: shortSpan(ms) },
+      { label: pulled ? "Lasted" : "Live for", value: fmtSpan(ms) },
     ],
     wide: link ? [{ label: "Money trail", value: link }] : [],
     clock: w.warning ? { warnedAt: w.warning.flaggedAt, pulledAt: pulled && w.pull ? w.pull.at : null } : null,

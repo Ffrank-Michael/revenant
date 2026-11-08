@@ -27,7 +27,7 @@ export function LoadingNotice({ onCancel }: { onCancel: () => void }) {
           <span className="relative inline-flex h-3 w-3 rounded-full bg-warn" />
         </span>
         <p className="font-mono text-xs uppercase tracking-widest text-warn">Tracing the money</p>
-        <span className="ml-auto font-mono text-xs text-dim">{seconds}s</span>
+        <span className="ml-auto font-mono text-xs text-dim">{seconds} sec</span>
       </div>
       <p className="mt-3 text-base text-text">{step.text}…</p>
       <p className="mt-1 text-sm leading-6 text-dim">This can take up to 30 seconds. Please keep this page open.</p>

@@ -11,10 +11,10 @@ export function fmtSpan(ms: number): string {
   const days = Math.floor(mins / 1440);
   const hours = Math.floor((mins % 1440) / 60);
   const m = mins % 60;
-  const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? "" : "s"}`;
+  const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? "" : "s"}`;
   if (days > 0) return hours > 0 ? `${plural(days, "day")} ${plural(hours, "hour")}` : plural(days, "day");
-  if (hours > 0) return m > 0 && hours < 10 ? `${plural(hours, "hour")} ${m} min` : plural(hours, "hour");
-  return `${m} min`;
+  if (hours > 0) return m > 0 && hours < 10 ? `${plural(hours, "hour")} ${m} min` : plural(hours, "hour");
+  return `${m} min`;
 }
 
 const sui = fmtSui; // "7,991 SUI"
@@ -31,7 +31,7 @@ function shortNum(n: number): string {
 }
 // Left out when the supply or the pool amount could not be read for this coin.
 const tokenSentence = (name: string, t: { removed: number; supply: number } | null) =>
-  t && t.supply > 0 ? `The pull took ${shortNum(t.removed)} (${Math.round((t.removed / t.supply) * 100)}%) of ${name}'s ${shortNum(t.supply)} tokens out of the pool, leaving buyers with no pool to sell into.` : "";
+  t && t.supply > 0 ? `The pull took ${shortNum(t.removed)} (${Math.round((t.removed / t.supply) * 100)}%) of ${name}'s ${shortNum(t.supply)} tokens out of the pool. The pool now holds nothing, so no one can sell the token.` : "";
 
 // The proven links on either side of this coin (one sentence each), or nothing when there is none.
 function linkSentence(name: string, links: BoardLink[]): string {

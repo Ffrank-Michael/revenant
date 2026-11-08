@@ -10,7 +10,7 @@ import type { BoardLink } from "@/lib/board";
 // Phone: a vertical list. Desktop: one row of blocks. Amber dots drift along the spine.
 
 function gap(seconds: number) {
-  return seconds < 60 ? `+${Math.round(seconds)} s` : `+${fmtDuration(Math.round(seconds))}`;
+  return seconds < 60 ? `+${Math.round(seconds)} sec` : `+${fmtDuration(Math.round(seconds))}`;
 }
 
 export function RelayChain({ link }: { link: BoardLink }) {
@@ -29,7 +29,7 @@ export function RelayChain({ link }: { link: BoardLink }) {
         The same SUI coin went from {link.from} to {link.to} through {link.relayCount} other wallets in {fmtDuration(link.seconds)}.
       </p>
       <p className="mt-1 text-xs leading-5 text-dim">
-        {fmtDate(link.leftAt)}. {typical !== null && gaps.length > 1 ? `After the first wallet, each wallet passed the money on about ${Math.round(typical)} seconds later. ` : ""}
+        {fmtDate(link.leftAt)}. {typical !== null && gaps.length > 1 ? `After the first wallet, each wallet passed the money on about ${Math.round(typical)} sec later. ` : ""}
         Tap a wallet to see the details.
       </p>
 

@@ -23,13 +23,13 @@ const ROLE_TEXT: Record<string, (rug: string) => string> = {
   funded: (r) => `This wallet paid for ${r}, a token that was rug pulled.`,
 };
 
-// "about 8 seconds", "about 3 minutes"
+// "about 8 sec", "about 3 min"
 function about(sec: number): string {
-  if (sec < 90) return `about ${Math.max(1, Math.round(sec))} second${Math.round(sec) === 1 ? "" : "s"}`;
+  if (sec < 90) return `about ${Math.max(1, Math.round(sec))} sec`;
   const m = Math.round(sec / 60);
-  if (m < 90) return `about ${m} minute${m === 1 ? "" : "s"}`;
+  if (m < 90) return `about ${m} min`;
   const h = Math.round(m / 60);
-  return `about ${h} hour${h === 1 ? "" : "s"}`;
+  return `about ${h} hour${h === 1 ? "" : "s"}`;
 }
 
 function stopText(t: TrailData, count: number): string {
