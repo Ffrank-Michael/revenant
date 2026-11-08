@@ -34,7 +34,7 @@ export function ResultCard({ data }: { data: TraceWithMemory }) {
   return (
     <div role="status" className={`paper rounded-lg border p-4 pl-11 sm:p-6 sm:pl-12 ${linked ? "border-warn/60" : "border-line"}`}>
       <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-dim">Result for {name}</p>
-      <h2 className={`mt-2 font-serif text-3xl leading-tight sm:text-4xl ${linked ? "text-warn" : v.level === "signs" ? "text-text" : "text-dim"}`}>{v.headline}</h2>
+      <h2 className={`mt-2 font-serif text-2xl leading-tight ${linked ? "text-warn" : v.level === "signs" ? "text-text" : "text-dim"}`}>{v.headline}</h2>
       {v.note && <p className="mt-3 max-w-2xl text-base leading-7 text-dim">{v.note}</p>}
 
       {watched?.warning && (

@@ -71,7 +71,7 @@ export function SearchBox({
         if (!hasValue) setOpen(false);
       }}
       className="relative w-full"
-      style={{ maxWidth: open ? 640 : 340, transition: `max-width 0.4s ${SPRING}` }}
+      style={{ maxWidth: "100%" }}
     >
       <div
         className="relative w-full overflow-hidden rounded-2xl border border-line bg-paper focus-within:border-warn/60"

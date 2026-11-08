@@ -154,3 +154,15 @@ body {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Phones only: headings wrap in a balanced way, paragraphs avoid a lone last word. */
+@media (max-width: 639px) {
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}

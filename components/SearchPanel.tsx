@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { SearchBox } from "./SearchBox";
 import { LoadingNotice } from "./LoadingNotice";
 import { ErrorNotice } from "./ErrorNotice";
@@ -18,7 +18,8 @@ type View =
   | { name: "retry"; message: string }
   | { name: "done"; data: TraceWithMemory };
 
-export function SearchPanel() {
+// intro = heading and subtext, side = the compact chain. On desktop they sit in two columns split by a thin rule.
+export function SearchPanel({ intro, side }: { intro: ReactNode; side: ReactNode }) {
   const [coin, setCoin] = useState("");
   const [view, setView] = useState<View>({ name: "idle" });
   const running = useRef<AbortController | null>(null);
@@ -41,29 +42,41 @@ export function SearchPanel() {
   const loading = view.name === "loading";
 
   return (
-    <section aria-label="Check a coin" className="flex flex-col gap-4">
-      <SearchBox value={coin} onChange={setCoin} onSubmit={run} disabled={loading} />
+    <section aria-labelledby="page-title" className="grid gap-6 lg:grid-cols-2 lg:gap-y-10">
+      {/* left: heading, subtext, search box, buttons (and the loading or error notice) */}
+      <div className="flex min-w-0 flex-col gap-6 lg:col-start-1 lg:row-start-1 lg:pr-10">
+        {intro}
+        <SearchBox value={coin} onChange={setCoin} onSubmit={run} disabled={loading} />
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <button
-          type="button"
-          disabled={loading}
-          onClick={() => {
-            setCoin(BUBBLES_COIN);
-            setView({ name: "idle" });
-          }}
-          className="rounded-full border border-warn/50 px-4 py-2 font-mono text-xs uppercase tracking-widest text-warn transition-colors hover:bg-warn hover:text-ink disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-warn"
-        >
-          Try a rug we caught
-        </button>
-        <span className="text-sm text-dim">An example coin from the story below.</span>
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => {
+              setCoin(BUBBLES_COIN);
+              setView({ name: "idle" });
+            }}
+            className="w-full rounded-full border border-warn/50 px-4 py-3 text-center font-mono sm:w-auto sm:py-2 text-xs uppercase tracking-widest text-warn transition-colors hover:bg-warn hover:text-ink disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-warn"
+          >
+            Try a rug we caught
+          </button>
+          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-dim">An example coin from the story below</span>
+        </div>
+
+        {view.name === "loading" && <LoadingNotice onCancel={() => running.current?.abort()} />}
+        {view.name === "bad_input" && <ErrorNotice message={view.message} />}
+        {view.name === "retry" && <ErrorNotice message={view.message} onRetry={() => run(coin.trim())} />}
       </div>
 
-      {view.name === "loading" && <LoadingNotice onCancel={() => running.current?.abort()} />}
-      {view.name === "bad_input" && <ErrorNotice message={view.message} />}
-      {view.name === "retry" && <ErrorNotice message={view.message} onRetry={() => run(coin.trim())} />}
+      {/* the result sits right under the search box on phones, and across the full width on desktop */}
+      {view.name === "done" && (
+        <div className="min-w-0 lg:col-span-2 lg:row-start-2">
+          <ResultCard data={view.data} />
+        </div>
+      )}
 
-      {view.name === "done" && <ResultCard data={view.data} />}
+      {/* right: the chain (under the search box on phones) */}
+      <div className="min-w-0 lg:col-start-2 lg:row-start-1 lg:border-l lg:border-line lg:pl-10">{side}</div>
     </section>
   );
 }

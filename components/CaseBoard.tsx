@@ -1,31 +1,33 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
-import { CaseCard, type CardFace } from "./CaseCard";
+import { Fragment, useRef, useState } from "react";
+import { CaseCard, LABEL, type CardFace } from "./CaseCard";
 import { Collapse } from "./Collapse";
 import { RelayLine } from "./RelayLine";
 import { RugProof, WatchedProof } from "./ProofPanel";
 import { ErrorNotice } from "./ErrorNotice";
+import { useBoard } from "./BoardContext";
+import { chainOrder } from "@/lib/chain";
 import { fmtDay, fmtDuration, fmtSui } from "@/lib/format";
-import type { BoardData, BoardLink, BoardRug, BoardWatched } from "@/lib/board";
+import type { BoardLink, BoardRug, BoardWatched } from "@/lib/board";
 
-type Loaded = BoardData & { ok: true };
-type State = { name: "loading" } | { name: "error" } | { name: "ready"; data: Loaded };
+// Every block on the page is a section with a thin rule on top. The same spacing everywhere:
+// 24 px above the rule and 40 px below it on desktop, 16 and 24 on phones.
+export const SECTION = "border-t border-line pt-6 lg:pt-10";
+const TITLE = "font-serif text-2xl leading-tight text-text";
+const BODY = "text-base leading-7 text-dim";
 
-// Puts the linked coins in order: the one nothing points at first, then whatever it points to.
-function chainOrder(links: BoardLink[]): string[] {
-  if (!links.length) return [];
-  const to = new Set(links.map((l) => l.to));
-  let cur = links.find((l) => !to.has(l.from))?.from ?? links[0].from;
-  const order = [cur];
-  for (let i = 0; i < links.length; i++) {
-    const next = links.find((l) => l.from === cur && !order.includes(l.to));
-    if (!next) break;
-    order.push(next.to);
-    cur = next.to;
-  }
-  return order;
+// "1d 10h", "21h 4m", "40m": short enough for a small cell
+function shortSpan(ms: number): string {
+  const mins = Math.max(0, Math.round(ms / 60_000));
+  const d = Math.floor(mins / 1440);
+  const h = Math.floor((mins % 1440) / 60);
+  if (d > 0) return h > 0 ? `${d}d ${h}h` : `${d}d`;
+  if (h > 0) return `${h}h ${mins % 60}m`;
+  return `${mins}m`;
 }
+
+const num = (n: number) => Math.round(n).toLocaleString("en-US");
 
 const putTakeSentence = (putIn: number, taken: number, at: string | null) =>
   `The creator put in ${fmtSui(putIn)} and took out ${fmtSui(taken)}${at ? ` on ${fmtDay(at)}` : ""}.`;
@@ -39,24 +41,48 @@ function linkLine(name: string, links: BoardLink[]): string | null {
   return null;
 }
 
-function rugFace(r: BoardRug, links: BoardLink[], withLink: boolean): CardFace {
+function rugFace(r: BoardRug, links: BoardLink[]): CardFace {
+  const ms = r.pulledAt ? Date.parse(r.pulledAt) - Date.parse(r.publishedAt) : null;
+  const link = linkLine(r.symbol, links);
   return {
     name: r.symbol,
     status: { label: "Rug pulled", tone: "alert" },
     sentence: putTakeSentence(r.suiPutIn, r.suiTaken, r.pulledAt),
-    linkLine: withLink ? linkLine(r.symbol, links) : null,
+    facts: [
+      { label: "Put in (SUI)", value: num(r.suiPutIn) },
+      { label: "Took out (SUI)", value: num(r.suiTaken) },
+      { label: "Pulled on", value: r.pulledAt ? fmtDay(r.pulledAt) : "Not yet" },
+      { label: "Lasted", value: ms !== null ? shortSpan(ms) : "Not pulled yet" },
+    ],
+    wide: [
+      ...(link ? [{ label: "Money trail", value: link }] : []),
+      ...(r.coinsTakenBackPct !== null ? [{ label: "Coins taken back", value: `${Math.round(r.coinsTakenBackPct)}% of the coins it put in` }] : []),
+    ],
   };
 }
 
 function watchedFace(w: BoardWatched, links: BoardLink[]): CardFace {
   const pulled = w.status === "pulled" && w.pull;
   const putIn = w.suiPutIn ?? w.suiInPool ?? 0;
-  const out = w.suiTakenOut ?? 0;
+  const out = pulled && w.pull ? w.pull.suiTaken : (w.suiTakenOut ?? 0);
+  const ms = (pulled && w.pull ? Date.parse(w.pull.at) : Date.now()) - Date.parse(w.publishedAt);
+  const link = linkLine(w.symbol, links);
   return {
     name: w.symbol,
     status: pulled ? { label: "Rug pulled", tone: "alert" } : { label: "Being watched", tone: "plain" },
-    sentence: pulled && w.pull ? putTakeSentence(putIn, w.pull.suiTaken, w.pull.at) : out > 0 ? `The creator put in ${fmtSui(putIn)} and has taken out ${fmtSui(out)} so far.` : `The creator put in ${fmtSui(putIn)} and has taken nothing out yet.`,
-    linkLine: linkLine(w.symbol, links),
+    sentence:
+      pulled && w.pull
+        ? putTakeSentence(putIn, w.pull.suiTaken, w.pull.at)
+        : out > 0
+          ? `The creator put in ${fmtSui(putIn)} and has taken out ${fmtSui(out)} so far.`
+          : `The creator put in ${fmtSui(putIn)} and has taken nothing out yet.`,
+    facts: [
+      { label: "Put in (SUI)", value: num(putIn) },
+      { label: "Took out (SUI)", value: num(out) },
+      { label: "Pulled on", value: pulled && w.pull ? fmtDay(w.pull.at) : "Not yet" },
+      { label: pulled ? "Lasted" : "Live for", value: shortSpan(ms) },
+    ],
+    wide: link ? [{ label: "Money trail", value: link }] : [],
     clock: w.warning ? { warnedAt: w.warning.flaggedAt, pulledAt: pulled && w.pull ? w.pull.at : null } : null,
   };
 }
@@ -90,46 +116,29 @@ function exampleStory(chain: string[], items: Map<string, { rug?: BoardRug; watc
 }
 
 export function CaseBoard() {
-  const [state, setState] = useState<State>({ name: "loading" });
+  const { state, reload } = useBoard();
   const [open, setOpen] = useState<string | null>(null);
-  const lastChainOpen = useRef<string | null>(null); // keeps the desktop panel filled while it closes
-  const lastOpen = useRef<string | null>(null);
-
-  const load = useCallback(async () => {
-    setState({ name: "loading" });
-    try {
-      const res = await fetch("/api/memory", { cache: "no-store", signal: AbortSignal.timeout(90_000) });
-      const body = await res.json();
-      if (!res.ok || !body?.ok) throw new Error("memory answer was not ok: " + res.status);
-      setState({ name: "ready", data: body as Loaded });
-    } catch (e) {
-      console.error("[board] could not load the examples:", e);
-      setState({ name: "error" });
-    }
-  }, []);
-  useEffect(() => {
-    void load();
-  }, [load]);
+  const lastOpen = useRef<string | null>(null); // remembered so a closing panel keeps its content while it shrinks
 
   if (state.name === "loading")
     return (
-      <Section>
+      <section className={SECTION}>
         <div role="status" aria-live="polite" className="flex flex-col gap-4">
-          <p className="font-mono text-xs uppercase tracking-widest text-warn">Loading the example…</p>
-          <p className="text-sm text-dim">The first load can take a few seconds.</p>
+          <p className={`${LABEL} text-warn`}>Loading the example…</p>
+          <p className={BODY}>The first load can take a few seconds.</p>
           <div className="flex flex-col gap-4 lg:flex-row">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="paper h-48 flex-1 animate-pulse rounded-lg border border-line opacity-60" />
+              <div key={i} className="paper h-64 flex-1 animate-pulse rounded-lg border border-line opacity-60" />
             ))}
           </div>
         </div>
-      </Section>
+      </section>
     );
   if (state.name === "error")
     return (
-      <Section>
-        <ErrorNotice message="We could not load the example. Please try again." onRetry={load} />
-      </Section>
+      <section className={SECTION}>
+        <ErrorNotice message="We could not load the example. Please try again." onRetry={reload} />
+      </section>
     );
 
   const { rugs, watched, links, counters, notes } = state.data;
@@ -139,11 +148,7 @@ export function CaseBoard() {
   const chain = chainOrder(links).filter((n) => items.has(n));
   const rest = rugs.filter((r) => !chain.includes(r.symbol)).sort((a, b) => (a.pulledAt ?? "").localeCompare(b.pulledAt ?? ""));
   const toggle = (k: string) => setOpen((cur) => (cur === k ? null : k));
-  const openRest = rest.find((r) => r.symbol === open);
-  // (shownRest is set just below, once the open card is remembered)
-  if (open) lastOpen.current = open; // remembered so a closing panel keeps its content while it shrinks
-  if (open && chain.includes(open)) lastChainOpen.current = open;
-  const shownRest = rest.find((r) => r.symbol === lastOpen.current);
+  if (open) lastOpen.current = open;
 
   const proofFor = (name: string) => {
     const it = items.get(name);
@@ -152,98 +157,152 @@ export function CaseBoard() {
   };
   const faceFor = (name: string) => {
     const it = items.get(name)!;
-    return it.rug ? rugFace(it.rug, links, true) : watchedFace(it.watched!, links);
+    return it.rug ? rugFace(it.rug, links) : watchedFace(it.watched!, links);
   };
+  const openChain = open && chain.includes(open) ? open : null;
+  const shownChain = lastOpen.current && chain.includes(lastOpen.current) ? lastOpen.current : null;
 
   return (
-    <div className="flex flex-col gap-14">
+    <>
       {chain.length > 1 && (
-        <Section>
-          <div className="flex flex-col gap-3">
-            <h2 className="font-serif text-3xl leading-[1.1] text-text sm:text-4xl">A real example from this week</h2>
-            <p className="max-w-2xl text-base leading-7 text-dim">A rug pull is when the people who made a coin take all the money out and leave buyers stuck.</p>
-            <p className="max-w-2xl text-base leading-7 text-text">{exampleStory(chain, items)}</p>
+        <section className={SECTION}>
+          {/* desktop: heading on the left, the text on the right, a thin rule underneath */}
+          <div className="flex flex-col gap-2 lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-0 lg:border-b lg:border-line lg:pb-6">
+            <h2 className={`${TITLE} lg:pr-10`}>A real example: AXIS, VETO and BUBBLES</h2>
+            <div className="flex flex-col gap-2 lg:border-l lg:border-transparent lg:pl-10">
+              <p className={`${BODY} max-w-[60ch] text-pretty lg:max-w-none`}>
+                A rug pull is when the people who made a coin take all the money out of its trading pool. The coin stays, but nobody can sell it for real money any more.
+              </p>
+              <p className="max-w-[60ch] text-pretty text-base leading-7 text-text lg:max-w-none">{exampleStory(chain, items)}</p>
+            </div>
           </div>
 
-          <div className="mt-8 flex flex-col lg:flex-row lg:items-stretch">
+          <div className="mt-6 flex flex-col lg:flex-row lg:items-stretch">
             {chain.map((name, i) => {
               const next = chain[i + 1];
               const link = next ? links.find((l) => l.from === name && l.to === next) : undefined;
               return (
                 <Fragment key={name}>
-                  <div className="mx-auto w-full min-w-0 max-w-xl lg:mx-0 lg:flex lg:max-w-none lg:flex-1 lg:flex-col">
+                  <div className="mx-auto flex w-full min-w-0 max-w-xl flex-col lg:mx-0 lg:max-w-none lg:flex-1">
                     <CaseCard face={faceFor(name)} open={open === name} onToggle={() => toggle(name)} delay={i * 250} controls={`proof-${name}`} />
                     {/* phone: the proof opens right under the card you tapped */}
                     <div className="lg:hidden">
-                      <div className="pt-3">
-                        <Collapse open={open === name} id={`proof-${name}`}>
-                          {lastOpen.current === name && proofFor(name)}
-                        </Collapse>
-                      </div>
+                      <Collapse open={open === name} id={`proof-${name}`}>
+                        <div className="pt-4">{lastOpen.current === name && proofFor(name)}</div>
+                      </Collapse>
                     </div>
                   </div>
-                  {link && (
-                    <RelayLine text={`This money went through ${link.relayCount} other wallets in ${fmtDuration(link.seconds)} before reaching the next creator.`} />
-                  )}
+                  {link && <RelayLine text={`This money went through ${link.relayCount} other wallets in ${fmtDuration(link.seconds)} before reaching the next creator.`} />}
                 </Fragment>
+              );
+            })}
+          </div>
+
+          {/* desktop: the link text, one ruled cell per link, under the cards */}
+          <div className="mt-4 hidden gap-px border border-line bg-line lg:grid" style={{ gridTemplateColumns: `repeat(${chain.length - 1}, 1fr)` }}>
+            {chain.slice(0, -1).map((name, i) => {
+              const link = links.find((l) => l.from === name && l.to === chain[i + 1]);
+              if (!link) return <div key={name} className="bg-ink" />;
+              return (
+                <div key={name} className="bg-ink p-2">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-dim">
+                    {name} to {chain[i + 1]}
+                  </p>
+                  <p className="mt-1 font-mono text-[11px] uppercase leading-4 tracking-[0.1em] text-warn">
+                    This money went through {link.relayCount} other wallets in {fmtDuration(link.seconds)} before reaching the next creator.
+                  </p>
+                </div>
               );
             })}
           </div>
 
           {/* desktop: one wide proof panel under the row of cards */}
           <div className="hidden lg:block">
-            <div className="pt-4">
-              <Collapse open={!!open && chain.includes(open)}>{lastChainOpen.current && proofFor(lastChainOpen.current)}</Collapse>
-            </div>
+            <Collapse open={!!openChain}>
+              <div className="pt-4">{shownChain && proofFor(shownChain)}</div>
+            </Collapse>
           </div>
-        </Section>
+        </section>
       )}
 
       {rest.length > 0 && (
-        <Section>
-          <h2 className="font-serif text-2xl leading-[1.1] text-text sm:text-3xl">Other rug pulls Revenant remembers</h2>
-          <p className="mt-3 max-w-2xl text-base leading-7 text-dim">
-            We found no exact coin link between these five saved rugs. Similar tricks alone do not show that one person is behind them.
-          </p>
-          {/* A swipeable row on phones, five across on desktop */}
-          <div className="-mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0">
-            {rest.map((r, i) => (
-              <div key={r.symbol} className="w-[250px] shrink-0 snap-start lg:w-auto">
-                <CaseCard small face={rugFace(r, links, false)} open={open === r.symbol} onToggle={() => toggle(r.symbol)} delay={600 + i * 120} controls="proof-rest" />
+        <section className={SECTION}>
+          <div className="lg:grid lg:grid-cols-2 lg:gap-x-6 lg:border-b lg:border-line lg:pb-6">
+            <h2 className={`${TITLE} lg:pr-10`}>Other rug pulls Revenant remembers</h2>
+            <p className={`${BODY} mt-2 max-w-[60ch] text-pretty lg:mt-0 lg:max-w-none lg:border-l lg:border-transparent lg:pl-10`}>
+              We found no exact coin link between these five saved rugs. Similar tricks alone do not show that one person is behind them.
+            </p>
+          </div>
+
+          {/* A table: one row per rug, thin rules between the rows */}
+          <div className="mt-6 border border-line bg-paper" role="table" aria-label="Other rug pulls">
+            <div role="row" className={`${LABEL} hidden grid-cols-[1.2fr_1fr_1fr_1fr_8.5rem] gap-4 border-b border-line px-4 py-2 sm:grid`}>
+              <span role="columnheader">Coin</span>
+              <span role="columnheader">Pulled on</span>
+              <span role="columnheader">Put in (SUI)</span>
+              <span role="columnheader">Took out (SUI)</span>
+              <span role="columnheader">
+                <span className="sr-only">Proof</span>
+              </span>
+            </div>
+            {rest.map((r) => (
+              <div key={r.symbol} role="row" className="border-b border-line last:border-b-0">
+                <div className="grid grid-cols-[5.5rem_1fr_1fr] items-center gap-x-3 gap-y-4 px-4 py-4 sm:grid-cols-[1.2fr_1fr_1fr_1fr_8.5rem] sm:gap-x-4 sm:gap-y-0">
+                  <span role="cell" className="col-span-2 font-serif text-2xl leading-none text-text sm:col-span-1">
+                    {r.symbol}
+                  </span>
+                  <Cell label="Pulled on" value={r.pulledAt ? fmtDay(r.pulledAt) : "Not yet"} className="col-start-1 row-start-2 sm:col-start-auto sm:row-start-auto" />
+                  <Cell label="Put in (SUI)" value={num(r.suiPutIn)} className="row-start-2 sm:row-start-auto" />
+                  <Cell label="Took out (SUI)" value={num(r.suiTaken)} className="row-start-2 sm:row-start-auto" />
+                  <span role="cell" className="col-start-3 row-start-1 justify-self-end sm:col-start-auto sm:row-start-auto sm:justify-self-stretch">
+                    <button
+                      type="button"
+                      onClick={() => toggle(r.symbol)}
+                      aria-expanded={open === r.symbol}
+                      aria-controls={`proof-${r.symbol}`}
+                      className="w-full whitespace-nowrap rounded-full border border-warn/60 px-3 py-2 font-mono text-xs uppercase tracking-wider text-warn transition-colors hover:bg-warn hover:text-ink sm:px-4"
+                    >
+                      {open === r.symbol ? "Hide the proof" : "See the proof"}
+                    </button>
+                  </span>
+                </div>
+                <Collapse open={open === r.symbol} id={`proof-${r.symbol}`}>
+                  <div className="px-4 pb-4">{lastOpen.current === r.symbol && <RugProof rug={r} links={links} />}</div>
+                </Collapse>
               </div>
             ))}
           </div>
-          <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-dim lg:hidden">Swipe sideways for more</p>
-          <div className="pt-3">
-            <Collapse open={!!openRest} id="proof-rest">
-              {shownRest && <RugProof rug={shownRest} links={links} />}
-            </Collapse>
-          </div>
-        </Section>
+        </section>
       )}
 
-      <Section>
-        <dl className="grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-line bg-line">
+      <section className={SECTION}>
+        <dl className="grid grid-cols-3 gap-px border border-line bg-line">
           <Counter value={String(counters.rugsRemembered)} label="rug pulls remembered" />
           <Counter value={counters.memoriesOnWalrus !== null ? String(counters.memoriesOnWalrus) : "?"} label="memories saved on Walrus" />
           <Counter value={String(counters.coinsChecked)} label="coins checked" sub={counters.coinsScreened ? `out of ${counters.coinsScreened} looked at` : undefined} />
         </dl>
-        {notes.length > 0 && <p className="mt-3 text-xs text-dim">{notes.join(" ")}</p>}
-      </Section>
-    </div>
+        {notes.length > 0 && <p className="mt-4 text-xs text-dim">{notes.join(" ")}</p>}
+      </section>
+    </>
   );
 }
 
-function Section({ children }: { children: React.ReactNode }) {
-  return <section>{children}</section>;
+// A table cell: on phones it shows its own label above the value; from sm up the header row has the labels.
+function Cell({ label, value, className = "" }: { label: string; value: string; className?: string }) {
+  return (
+    <span role="cell" className={`min-w-0 ${className}`}>
+      <span className="block font-mono text-[11px] uppercase tracking-[0.06em] text-dim sm:hidden">{label}</span>
+      <span className="block font-mono text-base text-text">{value}</span>
+    </span>
+  );
 }
 
 function Counter({ value, label, sub }: { value: string; label: string; sub?: string }) {
   return (
-    <div className="bg-paper p-3 text-center sm:p-4">
-      <dd className="font-serif text-3xl text-text sm:text-4xl">{value}</dd>
-      <dt className="mt-1 text-xs leading-4 text-dim">{label}</dt>
-      {sub && <p className="mt-0.5 text-balance text-[11px] text-dim">{sub}</p>}
+    <div className="bg-paper p-4 text-center">
+      <dd className="font-serif text-2xl text-text">{value}</dd>
+      <dt className={`${LABEL} mt-2 leading-4 tracking-[0.12em]`}>{label}</dt>
+      {sub && <p className="mt-1 text-balance font-mono text-[11px] text-dim">{sub}</p>}
     </div>
   );
 }
