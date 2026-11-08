@@ -21,7 +21,7 @@ export function WarnedClock({ warnedAt, pulledAt, className = "mt-3 font-mono te
     const gap = Date.parse(pulledAt) - start;
     return (
       <p className={className}>
-        {gap >= 0 ? `We warned about this ${fmtElapsedShort(gap)} before it happened.` : `This was pulled ${fmtElapsedShort(-gap)} before we warned about it.`}
+        {gap >= 0 ? `We warned about this ${fmtElapsedShort(gap)} before the pull happened.` : `This was pulled ${fmtElapsedShort(-gap)} before we warned about the coin.`}
       </p>
     );
   }

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const STEPS = [
   { from: 0, text: "Finding who made the coin" },
   { from: 7, text: "Following where their first money came from" },
-  { from: 18, text: "Checking it against past rug pulls" },
+  { from: 18, text: "Checking the coin against past rug pulls" },
   { from: 40, text: "Still working. This one is taking a bit longer" },
 ];
 

@@ -29,8 +29,8 @@ export function RelayChain({ link }: { link: BoardLink }) {
         The same SUI coin went from {link.from} to {link.to} through {link.relayCount} other wallets in {fmtDuration(link.seconds)}.
       </p>
       <p className="mt-1 text-xs leading-5 text-dim">
-        {fmtDate(link.leftAt)}. {typical !== null && gaps.length > 1 ? `After the first wallet, each one passed it on about ${Math.round(typical)} seconds later. ` : ""}
-        Tap a wallet to see all of it.
+        {fmtDate(link.leftAt)}. {typical !== null && gaps.length > 1 ? `After the first wallet, each wallet passed the money on about ${Math.round(typical)} seconds later. ` : ""}
+        Tap a wallet to see the details.
       </p>
 
       <ol className="relative mt-4 flex flex-col lg:grid lg:grid-cols-10">
@@ -67,7 +67,7 @@ export function RelayChain({ link }: { link: BoardLink }) {
                 </span>
                 <span className="flex flex-col text-right lg:text-center">
                   <span>{fmtClock(h.arrivedAt)}</span>
-                  <span className="text-[10px] text-dim">{i === 0 ? "received it" : gap(gaps[i - 1])}</span>
+                  <span className="text-[10px] text-dim">{i === 0 ? "received the money" : gap(gaps[i - 1])}</span>
                 </span>
               </button>
             </li>
@@ -81,7 +81,7 @@ export function RelayChain({ link }: { link: BoardLink }) {
           {chosen && sel !== null && (
             <div className="mt-4 flex flex-col gap-3 border-t border-line pt-4">
               <AddressText label={`Wallet ${sel + 1} of ${hops.length}${sel === 0 ? " (first)" : sel === hops.length - 1 ? " (last)" : ""}`} value={chosen.address} />
-              <AddressText label="Transaction where it received the coin" value={chosen.tx} tx />
+              <AddressText label="Transaction where this wallet received the coin" value={chosen.tx} tx />
               <p className="text-xs text-dim">Received at {fmtClock(chosen.arrivedAt)} UTC.</p>
             </div>
           )}

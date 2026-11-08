@@ -19,35 +19,38 @@ export function fmtSpan(ms: number): string {
 
 const sui = fmtSui; // "7,991 SUI"
 
-// One sentence about a proven link, or nothing when there is none.
+// The proven links on either side of this coin (one sentence each), or nothing when there is none.
 function linkSentence(name: string, links: BoardLink[]): string {
   const out = links.find((l) => l.from === name);
-  if (out) return `That money was sent to the wallet that launched ${out.to}.`;
   const inc = links.find((l) => l.to === name);
-  if (inc) return `Its creator was paid with money from ${inc.from}'s rug pull.`;
-  return "";
+  const parts: string[] = [];
+  if (inc) parts.push(`${inc.from}'s money was sent to the wallet that launched ${name}.`);
+  if (out) parts.push(`That money was sent to the wallet that launched ${out.to}.`);
+  return parts.join(" ");
 }
 
 // "[COIN] was rug pulled on [date], [time] after it launched, on [exchange]. The creator put in [X] and took out [Y]."
 export function rugSummary(rug: BoardRug, links: BoardLink[]): string {
   const name = rug.symbol;
-  const lasted = rug.pulledAt ? `, ${fmtSpan(Date.parse(rug.pulledAt) - Date.parse(rug.publishedAt))} after it launched` : "";
+  const lasted = rug.pulledAt ? `, ${fmtSpan(Date.parse(rug.pulledAt) - Date.parse(rug.publishedAt))} after the coin launched` : "";
   const first = rug.pulledAt ? `${name} was rug pulled on ${fmtDate(rug.pulledAt)}${lasted}${rug.exchange ? `, on ${rug.exchange}` : ""}.` : `${name} was launched on ${fmtDate(rug.publishedAt)}.`;
   const second = `The creator put in ${sui(rug.suiPutIn)} and took out ${sui(rug.suiTaken)}.`;
-  return [first, second, linkSentence(name, links)].filter(Boolean).join(" ");
+  const pct = rug.coinsTakenBackPct !== null ? Math.round(rug.coinsTakenBackPct) : null;
+  const coins = pct !== null ? `The creator also took back ${pct}% of the coins they had put in the pool. Buyers hold the rest and can no longer sell them for real money.` : "";
+  return [first, second, coins, linkSentence(name, links)].filter(Boolean).join(" ");
 }
 
 export function watchedSummary(w: BoardWatched, links: BoardLink[], nowMs: number): string {
   const parts: string[] = [];
   if (w.status === "pulled" && w.pull) {
     const ms = Date.parse(w.pull.at) - Date.parse(w.publishedAt);
-    parts.push(`${w.symbol} was rug pulled on ${fmtDate(w.pull.at)}, ${fmtSpan(ms)} after it launched.`);
+    parts.push(`${w.symbol} was rug pulled on ${fmtDate(w.pull.at)}, ${fmtSpan(ms)} after the coin launched.`);
     parts.push(`The creator put in ${sui(w.suiPutIn ?? 0)} and took out ${sui(w.pull.suiTaken)}.`);
   } else {
     const ms = nowMs - Date.parse(w.publishedAt);
     parts.push(`${w.symbol} has been live for ${fmtSpan(ms)}.`);
     if (w.suiPutIn !== null) {
-      parts.push(`Its creator put in ${sui(w.suiPutIn)} and has taken ${w.suiTakenOut ? sui(w.suiTakenOut) : "nothing"} out so far.`);
+      parts.push(`The creator put in ${sui(w.suiPutIn)} and has taken ${w.suiTakenOut ? sui(w.suiTakenOut) : "nothing"} out so far.`);
     }
     if (w.suiInPool !== null) parts.push(`About ${sui(w.suiInPool)} is still in the pool.`);
   }
@@ -56,10 +59,10 @@ export function watchedSummary(w: BoardWatched, links: BoardLink[], nowMs: numbe
   if (w.warning) {
     parts.push(
       w.status === "pulled" && w.pull?.hoursAfterWarning != null && w.pull.hoursAfterWarning >= 0
-        ? `We saved a warning about it ${fmtSpan(w.pull.hoursAfterWarning * 3_600_000)} before the pull.`
-        : `We saved a warning about it on ${fmtDateTime(w.warning.flaggedAt)}.`,
+        ? `We saved a warning about the coin ${fmtSpan(w.pull.hoursAfterWarning * 3_600_000)} before the pull.`
+        : `We saved a warning about the coin on ${fmtDateTime(w.warning.flaggedAt)}.`,
     );
   }
-  if (w.status !== "pulled") parts.push("Revenant checks it every 10 minutes.");
+  if (w.status !== "pulled") parts.push("Revenant checks the coin every 10 minutes.");
   return parts.join(" ");
 }

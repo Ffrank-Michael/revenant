@@ -37,7 +37,7 @@ function linkLine(name: string, links: BoardLink[]): string | null {
   const out = links.find((l) => l.from === name);
   if (out) return `That money was later sent to ${out.to}'s creator.`;
   const inc = links.find((l) => l.to === name);
-  if (inc) return `Its creator was paid with money from ${inc.from}'s rug pull.`;
+  if (inc) return `The creator was paid with money from ${inc.from}'s rug pull.`;
   return null;
 }
 

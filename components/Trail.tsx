@@ -38,7 +38,7 @@ function stopText(t: TrailData, count: number): string {
     case "exchange":
       return `We stopped here because this wallet belongs to ${last?.exchange ?? "an exchange"}. Exchanges do not tell us who is behind the money.`;
     case "busy_wallet":
-      return "We stopped here because this wallet is very busy, like an exchange. It does not tell us who is behind the money.";
+      return "We stopped here because this wallet is very busy, like an exchange. This does not tell us who is behind the money.";
     case "relay_cap":
       return `We stopped here because the money went through at least ${count} pass-through wallets, which is as far as we follow.`;
     case "max_hops_reached":
@@ -172,7 +172,7 @@ function WalletRow({
     <div className="flex min-w-0 flex-col gap-2">
       {isFirst ? (
         <p className="text-base leading-7 text-text">
-          {controller ? "Controls the coin. It was given the coin's control key." : `Created the coin on ${fmtDateTime(data.creator.publishedAt)}.`}
+          {controller ? "Controls the coin. This wallet was given the coin's control key." : `Created the coin on ${fmtDateTime(data.creator.publishedAt)}.`}
         </p>
       ) : w.isRelay ? (
         <p className="text-base leading-7 text-text">Passed the same money along.</p>
@@ -183,7 +183,7 @@ function WalletRow({
         <div key={c.objectId} className="flex flex-col items-start gap-1">
           <Tag>Holds a SUI coin from the {c.pastRug.symbol ?? "earlier"} rug pull</Tag>
           <p className="text-sm leading-6 text-dim">
-            The same SUI coin, with the same ID, came out of that pull and is in this wallet now. That shows the money moved. It does not show who is behind the wallets.
+            The same SUI coin, with the same ID, came out of that pull and is in this wallet now. That shows the money moved. This does not show who is behind the wallets.
           </p>
         </div>
       ))}

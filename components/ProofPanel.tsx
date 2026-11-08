@@ -27,14 +27,14 @@ function MoneyTrail({ link, direction }: { link: BoardLink; direction: "out" | "
     <div className="flex flex-col gap-4">
       <Heading>{direction === "out" ? `Where the money went: ${link.to}` : `Where the money came from: ${link.from}`}</Heading>
       <p className="text-sm leading-6 text-text">
-        One SUI coin made in the {link.from} pull stayed in one piece. It went through {link.relayCount} other wallets in {fmtDuration(link.seconds)} and reached the
-        creator of {link.to}. It has the same ID the whole way, so this is not a guess.
+        One SUI coin made in the {link.from} pull stayed in one piece. That SUI coin went through {link.relayCount} other wallets in {fmtDuration(link.seconds)} and reached the
+        creator of {link.to}. The SUI coin kept the same ID the whole way, so this is not a guess.
       </p>
       <RelayChain link={link} />
       <AddressText label="SUI coin that moved" value={link.coinId} />
-      <AddressText label="Transaction where it left" value={link.leftTx} tx />
-      <AddressText label="Transaction where it arrived" value={link.arrivedTx} tx />
-      <p className="text-xs leading-5 text-dim">This shows the money moved. It does not show who is behind the wallets.</p>
+      <AddressText label="Transaction where the SUI coin left" value={link.leftTx} tx />
+      <AddressText label="Transaction where the SUI coin arrived" value={link.arrivedTx} tx />
+      <p className="text-xs leading-5 text-dim">This shows the money moved. This does not show who is behind the wallets.</p>
     </div>
   );
 }
@@ -66,7 +66,7 @@ export function RugProof({ rug, links }: { rug: BoardRug; links: BoardLink[] }) 
           ))}
           <AddressText label="Creator wallet" value={rug.creator} />
           <AddressText label="Coin address" value={rug.coinType} coin />
-          <p className="-mt-2 max-w-3xl text-xs leading-5 text-dim">This is the coin&apos;s full address on Sui. Open it on Suiscan to see the coin, its supply and who holds it. Coins whose pool was closed will not show on DexScreener.</p>
+          <p className="-mt-2 max-w-3xl text-xs leading-5 text-dim">This is the coin&apos;s full address on Sui. Open it on Suiscan to see the coin, the supply and who holds the coin. Coins whose pool was closed will not show on DexScreener.</p>
           {rug.pullCoinObjects.map((o) => (
             <AddressText key={o.id} label={o.role === "gas_coin" ? "SUI coin that paid the fees" : "SUI coin from the pull"} value={o.id} />
           ))}
@@ -84,7 +84,7 @@ export function WatchedProof({ w, links }: { w: BoardWatched; links: BoardLink[]
       <p className="mt-3 max-w-3xl text-base leading-7 text-text">{watchedSummary(w, links, nowMs)}</p>
       {w.warning && (
         <p className="mt-2 max-w-3xl text-sm leading-6 text-dim">
-          Our warning is saved on Walrus, a public storage network, so it cannot be changed afterwards.
+          Our warning is saved on Walrus, a public storage network, so the warning cannot be changed afterwards.
         </p>
       )}
 
@@ -98,7 +98,7 @@ export function WatchedProof({ w, links }: { w: BoardWatched; links: BoardLink[]
           {w.pull?.digest ? <AddressText label="Pull transaction" value={w.pull.digest} tx /> : <p className="text-sm leading-6 text-text">Not pulled yet, so there is no pull to check.</p>}
           <AddressText label="Creator wallet" value={w.creator} />
           <AddressText label="Coin address" value={w.coinType} coin />
-          <p className="-mt-2 max-w-3xl text-xs leading-5 text-dim">This is the coin&apos;s full address on Sui. Open it on Suiscan to see the coin, its supply and who holds it. Coins whose pool was closed will not show on DexScreener.</p>
+          <p className="-mt-2 max-w-3xl text-xs leading-5 text-dim">This is the coin&apos;s full address on Sui. Open it on Suiscan to see the coin, the supply and who holds the coin. Coins whose pool was closed will not show on DexScreener.</p>
           {w.lastCheckAt && <p className="text-xs text-dim">Last checked {fmtDateTime(w.lastCheckAt)}. A link to earlier rug pulls is a warning sign, not proof.</p>}
         </div>
       </div>

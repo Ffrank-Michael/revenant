@@ -23,18 +23,18 @@ const TRAIL_END_CODES = new Set(["FUNDED_BY_EXCHANGE", "FUNDED_BY_BUSY_WALLET", 
 const HANDLED_CODES = new Set(["MATCHES_PAST_RUG", "SAME_COIN_OBJECT_AS_PAST_RUG", "RELAY_CHAIN"]);
 
 const SIGN_TEXT: Record<string, string> = {
-  CREATOR_IS_BUSY_WALLET: "The wallet that published the coin is very busy. It may be a launch service and not the person behind the coin.",
-  CONTROL_HANDED_OFF: "The wallet that published the coin gave control of it to a different wallet. That wallet may be the real owner.",
+  CREATOR_IS_BUSY_WALLET: "The wallet that published the coin is very busy. The wallet may be a launch service and not the person behind the coin.",
+  CONTROL_HANDED_OFF: "The wallet that published the coin gave control of the coin to a different wallet. That wallet may be the real owner.",
   SPONSORED_PUBLISH: "Someone else paid the fee to publish this coin.",
-  FRESH_CREATOR_WALLET: "The creator's wallet was brand new. It was less than 24 hours old when it published the coin.",
-  TYPE_DEFINED_IN_UPGRADE: "The coin was added in an update to its package, so the creator shown may not be the one who added it.",
+  FRESH_CREATOR_WALLET: "The creator's wallet was brand new. The wallet was less than 24 hours old when the creator published the coin.",
+  TYPE_DEFINED_IN_UPGRADE: "The coin was added in an update to the coin's package, so the creator shown may not be the one who added it.",
 };
 
 export function buildVerdict(t: TraceWithMemory): Verdict {
   const reasons: string[] = [];
 
   if (t.alreadyConfirmedRug) {
-    reasons.push("This coin is itself one of the rug pulls Revenant remembers.");
+    reasons.push("This coin is one of the rug pulls Revenant remembers.");
   }
 
   // The same SUI coin moved from a past rug pull to this creator: the strongest sign.
@@ -70,7 +70,7 @@ export function buildVerdict(t: TraceWithMemory): Verdict {
     // The trace stops counting at its cap, so the real number may be higher.
     const capped = t.trail.stoppedBecause.code === "relay_cap" || t.controllerTrail?.stoppedBecause.code === "relay_cap";
     reasons.push(
-      `The creator's money passed through ${capped ? "at least " : ""}${n ? `${n} other wallets` : "many other wallets"} in a row. Each one held it for only seconds or minutes, then sent it on. This is a common way to hide where money came from.`,
+      `The creator's money passed through ${capped ? "at least " : ""}${n ? `${n} other wallets` : "many other wallets"} in a row. Each wallet held the money for only seconds or minutes, then sent the money on. This is a common way to hide where money came from.`,
     );
   }
 
