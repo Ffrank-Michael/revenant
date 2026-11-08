@@ -3,9 +3,10 @@
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { CaseCard, type CardFace } from "./CaseCard";
 import { RelayLine } from "./RelayLine";
+import { RelayChain } from "./RelayChain";
 import { AddressText } from "./AddressText";
 import { ErrorNotice } from "./ErrorNotice";
-import { fmtDate, fmtDateTime, fmtDuration, fmtShortDay, fmtSui, fmtTime } from "@/lib/format";
+import { fmtDate, fmtDateTime, fmtDuration, fmtShortDay, fmtSui, fmtTime, numberWord } from "@/lib/format";
 import type { BoardData, BoardLink, BoardRug, BoardWatched } from "@/lib/board";
 
 type Loaded = BoardData & { ok: true };
@@ -68,6 +69,7 @@ function watchedFace(w: BoardWatched, fileNo: string): CardFace {
     statusLine: pulled ? "Pulled. Revenant's own check says this is a rug, awaiting review." : "Not pulled yet. Revenant checks it every 10 minutes.",
     extra: !pulled && w.suiInPool !== null ? { label: "SUI still in the pool", value: fmtSui(w.suiInPool) } : null,
     warnedStamp: warned,
+    clock: w.warning ? { warnedAt: w.warning.flaggedAt, pulledAt: pulled && w.pull ? w.pull.at : null } : null,
   };
 }
 
@@ -192,8 +194,20 @@ export function CaseBoard() {
     void load();
   }, [load]);
 
-  if (state.name === "loading") return <BoardSkeleton />;
-  if (state.name === "error") return <ErrorNotice message="We couldn't open the case file just now. This is usually temporary." onRetry={load} />;
+  if (state.name === "loading")
+    return (
+      <div className="flex flex-col gap-6">
+        <BoardHeading title="Reading the case file…" />
+        <BoardSkeleton />
+      </div>
+    );
+  if (state.name === "error")
+    return (
+      <div className="flex flex-col gap-6">
+        <BoardHeading title="The case file" />
+        <ErrorNotice message="We couldn't open the case file just now. This is usually temporary." onRetry={load} />
+      </div>
+    );
 
   const { rugs, watched, links, counters, notes } = state.data;
   const bySymbol = new Map<string, { rug?: BoardRug; watched?: BoardWatched }>();
@@ -204,8 +218,13 @@ export function CaseBoard() {
   const toggle = (k: string) => setOpen((cur) => (cur === k ? null : k));
   const openRest = rest.find((r) => r.symbol === open);
 
+  const fact = factFromLinks(links);
+  const chainLinks = chain.slice(0, -1).map((n, i) => links.find((l) => l.from === n && l.to === chain[i + 1])).filter((l): l is BoardLink => !!l);
+
   return (
     <div className="flex flex-col gap-10">
+      <BoardHeading title={fact?.title ?? "The evidence board"} sub={fact?.sub} />
+
       {/* The linked cases */}
       <div className="flex flex-col lg:flex-row lg:items-start">
         {chain.map((name, i) => {
@@ -220,11 +239,26 @@ export function CaseBoard() {
                   {item.rug ? <RugEvidence rug={item.rug} links={links} /> : <WatchedEvidence w={item.watched!} links={links} />}
                 </CaseCard>
               </div>
-              {link && <RelayLine label={`Same SUI coin passed through ${link.relayCount} relay wallets`} detail={`in ${fmtDuration(link.seconds)}`} />}
+              {/* phone: the real relay chain runs down between the cards */}
+              {link && (
+                <div className="mx-auto my-3 w-full max-w-xl lg:hidden">
+                  <RelayChain link={link} />
+                </div>
+              )}
+              {/* desktop: a short line with moving dots here, the full chain just below the row */}
+              {link && <RelayLine label={`${link.relayCount} relay wallets`} detail={`in ${fmtDuration(link.seconds)}`} />}
             </Fragment>
           );
         })}
       </div>
+
+      {chainLinks.length > 0 && (
+        <div className="hidden flex-col gap-4 lg:flex">
+          {chainLinks.map((l) => (
+            <RelayChain key={l.coinId} link={l} />
+          ))}
+        </div>
+      )}
 
       {/* The other rugs: smaller cards, no lines */}
       {rest.length > 0 && (
@@ -264,6 +298,36 @@ export function CaseBoard() {
         <Counter value={String(counters.coinsChecked)} label="Coins checked" sub={counters.coinsScreened ? `of ${counters.coinsScreened} screened` : undefined} />
       </dl>
       {notes.length > 0 && <p className="-mt-6 text-xs text-dim">{notes.join(" ")}</p>}
+    </div>
+  );
+}
+
+// A fact built from the real link data. Nothing here is typed in by hand: counts and times come from the links.
+function factFromLinks(links: BoardLink[]): { title: string; sub: string } | null {
+  if (!links.length) return null;
+  const coins = new Set(links.map((l) => l.coinId)).size;
+  const tokens = new Set(links.flatMap((l) => [l.from, l.to])).size;
+  const wallets = links.reduce((n, l) => n + l.relayCount, 0);
+  const seconds = links.reduce((n, l) => n + l.seconds, 0);
+  const days = [...new Set([...links].sort((a, b) => a.leftAt.localeCompare(b.leftAt)).map((l) => fmtDate(l.leftAt).slice(0, -5)))]; // "6 Nov", oldest first
+  const under = seconds < 60 ? "a minute" : `${Math.floor(seconds / 60) + 1} minutes`;
+  return {
+    title: `${numberWord(coins)} SUI coin${coins === 1 ? "" : "s"}. ${numberWord(tokens)} tokens. ${wallets} relay wallets in under ${under}.`,
+    sub:
+      `The same SUI coins moved from one token's pull to the next token's creator. ` +
+      (links.length > 1 ? `The time is added up across ${numberWord(links.length).toLowerCase()} separate relays, on ${days.join(" and ")}. ` : `It happened on ${days[0]}. `) +
+      `Each card is a token Revenant remembers. Tap one to see the proof.`,
+  };
+}
+
+function BoardHeading({ title, sub }: { title: string; sub?: string }) {
+  return (
+    <div className="flex flex-col gap-3">
+      <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-warn">Open case · stored on Walrus</p>
+      <h1 id="board-title" className="font-serif text-3xl leading-[1.08] text-text sm:text-5xl">
+        {title}
+      </h1>
+      {sub && <p className="max-w-2xl text-base leading-7 text-dim">{sub}</p>}
     </div>
   );
 }

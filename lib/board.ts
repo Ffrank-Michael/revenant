@@ -98,6 +98,9 @@ export type BoardLink = {
   to: string;
   coinId: string;
   relayCount: number;
+  fromCreator: string;
+  toCreator: string;
+  hops: { address: string; arrivedAt: string; tx: string }[]; // the relay wallets, in order, with real times
   seconds: number;
   leftAt: string;
   arrivedAt: string;

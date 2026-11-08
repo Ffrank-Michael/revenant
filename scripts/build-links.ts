@@ -26,14 +26,18 @@ async function main() {
         if (o.address === r.creator) { between.length = 0; continue; }
         const dest = byCreator.get(o.address);
         if (dest && dest !== from) {
-          const relays = [...new Set(between.map((b) => b.address))];
+          // One entry per relay wallet, in order, with the time and transaction in which it received the coin.
+          const hops: { address: string; arrivedAt: string; tx: string }[] = [];
+          for (const x of between) if (!hops.length || hops[hops.length - 1].address !== x.address) hops.push({ address: x.address, arrivedAt: x.at, tx: x.tx });
+          const first = hops[0] ?? { arrivedAt: o.at, tx: o.tx };
           links.push({
-            from, to: dest, coinId: coin.id, relayCount: relays.length,
-            leftAt: (between[0] ?? o).at, arrivedAt: o.at,
-            seconds: Math.round((Date.parse(o.at) - Date.parse((between[0] ?? o).at)) / 1000),
-            leftTx: (between[0] ?? o).tx, arrivedTx: o.tx, pullTx: coin.digest, relays,
+            from, to: dest, coinId: coin.id, relayCount: new Set(hops.map((h) => h.address)).size,
+            fromCreator: r.creator, toCreator: o.address,
+            leftAt: first.arrivedAt, arrivedAt: o.at,
+            seconds: Math.round((Date.parse(o.at) - Date.parse(first.arrivedAt)) / 1000),
+            leftTx: first.tx, arrivedTx: o.tx, pullTx: coin.digest, hops,
           });
-          console.log(`${from} -> ${dest}: coin ${coin.id.slice(0, 12)}… through ${relays.length} relay wallets`);
+          console.log(`${from} -> ${dest}: coin ${coin.id.slice(0, 12)}… through ${hops.length} relay wallets`);
           break;
         }
         between.push(o);

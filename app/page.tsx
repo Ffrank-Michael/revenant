@@ -10,17 +10,8 @@ export default function Home() {
       </header>
 
       <main className="flex flex-1 flex-col gap-16 pt-8 sm:pt-12">
-        {/* The hero: what Revenant remembers */}
-        <section aria-labelledby="board-title" className="flex flex-col gap-6">
-          <div className="flex flex-col gap-3">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-warn">Open case · stored on Walrus</p>
-            <h1 id="board-title" className="font-serif text-4xl leading-[1.05] text-text sm:text-6xl">
-              The evidence board
-            </h1>
-            <p className="max-w-2xl text-base leading-7 text-dim">
-              The same SUI coins moved from one rug to the next. Each card is a coin Revenant remembers. Tap a card to see the proof.
-            </p>
-          </div>
+        {/* The hero: what Revenant remembers. It writes its own headline from the real numbers. */}
+        <section aria-labelledby="board-title">
           <CaseBoard />
         </section>
 

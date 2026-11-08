@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, type ReactNode } from "react";
+import { WarnedClock } from "./WarnedClock";
 
 // One case-file card. The face is always visible; the evidence opens smoothly below it when tapped.
 
@@ -15,6 +16,7 @@ export type CardFace = {
   statusLine: string; // plain words under the stamp
   extra?: { label: string; value: string } | null; // e.g. "SUI still in the pool"
   warnedStamp?: string | null; // the BUBBLES "warned before any pull" stamp
+  clock?: { warnedAt: string; pulledAt: string | null } | null; // live count-up from the warning (frozen once pulled)
 };
 
 export function CaseCard({
@@ -88,6 +90,8 @@ export function CaseCard({
             {face.warnedStamp}
           </p>
         )}
+
+        {face.clock && <WarnedClock warnedAt={face.clock.warnedAt} pulledAt={face.clock.pulledAt} />}
 
         <p className="mt-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-dim">
           <span aria-hidden="true" className={`inline-block transition-transform duration-500 ${open ? "rotate-90" : ""}`}>
