@@ -137,6 +137,7 @@ type IndexState = {
   cases: Map<string, RugCase>; // by coin type
   byWallet: Map<string, { coinType: string; role: RugWallet["role"]; hop: number | null }[]>;
   byCoinObject: Map<string, { coinType: string; role: CoinObjectRef["role"]; digest: string }[]>;
+  listedCount: number | null; // how many memories Walrus said the namespace holds
   loadedAt: number; // when the index was last rebuilt from Walrus (0 = never)
   status: IndexStatus;
   note: string;
@@ -151,7 +152,7 @@ function state(): IndexState {
     g.__rugIndex.byCoinObject = new Map();
     setCases(g.__rugIndex, [...g.__rugIndex.cases.values()]);
   }
-  if (!g.__rugIndex) g.__rugIndex = { cases: new Map(), byWallet: new Map(), byCoinObject: new Map(), loadedAt: 0, status: "unavailable", note: "not loaded yet", refreshing: null };
+  if (!g.__rugIndex) g.__rugIndex = { cases: new Map(), byWallet: new Map(), byCoinObject: new Map(), listedCount: null, loadedAt: 0, status: "unavailable", note: "not loaded yet", refreshing: null };
   return g.__rugIndex;
 }
 
@@ -182,7 +183,7 @@ function setCases(s: IndexState, cases: RugCase[]) {
 function writeSnapshot(s: IndexState) {
   try {
     fs.mkdirSync(path.dirname(SNAPSHOT_FILE), { recursive: true });
-    fs.writeFileSync(SNAPSHOT_FILE, JSON.stringify({ savedAt: new Date().toISOString(), cases: [...s.cases.values()] }, null, 1));
+    fs.writeFileSync(SNAPSHOT_FILE, JSON.stringify({ savedAt: new Date().toISOString(), listedCount: s.listedCount, cases: [...s.cases.values()] }, null, 1));
   } catch (e) {
     console.warn("[rugs] could not write snapshot:", e instanceof Error ? e.message : e);
   }
@@ -213,6 +214,7 @@ export async function refreshRugIndex(): Promise<void> {
       // Never let a short/partial answer wipe out cases we already know from the snapshot.
       const merged = complete ? cases : [...readSnapshot(), ...cases];
       setCases(s, merged);
+      s.listedCount = listed.memories.length;
       s.loadedAt = Date.now();
       s.status = complete ? "fresh" : "partial";
       s.note = complete
@@ -231,6 +233,16 @@ export async function refreshRugIndex(): Promise<void> {
     }
   })();
   return s.refreshing;
+}
+
+// For the website: the rugs in memory, loaded the same safe way a trace loads them.
+export async function loadRugIndex(): Promise<{ cases: RugCase[]; status: IndexStatus; note: string; listedCount: number | null }> {
+  const s = await ensureIndex();
+  let listedCount = s.listedCount;
+  if (listedCount === null) {
+    try { listedCount = JSON.parse(fs.readFileSync(SNAPSHOT_FILE, "utf8")).listedCount ?? null; } catch { /* no snapshot yet */ }
+  }
+  return { cases: [...s.cases.values()], status: s.status, note: s.note, listedCount };
 }
 
 // Makes sure the index is loaded. First load waits; later loads serve the cache and refresh in the background.

@@ -1,0 +1,54 @@
+{
+ "generatedAt": "2026-11-08T00:06:34.524Z",
+ "method": "exact SUI coin object ID followed through its ownership history",
+ "links": [
+  {
+   "from": "VETO",
+   "to": "BUBBLES",
+   "coinId": "0x89793646a6e195fcf33ff5e7915481f9a077a38174703fae6d2740d1b896763e",
+   "relayCount": 10,
+   "leftAt": "2026-11-07T00:25:29.290Z",
+   "arrivedAt": "2026-11-07T00:27:55.164Z",
+   "seconds": 146,
+   "leftTx": "DFVkgk7p7SSujNupF6ExGvnkZ6GjuWj18WpvjSFvcqCQ",
+   "arrivedTx": "2ViU5kjRYSkfPARz91cQqukEGxg2ikGEUKoBbRAN7dVw",
+   "pullTx": "D4ABGoXhv94z8Rk2jGHYs3WC1JEuMyzYQs2a9U2egMty",
+   "relays": [
+    "0xd4498a0784a88b54e6371a2b2f0bc37baa968ec32a8f5dc63807f20fd00b8632",
+    "0x5b97d7f52a876a210d040f26e97e7cead0ed13482ae252433e2935426ceecdb9",
+    "0xac8ea6096f172e155b5b06c925570a1d440f2508f383a4591353e9d98f9d2cd4",
+    "0xe7a1fe6c3845582e4fef8a2d143d9db1ef9ca7b796297534b8de48136aa62753",
+    "0x2b14320070570f1b48c44296d41bc126ba9b18f26a1181ccd8109df92753dc29",
+    "0x3bd47888bbd68bf6731d1ff0f9f4815a3bbb1418f2a28e4733e4f8a841fee4a5",
+    "0x664875d4617875827bdf7b42f3ad87c57b589cf7ef003a7222c4385634fbdd1a",
+    "0x28f0761d96882c6cf0f24a5cad8b81a01ecb4c6a0a1b15ae912681729bc74bad",
+    "0x2e888815cfd94046db6979d0074722d2744f93b4f92c73d339e4b6c05f7f6219",
+    "0x1e8cb67d7a29730bd81a27f576d57618c2158602be3fe4d6a10e29b02c79cc7c"
+   ]
+  },
+  {
+   "from": "AXIS",
+   "to": "VETO",
+   "coinId": "0xe664eea59c7a4b9576ad4409b7975aa33ac125ee760bbb4bf4b6641816e1484e",
+   "relayCount": 10,
+   "leftAt": "2026-11-06T02:37:39.793Z",
+   "arrivedAt": "2026-11-06T02:43:29.377Z",
+   "seconds": 350,
+   "leftTx": "GFgCte16w4h4DiWn8fd7ZPcsF6VkqkaXNyYxUyFfnJbG",
+   "arrivedTx": "5jTaDmYaRdeTBKW8A2eiM11wVHP7cn64CLv6hfzJE232",
+   "pullTx": "7PFLoV6U6nQadpWiP1C971PJ6xSPK5U9tZWSacZDnWvv",
+   "relays": [
+    "0xa2ae9a008dfa5ad94401b920eaca56ff2aae4e534cfa31c12227bbe765f01b65",
+    "0x8cd1e85f4326e8628632b96459e7f452a9d455abed53d018c657cd43f0ba6165",
+    "0x9b02ad93e9840b353ffc81ab73cc17a8b9c1517193459acab7d18ce57a3b83ce",
+    "0xd6f051198833c7f1065ef4d258c05f93925c6c71a5c414c2d5c23266bc15751b",
+    "0x265cd4bbad3e515739486c6e5087a8fe69e26407700104a924bcdd3e677744c2",
+    "0x36c60511d6a01177e53dc635ee849c1ee45daf728d3b55caa47f012c437c7370",
+    "0x2b9ce5d6ec61a9f5901fd0a887678b48333a699206b7cf55a590f470e2d9da67",
+    "0x3b3647f019490c1f176c339305935b02607b527ece9e0375ccafe9fdb09f2f97",
+    "0xa8444a7479886f4800df6a0fe0f9b8e8a1baffec199053fa386fa4a4c333e880",
+    "0x5dd1aa10d4eaf440c78a765cc466b57f5861811b04cd2feeaf7231d473da1cf3"
+   ]
+  }
+ ]
+}

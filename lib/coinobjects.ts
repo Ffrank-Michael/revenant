@@ -78,3 +78,22 @@ export async function walletCoinObjects(address: string): Promise<Map<string, "h
   }
   return seen;
 }
+
+// Everyone who ever owned a coin object, in order (the object's own history). Used to follow money by its coin ID.
+export type OwnerStep = { address: string; at: string; tx: string };
+export async function ownersOfObject(objectId: string): Promise<OwnerStep[]> {
+  const d: {
+    objectVersions: {
+      nodes: { asMoveObject: { owner: { address?: { address: string } } | null } | null; previousTransaction: { digest: string; effects: { timestamp: string } } | null }[];
+    };
+  } = await suiGraphQL(
+    `query($a:SuiAddress!){ objectVersions(address:$a, first:50){ nodes{ asMoveObject{ owner{ ... on AddressOwner{ address{ address } } } } previousTransaction{ digest effects{ timestamp } } } } }`,
+    { a: objectId },
+  );
+  const out: OwnerStep[] = [];
+  for (const n of d.objectVersions.nodes) {
+    const a = n.asMoveObject?.owner?.address?.address;
+    if (a && n.previousTransaction) out.push({ address: normalizeSuiAddress(a), at: n.previousTransaction.effects.timestamp, tx: n.previousTransaction.digest });
+  }
+  return out;
+}
