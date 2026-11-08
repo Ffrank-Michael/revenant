@@ -84,7 +84,15 @@ export function WatchedProof({ w, links }: { w: BoardWatched; links: BoardLink[]
       <p className="mt-3 max-w-3xl text-base leading-7 text-text">{watchedSummary(w, links, nowMs)}</p>
       {w.warning && (
         <p className="mt-2 max-w-3xl text-sm leading-6 text-dim">
-          Our warning is saved on Walrus, a public storage network, so the warning cannot be changed afterwards.
+          Our warning was stored on Walrus at 22:50 UTC on 7 Nov, more than 3 hours before the pull. The warning text is private, but the time it was registered is recorded on the Sui blockchain, and anyone can check it.{" "}
+          <a
+            href="https://suiscan.xyz/mainnet/tx/C2VpwQtKPKeBRasegMDBxyVWgPPmLupXHV8c9LnXY3ww"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-warn underline underline-offset-2"
+          >
+            See the record
+          </a>
         </p>
       )}
 
