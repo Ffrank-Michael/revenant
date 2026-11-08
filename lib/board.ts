@@ -61,7 +61,7 @@ async function getWarnings(): Promise<{ state: WarningState; fromSnapshot: boole
 
 function readJson<T>(file: string, fallback: T): T {
   try {
-    return JSON.parse(fs.readFileSync(path.join(process.cwd(), file), "utf8")) as T;
+    return JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", file.replace(/^data\//, "")), "utf8")) as T;
   } catch {
     return fallback;
   }
@@ -70,7 +70,7 @@ function readJson<T>(file: string, fallback: T): T {
 // The last line the watcher wrote: when it looked, and how much SUI is still in the pool.
 function readWatch(file: string) {
   try {
-    const lines = fs.readFileSync(path.join(process.cwd(), file), "utf8").split("\n").filter((l) => l.includes(" verdict=") && l.includes("addedSui="));
+    const lines = fs.readFileSync(path.join(process.cwd(), "data", file.replace(/^data\//, "")), "utf8").split("\n").filter((l) => l.includes(" verdict=") && l.includes("addedSui="));
     const last = lines[lines.length - 1];
     if (!last) return null;
     const num = (k: string) => Number(new RegExp(`${k}=([\\d.]+)`).exec(last)?.[1] ?? NaN);
