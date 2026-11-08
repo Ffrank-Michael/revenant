@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 // so these lines follow the usual order of the work and are timed, not measured.
 const STEPS = [
   { from: 0, text: "Finding who made the coin" },
-  { from: 7, text: "Following the first money that reached them" },
-  { from: 18, text: "Checking Revenant's memory of past rugs" },
-  { from: 40, text: "Still working. Slow blockchain data can take a little longer" },
+  { from: 7, text: "Following where their first money came from" },
+  { from: 18, text: "Checking it against past rug pulls" },
+  { from: 40, text: "Still working. This one is taking a bit longer" },
 ];
 
 export function LoadingNotice({ onCancel }: { onCancel: () => void }) {
@@ -30,7 +30,7 @@ export function LoadingNotice({ onCancel }: { onCancel: () => void }) {
         <span className="ml-auto font-mono text-xs text-dim">{seconds}s</span>
       </div>
       <p className="mt-3 text-base text-text">{step.text}…</p>
-      <p className="mt-1 text-sm leading-6 text-dim">This usually takes up to 30 seconds. You can leave this page open.</p>
+      <p className="mt-1 text-sm leading-6 text-dim">This can take up to 30 seconds. Please keep this page open.</p>
       <button
         type="button"
         onClick={onCancel}

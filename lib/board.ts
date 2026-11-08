@@ -74,7 +74,8 @@ function readWatch(file: string) {
     const last = lines[lines.length - 1];
     if (!last) return null;
     const num = (k: string) => Number(new RegExp(`${k}=([\\d.]+)`).exec(last)?.[1] ?? NaN);
-    return { checkedAt: last.split(" ")[0], suiAdded: num("addedSui"), suiRemoved: num("removedSui") };
+    const removed = num("removedSui");
+    return { checkedAt: last.split(" ")[0], suiAdded: num("addedSui"), suiRemoved: Number.isFinite(removed) ? removed : 0 };
   } catch {
     return null;
   }
@@ -115,6 +116,8 @@ export type BoardWatched = {
   publishedAt: string;
   status: "watching" | "pulled" | "unknown";
   suiInPool: number | null;
+  suiPutIn: number | null; // from the watcher log, or the saved rug once pulled
+  suiTakenOut: number | null;
   lastCheckAt: string | null;
   warning: { flaggedAt: string; blobId: string | null } | null;
   pull: { at: string; digest: string; suiTaken: number; hoursAfterWarning: number | null } | null;
@@ -144,7 +147,7 @@ const toRug = (c: RugCase): BoardRug => ({
 export async function getBoard(): Promise<BoardData> {
   const notes: string[] = [];
   const [idx, w] = await Promise.all([loadRugIndex(), getWarnings()]);
-  if (idx.status !== "fresh") notes.push("Showing the last saved copy of the case file because Walrus was slow to answer.");
+  if (idx.status !== "fresh") notes.push("Showing the last saved copy because Walrus was slow to answer.");
   if (w.fromSnapshot) notes.push("The warning record is a saved copy.");
 
   const defs = readJson<{ name: string; coinType: string; creator: string; publishedAt: string; watchFile: string }[]>("data/watched.json", []);
@@ -160,6 +163,8 @@ export async function getBoard(): Promise<BoardData> {
       publishedAt: d.publishedAt,
       status: done ? "pulled" : watch ? "watching" : "unknown",
       suiInPool: done ? 0 : watch && Number.isFinite(watch.suiAdded) ? Math.max(0, watch.suiAdded - (watch.suiRemoved || 0)) : null,
+      suiPutIn: done ? done.suiPutIn : watch && Number.isFinite(watch.suiAdded) ? watch.suiAdded : null,
+      suiTakenOut: done ? done.suiTaken : watch ? watch.suiRemoved || 0 : null,
       lastCheckAt: watch?.checkedAt ?? null,
       warning: warn ? { flaggedAt: warn.flaggedAt, blobId: warn.blobId } : null,
       pull:

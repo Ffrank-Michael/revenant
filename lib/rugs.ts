@@ -321,11 +321,11 @@ export async function addRugMemory(trace: TraceResult): Promise<TraceWithMemory>
       matches.push({
         address: w.address,
         foundIn,
-        roleInThisTrace: w.role === "creator" ? "creator" : w.isRelay ? "relay wallet" : `hop ${w.hop} funder`,
+        roleInThisTrace: w.role === "creator" ? "creator" : w.isRelay ? "pass-through wallet" : `hop ${w.hop} funder`,
         pastRugs: hits.map((h) => ({
           coinType: h.coinType,
           symbol: s.cases.get(h.coinType)?.symbol ?? null,
-          roleInThatRug: h.role === "profit" ? "received the profits of" : h.role === "creator" ? "created" : h.role === "controller" ? "held the mint key of" : h.role === "relay" ? "relayed money for" : "funded",
+          roleInThatRug: h.role === "profit" ? "received the profits of" : h.role === "creator" ? "created" : h.role === "controller" ? "held the mint key of" : h.role === "relay" ? "passed money along for" : "funded",
           confirmedAt: s.cases.get(h.coinType)?.confirmedAt ?? "",
         })),
       });

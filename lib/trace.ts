@@ -559,7 +559,7 @@ function buildWarnings(p: {
     w(
       "RELAY_CHAIN",
       "warning",
-      `Funded through a relay chain: the creator's money passed through ${relayCount} pass-through wallets (each held the same amount for only seconds or minutes before forwarding it). This is a common way to hide where money came from.`,
+      `The creator's money passed through ${relayCount} other wallets in a row. Each one held the same amount for only seconds or minutes, then sent it on. This is a common way to hide where money came from.`,
     );
   }
 
@@ -596,7 +596,7 @@ function describeTrail(who: string, trail: Trail): string[] {
   const ws = trail.wallets;
   ws.forEach((wallet, i) => {
     const f = wallet.firstFunding;
-    const name = i === 0 ? `${who} ${short(wallet.address)}` : `${wallet.isRelay ? "Relay wallet" : `Hop ${wallet.hop} wallet`} ${short(wallet.address)}`;
+    const name = i === 0 ? `${who} ${short(wallet.address)}` : `${wallet.isRelay ? "Pass-through wallet" : `Hop ${wallet.hop} wallet`} ${short(wallet.address)}`;
     const tag = wallet.exchange ? ` (${wallet.exchange})` : wallet.isBusy ? " (very busy wallet)" : "";
     if (f) {
       lines.push(`${name}${tag} got its first ${sui(f.amountSui)} SUI from ${short(f.from)} on ${f.at.slice(0, 19).replace("T", " ")} UTC.`);

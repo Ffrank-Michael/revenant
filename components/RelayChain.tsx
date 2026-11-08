@@ -24,13 +24,13 @@ export function RelayChain({ link }: { link: BoardLink }) {
   const chosen = sel !== null ? hops[sel] : null;
 
   return (
-    <div className="paper rounded-lg border border-line p-4 pl-11 sm:p-5 sm:pl-12">
-      <p className="font-mono text-[11px] leading-5 text-warn">
-        {link.from} to {link.to}: the same SUI coin passed through {link.relayCount} relay wallets in {fmtDuration(link.seconds)}
+    <div className="rounded-lg border border-line bg-ink/40 p-3 sm:p-4">
+      <p className="text-sm leading-6 text-warn">
+        The same SUI coin went from {link.from} to {link.to} through {link.relayCount} other wallets in {fmtDuration(link.seconds)}.
       </p>
       <p className="mt-1 text-xs leading-5 text-dim">
         {fmtDate(link.leftAt)}. {typical !== null && gaps.length > 1 ? `After the first wallet, each one passed it on about ${Math.round(typical)} seconds later. ` : ""}
-        Tap a wallet to see it in full.
+        Tap a wallet to see all of it.
       </p>
 
       <ol className="relative mt-4 flex flex-col lg:grid lg:grid-cols-10">
@@ -56,7 +56,7 @@ export function RelayChain({ link }: { link: BoardLink }) {
                 type="button"
                 onClick={() => setSel(isSel ? null : i)}
                 aria-pressed={isSel}
-                aria-label={`Relay wallet ${i + 1} of ${hops.length}, ${shortAddr(h.address)}`}
+                aria-label={`Wallet ${i + 1} of ${hops.length}, ${shortAddr(h.address)}`}
                 className={`flex min-h-[34px] min-w-0 flex-1 items-center justify-between gap-2 rounded border px-2 py-1 text-left font-mono text-[11px] leading-4 transition-colors lg:min-h-0 lg:flex-col lg:justify-start lg:px-1 lg:text-center ${
                   isSel ? "border-warn bg-warn/10 text-text" : "border-line text-dim hover:border-warn/60"
                 }`}
@@ -80,7 +80,7 @@ export function RelayChain({ link }: { link: BoardLink }) {
         <div className="overflow-hidden" inert={!chosen}>
           {chosen && sel !== null && (
             <div className="mt-4 flex flex-col gap-3 border-t border-line pt-4">
-              <AddressText label={`Relay wallet ${sel + 1} of ${hops.length}${sel === 0 ? " (first)" : sel === hops.length - 1 ? " (last)" : ""}`} value={chosen.address} />
+              <AddressText label={`Wallet ${sel + 1} of ${hops.length}${sel === 0 ? " (first)" : sel === hops.length - 1 ? " (last)" : ""}`} value={chosen.address} />
               <AddressText label="Transaction where it received the coin" value={chosen.tx} />
               <p className="text-xs text-dim">Received at {fmtClock(chosen.arrivedAt)} UTC.</p>
             </div>

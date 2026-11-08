@@ -36,3 +36,11 @@ export const fmtElapsed = (ms: number) => {
 export const shortAddr = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 const WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
 export const numberWord = (n: number) => (n >= 0 && n <= 10 ? WORDS[n] : String(n));
+
+// "20h 41m" (no seconds), for a gap that has stopped counting
+export const fmtElapsedShort = (ms: number) => {
+  const t = Math.max(0, Math.floor(ms / 60000));
+  return `${Math.floor(t / 60)}h ${pad(t % 60)}m`;
+};
+// "6 Nov"
+export const fmtDay = (iso: string) => fmtDate(iso).slice(0, -5);

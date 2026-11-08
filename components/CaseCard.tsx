@@ -1,113 +1,61 @@
 "use client";
 
-import { useId, type ReactNode } from "react";
 import { WarnedClock } from "./WarnedClock";
 
-// One case-file card. The face is always visible; the evidence opens smoothly below it when tapped.
+// One card says one thing a stranger can repeat. All the detail lives in the proof panel.
 
 export type CardFace = {
-  fileNo: string;
   name: string;
-  published: string; // "7 Nov 2026"
-  pulled: string | null; // "7 Nov 2026"
-  putIn: string | null;
-  pulledOut: string | null;
-  stamp: { text: string; tone: "alert" | "plain" };
-  statusLine: string; // plain words under the stamp
-  extra?: { label: string; value: string } | null; // e.g. "SUI still in the pool"
-  warnedStamp?: string | null; // the BUBBLES "warned before any pull" stamp
-  clock?: { warnedAt: string; pulledAt: string | null } | null; // live count-up from the warning (frozen once pulled)
+  status: { label: string; tone: "alert" | "plain" };
+  sentence: string; // the main sentence, large
+  linkLine?: string | null; // one line about where the money went (or came from)
+  clock?: { warnedAt: string; pulledAt: string | null } | null; // live count from our warning
 };
 
 export function CaseCard({
   face,
   open,
   onToggle,
-  children,
   small = false,
   delay = 0,
-  expandInside = true,
+  controls,
 }: {
   face: CardFace;
   open: boolean;
   onToggle: () => void;
-  children?: ReactNode; // the evidence
   small?: boolean;
   delay?: number;
-  expandInside?: boolean;
+  controls?: string;
 }) {
-  const id = useId();
+  const alert = face.status.tone === "alert";
   return (
-    <article className={`card-in paper relative min-w-0 rounded-lg border ${open ? "border-warn/60" : "border-line"} transition-colors duration-500`} style={{ animationDelay: `${delay}ms` }}>
+    <article
+      className={`card-in paper relative flex min-w-0 flex-col rounded-lg border transition-colors duration-500 ${open ? "border-warn/60" : "border-line"} ${
+        small ? "p-3 pl-9" : "p-4 pl-11 sm:p-5 sm:pl-12 lg:p-4 lg:pl-10"
+      }`}
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <h3 className={`font-serif leading-none text-text ${small ? "text-2xl" : "text-4xl lg:text-3xl"}`}>{face.name}</h3>
+      <span
+        className="stamp mt-3 self-start text-[10px]"
+        style={{ ["--tilt" as string]: alert ? "-3deg" : "2deg", color: alert ? "var(--warn)" : "var(--text)" }}
+      >
+        {face.status.label}
+      </span>
+
+      <p className={`mt-4 font-serif leading-snug text-text ${small ? "text-base" : "text-xl lg:text-lg"}`}>{face.sentence}</p>
+      {face.linkLine && <p className="mt-3 text-sm leading-6 text-dim">{face.linkLine}</p>}
+      {face.clock && <WarnedClock warnedAt={face.clock.warnedAt} pulledAt={face.clock.pulledAt} />}
+
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        aria-controls={expandInside ? id : undefined}
-        className={`block w-full text-left ${small ? "p-3 pl-9" : "p-4 pl-11 sm:p-5 sm:pl-12"}`}
+        aria-controls={controls}
+        className="mt-5 self-start whitespace-nowrap rounded-full border border-warn/60 px-4 py-2 font-mono text-xs uppercase tracking-wider text-warn transition-colors hover:bg-warn hover:text-ink"
       >
-        <div className="flex items-start justify-between gap-3">
-          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-dim">File {face.fileNo}</span>
-          <span className="stamp text-[10px]" style={{ ["--tilt" as string]: face.stamp.tone === "alert" ? "3deg" : "-2deg", color: face.stamp.tone === "alert" ? "var(--warn)" : "var(--text)" }}>
-            {face.stamp.text}
-          </span>
-        </div>
-
-        <h3 className={`mt-2 font-serif leading-none text-text ${small ? "text-2xl" : "text-4xl"}`}>{face.name}</h3>
-        <p className={`mt-2 text-dim ${small ? "text-xs" : "text-sm"}`}>{face.statusLine}</p>
-
-        <dl className={`mt-3 grid gap-x-3 gap-y-2 ${small ? "grid-cols-2 text-xs" : "grid-cols-2 text-sm"}`}>
-          <div>
-            <dt className="font-mono text-[10px] uppercase tracking-widest text-dim">Published</dt>
-            <dd className="text-text">{face.published}</dd>
-          </div>
-          <div>
-            <dt className="font-mono text-[10px] uppercase tracking-widest text-dim">Pulled</dt>
-            <dd className="text-text">{face.pulled ?? "Not yet"}</dd>
-          </div>
-          {face.putIn && (
-            <div>
-              <dt className="font-mono text-[10px] uppercase tracking-widest text-dim">Put in</dt>
-              <dd className="whitespace-nowrap font-mono text-text">{face.putIn}</dd>
-            </div>
-          )}
-          {face.pulledOut && (
-            <div>
-              <dt className="font-mono text-[10px] uppercase tracking-widest text-dim">Pulled out</dt>
-              <dd className="whitespace-nowrap font-mono text-warn">{face.pulledOut}</dd>
-            </div>
-          )}
-          {face.extra && (
-            <div className="col-span-2">
-              <dt className="font-mono text-[10px] uppercase tracking-widest text-dim">{face.extra.label}</dt>
-              <dd className="font-mono text-text">{face.extra.value}</dd>
-            </div>
-          )}
-        </dl>
-
-        {face.warnedStamp && (
-          <p className="stamp mt-4 text-[10px] text-warn" style={{ ["--tilt" as string]: "-2.5deg", animationDelay: `${delay + 500}ms` }}>
-            {face.warnedStamp}
-          </p>
-        )}
-
-        {face.clock && <WarnedClock warnedAt={face.clock.warnedAt} pulledAt={face.clock.pulledAt} />}
-
-        <p className="mt-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-dim">
-          <span aria-hidden="true" className={`inline-block transition-transform duration-500 ${open ? "rotate-90" : ""}`}>
-            &#9656;
-          </span>
-          {open ? "Hide the evidence" : "Tap for the evidence"}
-        </p>
+        {open ? "Hide the proof" : "See the proof"}
       </button>
-
-      {expandInside && (
-        <div id={id} className="grid transition-[grid-template-rows] duration-700 ease-in-out" style={{ gridTemplateRows: open ? "1fr" : "0fr" }}>
-          <div className="overflow-hidden" inert={!open}>
-            <div className={`border-t border-line ${small ? "p-3 pl-9" : "p-4 pl-11 sm:p-5 sm:pl-12"}`}>{children}</div>
-          </div>
-        </div>
-      )}
     </article>
   );
 }

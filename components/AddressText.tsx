@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-// A label, the FULL value in monospace, and a copy button. Used for wallets, digests and coin IDs.
+// A label, the FULL value on one line (it scrolls sideways if it is too long), and a copy button.
+// Used for wallets, transaction IDs and coin IDs.
 export function AddressText({ label, value }: { label: string; value: string }) {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
@@ -36,13 +37,15 @@ export function AddressText({ label, value }: { label: string; value: string }) 
   return (
     <div className="min-w-0">
       <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-dim">{label}</p>
-      <div className="mt-1 flex items-start gap-2">
-        <code className="min-w-0 flex-1 break-all font-mono text-xs leading-5 text-text">{value}</code>
+      <div className="mt-1 flex items-center gap-2">
+        <code tabIndex={0} className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap rounded border border-line bg-ink/60 px-2 py-1.5 font-mono text-xs leading-5 text-text">
+          {value}
+        </code>
         <button
           type="button"
           onClick={copy}
           aria-label={`Copy ${label}`}
-          className="shrink-0 rounded border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-dim transition-colors hover:border-warn hover:text-warn"
+          className="shrink-0 rounded border border-line px-2 py-1.5 font-mono text-[10px] uppercase tracking-widest text-dim transition-colors hover:border-warn hover:text-warn"
         >
           {copied ? "Copied" : "Copy"}
         </button>

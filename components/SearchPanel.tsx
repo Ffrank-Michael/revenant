@@ -55,7 +55,7 @@ export function SearchPanel() {
         >
           Try BUBBLES
         </button>
-        <span className="text-sm text-dim">An example coin Revenant is watching right now.</span>
+        <span className="text-sm text-dim">An example coin we are watching right now.</span>
       </div>
 
       {view.name === "loading" && <LoadingNotice onCancel={() => running.current?.abort()} />}
@@ -65,15 +65,15 @@ export function SearchPanel() {
       {/* Step 2 only: proof that the answer arrived. The real verdict and trail come in steps 3 and 4. */}
       {view.name === "done" && (
         <div role="status" className="border-l-2 border-warn pl-3 text-sm leading-6 text-dim">
-          <p className="font-mono text-[11px] uppercase tracking-widest text-warn">Step 2 preview · answer received</p>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-warn">Result (preview)</p>
           <p className="mt-1 text-text">
             {view.data.coin.symbol ?? "This coin"} was made by
             <span className="mt-1 block break-all font-mono text-xs">{view.data.creator.address}</span>
           </p>
           <p className="mt-1">
-            {view.data.warnings.length} note{view.data.warnings.length === 1 ? "" : "s"} found,{" "}
+            {view.data.warnings.length} warning{view.data.warnings.length === 1 ? "" : "s"} found and{" "}
             {view.data.rugMatches.length + view.data.coinObjectMatches.length} link
-            {view.data.rugMatches.length + view.data.coinObjectMatches.length === 1 ? "" : "s"} to past rugs. The full verdict comes next.
+            {view.data.rugMatches.length + view.data.coinObjectMatches.length === 1 ? "" : "s"} to past rug pulls. The full result comes next.
           </p>
         </div>
       )}
