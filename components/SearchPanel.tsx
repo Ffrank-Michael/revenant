@@ -56,7 +56,7 @@ export function SearchPanel() {
         >
           Try BUBBLES
         </button>
-        <span className="text-sm text-dim">An example coin we are watching right now.</span>
+        <span className="text-sm text-dim">An example coin from the story below.</span>
       </div>
 
       {view.name === "loading" && <LoadingNotice onCancel={() => running.current?.abort()} />}
