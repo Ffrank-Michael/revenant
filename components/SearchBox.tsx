@@ -30,7 +30,7 @@ export function SearchBox({
   const box = useRef<HTMLDivElement>(null);
   const hasValue = value.trim() !== "";
 
-  // Open whenever there is text (for example after "Try BUBBLES" fills it in).
+  // Open whenever there is text (for example after "Try a rug we caught" fills it in).
   useEffect(() => {
     if (hasValue) setOpen(true);
   }, [hasValue]);

@@ -1,12 +1,13 @@
 {
- "savedAt": "2026-11-08T02:22:57.969Z",
+ "savedAt": "2026-11-08T06:43:56.889Z",
+ "listedCount": 11,
  "cases": [
   {
    "v": 1,
    "coinType": "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0::bubbles::BUBBLES",
    "symbol": "Bubbles",
    "publishedAt": "2026-11-07T00:28:12.977Z",
-   "confirmedAt": "2026-11-08T02:21:59.921Z",
+   "confirmedAt": "2026-11-08T06:42:23.638Z",
    "methods": [
     "liquidity_pull"
    ],
@@ -104,7 +105,11 @@
      "coinAmount": 627479422.8562757
     }
    ],
-   "reviewStatus": "auto_verified_awaiting_review",
+   "confirmedBy": {
+    "by": "project owner",
+    "how": "checked the transactions on Suiscan",
+    "at": "2026-11-08T06:42:23.635Z"
+   },
    "coinObjects": [
     {
      "id": "0x72941d12516c2326bac2b9a24a26e6e9cef725591a658ad983b589abb19b0863",

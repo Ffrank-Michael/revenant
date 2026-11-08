@@ -1,0 +1,71 @@
+{
+ "ok": true,
+ "asOf": "2026-11-08T02:21:45.437Z",
+ "coin": {
+  "type": "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0::bubbles::BUBBLES",
+  "symbol": "Bubbles",
+  "name": "Bubbles",
+  "supply": 1000000000,
+  "decimals": 9
+ },
+ "creator": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+ "controller": null,
+ "publishedAt": "2026-11-07T00:28:12.977Z",
+ "verdict": "rugged",
+ "methods": [
+  "liquidity_pull"
+ ],
+ "reasons": [
+  "The creator put 8,000.03 SUI into a trading pool and took 12,754.66 SUI back out (159% of it).",
+  "In total the creator came out 4,754.61 SUI ahead (took out 12,754.66 SUI, put in or spent 8,000.05 SUI)."
+ ],
+ "numbers": {
+  "soldPctOfSupply": 0,
+  "movedPctOfSupply": 0,
+  "creatorHoldingPctOfSupply": 62.74,
+  "suiTakenFromSales": 0,
+  "liquidityAddedSui": 8000.025021998,
+  "liquidityRemovedSui": 12754.655336497,
+  "totalSuiTaken": 12754.655336497,
+  "suiSpentBuying": 0.022626499,
+  "netSuiGained": 4754.607688000001
+ },
+ "firstRugAt": "2026-11-08T02:21:33.198Z",
+ "evidence": [
+  {
+   "digest": "GNUj7cHVwjKCNxRPxmX73dpYE2aHibnPGoUNwiGwgPAt",
+   "at": "2026-11-07T00:28:28.518Z",
+   "wallet": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+   "kind": "liquidity_add",
+   "coinAmount": 999999900,
+   "suiAmount": 8000.025021998,
+   "note": "Put 8,000.03 SUI and 999,999,900 coins into a pool."
+  },
+  {
+   "digest": "Ek2rSa3fox6JKmDggDckyU2MPfJHJi2BtLnupJZsnXBw",
+   "at": "2026-11-08T02:21:33.198Z",
+   "wallet": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+   "kind": "liquidity_remove",
+   "coinAmount": 627479422.8562757,
+   "suiAmount": 12754.655336497,
+   "note": "Took 12,754.66 SUI (and 627,479,423 coins) back out of the pool."
+  }
+ ],
+ "movedTo": [],
+ "profitDestinations": [],
+ "unclassifiedEvents": [],
+ "scan": {
+  "transactionsChecked": 3,
+  "complete": true
+ },
+ "summary": [
+  "Bubbles was published by 0xeb1a41…0b89 on 2026-11-07 00:28:12 UTC.",
+  "Verdict: RUGGED (liquidity pulled).",
+  "The creator put 8,000.03 SUI into a trading pool and took 12,754.66 SUI back out (159% of it).",
+  "In total the creator came out 4,754.61 SUI ahead (took out 12,754.66 SUI, put in or spent 8,000.05 SUI)."
+ ],
+ "stats": {
+  "graphqlCalls": 5,
+  "seconds": 3.2
+ }
+}

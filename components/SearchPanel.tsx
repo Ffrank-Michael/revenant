@@ -8,7 +8,7 @@ import { ResultCard } from "./ResultCard";
 import { fetchTrace } from "@/lib/traceClient";
 import type { TraceWithMemory } from "@/lib/rugs";
 
-// The example coin used by the "Try BUBBLES" button.
+// The example coin used by the "Try a rug we caught" button.
 const BUBBLES_COIN = "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0::bubbles::BUBBLES";
 
 type View =
@@ -54,7 +54,7 @@ export function SearchPanel() {
           }}
           className="rounded-full border border-warn/50 px-4 py-2 font-mono text-xs uppercase tracking-widest text-warn transition-colors hover:bg-warn hover:text-ink disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-warn"
         >
-          Try BUBBLES
+          Try a rug we caught
         </button>
         <span className="text-sm text-dim">An example coin from the story below.</span>
       </div>

@@ -81,9 +81,9 @@ function exampleStory(chain: string[], items: Map<string, { rug?: BoardRug; watc
     const d = when(n);
     if (i === 0) {
       parts.push(`${n} was rug pulled${d ? ` on ${d}` : ""}.`);
-      parts.push(`The money it took was sent to the person who launched ${next}${last ? tail(next) : ""}.`);
+      parts.push(`The money it took was sent to the wallet that launched ${next}${last ? tail(next) : ""}.`);
     } else {
-      parts.push(`${n} was rug pulled${d ? ` on ${d}` : ""}, and that money was sent to the person who launched ${next}${last ? tail(next) : ""}.`);
+      parts.push(`${n} was rug pulled${d ? ` on ${d}` : ""}, and that money was sent to the wallet that launched ${next}${last ? tail(next) : ""}.`);
     }
   });
   return parts.join(" ");
@@ -203,7 +203,7 @@ export function CaseBoard() {
         <Section>
           <h2 className="font-serif text-2xl leading-[1.1] text-text sm:text-3xl">Other rug pulls Revenant remembers</h2>
           <p className="mt-3 max-w-2xl text-base leading-7 text-dim">
-            We have not found a link between these and any other coin. Similar tricks alone do not show that one person is behind them.
+            We found no exact coin link between these five saved rugs. Similar tricks alone do not show that one person is behind them.
           </p>
           {/* A swipeable row on phones, five across on desktop */}
           <div className="-mx-4 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0">
