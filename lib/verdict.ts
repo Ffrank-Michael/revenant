@@ -74,7 +74,7 @@ export function buildVerdict(t: TraceWithMemory): Verdict {
     );
   }
 
-  const linked = t.alreadyConfirmedRug || byCoin.size > 0 || byRug.size > 0 || !!relay;
+  const linked = t.alreadyConfirmedRug || byCoin.size > 0 || byRug.size > 0;
 
   const signs: string[] = [];
   for (const w of t.warnings) {
@@ -86,7 +86,7 @@ export function buildVerdict(t: TraceWithMemory): Verdict {
   if (linked) {
     return { level: "linked", headline: "This coin is linked to rug pulls we know", note: null, reasons };
   }
-  if (signs.length > 0) {
+  if (signs.length > 0 || relay) {
     return { level: "signs", headline: "We found some warning signs", note: null, reasons };
   }
   return {
