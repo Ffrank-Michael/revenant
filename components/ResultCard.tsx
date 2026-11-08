@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AddressText } from "./AddressText";
 import { WarnedClock } from "./WarnedClock";
+import { Trail } from "./Trail";
 import { buildVerdict } from "@/lib/verdict";
-import { fmtDateTime } from "@/lib/format";
+
 import type { TraceWithMemory } from "@/lib/rugs";
 import type { BoardWatched } from "@/lib/board";
 
@@ -54,16 +54,10 @@ export function ResultCard({ data }: { data: TraceWithMemory }) {
         </ul>
       )}
 
-      <div className="mt-6 flex flex-col gap-3 border-t border-line pt-5">
-        <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-warn">Coin created</p>
-        <p className="text-base leading-7 text-text">
-          {name} was created on {fmtDateTime(data.creator.publishedAt)} by this wallet.
-        </p>
-        <AddressText label="Creator wallet" value={data.creator.address} account />
-      </div>
-
-      {/* Next step: the trail of wallets goes here. */}
-      <div id="trail-slot" data-slot="trail" />
+      <Trail data={data} />
+      {data.controllerTrail && data.creator.controller && (
+        <Trail data={data} controller title="Where the money of the wallet that controls the coin came from" />
+      )}
     </div>
   );
 }

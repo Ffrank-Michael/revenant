@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 // A label, the FULL value on one line (it scrolls sideways if it is too long), and a copy button.
 // Used for wallets, transaction IDs and coin IDs.
-export function AddressText({ label, value, tx = false, coin = false, account = false }: { label: string; value: string; tx?: boolean; coin?: boolean; account?: boolean }) {
+export function AddressText({ label, value, tx = false, coin = false, account = false, wrap = false }: { label: string; value: string; tx?: boolean; coin?: boolean; account?: boolean; wrap?: boolean }) {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) return;
@@ -37,8 +37,13 @@ export function AddressText({ label, value, tx = false, coin = false, account = 
   return (
     <div className="min-w-0">
       <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-dim">{label}</p>
-      <div className="mt-1 flex items-center gap-2">
-        <code tabIndex={0} className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap rounded border border-line bg-ink/60 px-2 py-1.5 font-mono text-xs leading-5 text-text">
+      <div className={`mt-1 flex items-center gap-2 ${wrap ? "flex-wrap sm:flex-nowrap" : ""}`}>
+        <code
+          tabIndex={0}
+          className={`min-w-0 flex-1 rounded border border-line bg-ink/60 px-2 py-1.5 font-mono text-xs leading-5 text-text ${
+            wrap ? "basis-full break-all sm:basis-0 sm:overflow-x-auto sm:whitespace-nowrap sm:break-normal" : "overflow-x-auto whitespace-nowrap"
+          }`}
+        >
           {value}
         </code>
         <button

@@ -67,8 +67,10 @@ export function buildVerdict(t: TraceWithMemory): Verdict {
   const relay = t.warnings.find((w) => w.code === "RELAY_CHAIN");
   if (relay) {
     const n = /passed through (\d+) other wallets/.exec(relay.message)?.[1];
+    // The trace stops counting at its cap, so the real number may be higher.
+    const capped = t.trail.stoppedBecause.code === "relay_cap" || t.controllerTrail?.stoppedBecause.code === "relay_cap";
     reasons.push(
-      `The creator's money passed through ${n ? `${n} other wallets` : "many other wallets"} in a row. Each one held it for only seconds or minutes, then sent it on. This is a common way to hide where money came from.`,
+      `The creator's money passed through ${capped ? "at least " : ""}${n ? `${n} other wallets` : "many other wallets"} in a row. Each one held it for only seconds or minutes, then sent it on. This is a common way to hide where money came from.`,
     );
   }
 

@@ -165,13 +165,13 @@ export function CaseBoard() {
             <p className="max-w-2xl text-base leading-7 text-text">{exampleStory(chain, items)}</p>
           </div>
 
-          <div className="mt-8 flex flex-col lg:flex-row lg:items-start">
+          <div className="mt-8 flex flex-col lg:flex-row lg:items-stretch">
             {chain.map((name, i) => {
               const next = chain[i + 1];
               const link = next ? links.find((l) => l.from === name && l.to === next) : undefined;
               return (
                 <Fragment key={name}>
-                  <div className="mx-auto w-full min-w-0 max-w-xl lg:mx-0 lg:max-w-none lg:flex-1">
+                  <div className="mx-auto w-full min-w-0 max-w-xl lg:mx-0 lg:flex lg:max-w-none lg:flex-1 lg:flex-col">
                     <CaseCard face={faceFor(name)} open={open === name} onToggle={() => toggle(name)} delay={i * 250} controls={`proof-${name}`} />
                     {/* phone: the proof opens right under the card you tapped */}
                     <div className="lg:hidden">
@@ -243,7 +243,7 @@ function Counter({ value, label, sub }: { value: string; label: string; sub?: st
     <div className="bg-paper p-3 text-center sm:p-4">
       <dd className="font-serif text-3xl text-text sm:text-4xl">{value}</dd>
       <dt className="mt-1 text-xs leading-4 text-dim">{label}</dt>
-      {sub && <p className="mt-0.5 text-[11px] text-dim">{sub}</p>}
+      {sub && <p className="mt-0.5 text-balance text-[11px] text-dim">{sub}</p>}
     </div>
   );
 }

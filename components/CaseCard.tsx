@@ -30,7 +30,7 @@ export function CaseCard({
   const alert = face.status.tone === "alert";
   return (
     <article
-      className={`card-in paper relative flex min-w-0 flex-col rounded-lg border transition-colors duration-500 ${open ? "border-warn/60" : "border-line"} ${
+      className={`card-in paper relative flex min-w-0 flex-1 flex-col rounded-lg border transition-colors duration-500 ${open ? "border-warn/60" : "border-line"} ${
         small ? "p-3 pl-9" : "p-4 pl-11 sm:p-5 sm:pl-12 lg:p-4 lg:pl-10"
       }`}
       style={{ animationDelay: `${delay}ms` }}
@@ -47,15 +47,17 @@ export function CaseCard({
       {face.linkLine && <p className="mt-3 text-sm leading-6 text-dim">{face.linkLine}</p>}
       {face.clock && <WarnedClock warnedAt={face.clock.warnedAt} pulledAt={face.clock.pulledAt} />}
 
+      <div className="mt-auto pt-5">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={controls}
-        className="mt-5 self-start whitespace-nowrap rounded-full border border-warn/60 px-4 py-2 font-mono text-xs uppercase tracking-wider text-warn transition-colors hover:bg-warn hover:text-ink"
+        className="whitespace-nowrap rounded-full border border-warn/60 px-4 py-2 font-mono text-xs uppercase tracking-wider text-warn transition-colors hover:bg-warn hover:text-ink"
       >
         {open ? "Hide the proof" : "See the proof"}
       </button>
+      </div>
     </article>
   );
 }
