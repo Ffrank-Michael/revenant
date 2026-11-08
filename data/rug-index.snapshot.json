@@ -1,7 +1,128 @@
 {
- "savedAt": "2026-11-08T00:14:25.771Z",
- "listedCount": 9,
+ "savedAt": "2026-11-08T02:22:57.969Z",
  "cases": [
+  {
+   "v": 1,
+   "coinType": "0x25607c967deeb5e22e48d275bd2af73eb147b57c67e679c8f42f6e925e767ee0::bubbles::BUBBLES",
+   "symbol": "Bubbles",
+   "publishedAt": "2026-11-07T00:28:12.977Z",
+   "confirmedAt": "2026-11-08T02:21:59.921Z",
+   "methods": [
+    "liquidity_pull"
+   ],
+   "creator": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+   "controller": null,
+   "wallets": [
+    {
+     "address": "0xeb1a4123e5cd6a63ba9558c362b27b8b3bced6455dd1ba47ef4d1582e1250b89",
+     "role": "creator",
+     "hop": 0
+    },
+    {
+     "address": "0x1e8cb67d7a29730bd81a27f576d57618c2158602be3fe4d6a10e29b02c79cc7c",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x2e888815cfd94046db6979d0074722d2744f93b4f92c73d339e4b6c05f7f6219",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x28f0761d96882c6cf0f24a5cad8b81a01ecb4c6a0a1b15ae912681729bc74bad",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x664875d4617875827bdf7b42f3ad87c57b589cf7ef003a7222c4385634fbdd1a",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x3bd47888bbd68bf6731d1ff0f9f4815a3bbb1418f2a28e4733e4f8a841fee4a5",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x2b14320070570f1b48c44296d41bc126ba9b18f26a1181ccd8109df92753dc29",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xe7a1fe6c3845582e4fef8a2d143d9db1ef9ca7b796297534b8de48136aa62753",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xac8ea6096f172e155b5b06c925570a1d440f2508f383a4591353e9d98f9d2cd4",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0x5b97d7f52a876a210d040f26e97e7cead0ed13482ae252433e2935426ceecdb9",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xd4498a0784a88b54e6371a2b2f0bc37baa968ec32a8f5dc63807f20fd00b8632",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xe1f9891e6cbb2faf32b39a9478440ad3ce20449f0bc8cb67627645d66fd8be49",
+     "role": "funder",
+     "hop": 1
+    },
+    {
+     "address": "0x5dd1aa10d4eaf440c78a765cc466b57f5861811b04cd2feeaf7231d473da1cf3",
+     "role": "relay",
+     "hop": null
+    },
+    {
+     "address": "0xa8444a7479886f4800df6a0fe0f9b8e8a1baffec199053fa386fa4a4c333e880",
+     "role": "relay",
+     "hop": null
+    }
+   ],
+   "suiPutIn": 8000.0476484969995,
+   "suiTaken": 12754.655336497,
+   "netSuiGained": 4754.607688000001,
+   "firstRugAt": "2026-11-08T02:21:33.198Z",
+   "evidence": [
+    {
+     "kind": "liquidity_add",
+     "digest": "GNUj7cHVwjKCNxRPxmX73dpYE2aHibnPGoUNwiGwgPAt",
+     "at": "2026-11-07T00:28:28.518Z",
+     "suiAmount": 8000.025021998,
+     "coinAmount": 999999900
+    },
+    {
+     "kind": "liquidity_remove",
+     "digest": "Ek2rSa3fox6JKmDggDckyU2MPfJHJi2BtLnupJZsnXBw",
+     "at": "2026-11-08T02:21:33.198Z",
+     "suiAmount": 12754.655336497,
+     "coinAmount": 627479422.8562757
+    }
+   ],
+   "reviewStatus": "auto_verified_awaiting_review",
+   "coinObjects": [
+    {
+     "id": "0x72941d12516c2326bac2b9a24a26e6e9cef725591a658ad983b589abb19b0863",
+     "role": "pull_output",
+     "digest": "Ek2rSa3fox6JKmDggDckyU2MPfJHJi2BtLnupJZsnXBw"
+    },
+    {
+     "id": "0x89793646a6e195fcf33ff5e7915481f9a077a38174703fae6d2740d1b896763e",
+     "role": "gas_coin",
+     "digest": "Ek2rSa3fox6JKmDggDckyU2MPfJHJi2BtLnupJZsnXBw"
+    },
+    {
+     "id": "0xf616a42991a58d45ee288e45b34e8f9b313375421ce9e78aaf4d1aba38857abd",
+     "role": "gas_coin",
+     "digest": "Ek2rSa3fox6JKmDggDckyU2MPfJHJi2BtLnupJZsnXBw"
+    }
+   ]
+  },
   {
    "v": 1,
    "coinType": "0xbde8cce444761bbb0d1dbc72baacc0c4fe9a10b249c605785636180613326d85::brrr::BRRR",
