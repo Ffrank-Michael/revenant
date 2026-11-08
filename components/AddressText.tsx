@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 // A label, the FULL value on one line (it scrolls sideways if it is too long), and a copy button.
 // Used for wallets, transaction IDs and coin IDs.
-export function AddressText({ label, value }: { label: string; value: string }) {
+export function AddressText({ label, value, tx = false }: { label: string; value: string; tx?: boolean }) {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) return;
@@ -49,6 +49,16 @@ export function AddressText({ label, value }: { label: string; value: string }) 
         >
           {copied ? "Copied" : "Copy"}
         </button>
+        {tx && (
+          <a
+            href={`https://suiscan.xyz/mainnet/tx/${value}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 whitespace-nowrap rounded border border-warn/50 px-2 py-1.5 font-mono text-[10px] uppercase tracking-widest text-warn transition-colors hover:bg-warn hover:text-ink"
+          >
+            Open on Suiscan
+          </a>
+        )}
       </div>
     </div>
   );

@@ -81,7 +81,7 @@ export function RelayChain({ link }: { link: BoardLink }) {
           {chosen && sel !== null && (
             <div className="mt-4 flex flex-col gap-3 border-t border-line pt-4">
               <AddressText label={`Wallet ${sel + 1} of ${hops.length}${sel === 0 ? " (first)" : sel === hops.length - 1 ? " (last)" : ""}`} value={chosen.address} />
-              <AddressText label="Transaction where it received the coin" value={chosen.tx} />
+              <AddressText label="Transaction where it received the coin" value={chosen.tx} tx />
               <p className="text-xs text-dim">Received at {fmtClock(chosen.arrivedAt)} UTC.</p>
             </div>
           )}

@@ -90,6 +90,7 @@ export type BoardRug = {
   suiPutIn: number;
   suiTaken: number;
   exchange: string | null;
+  coinsTakenBackPct: number | null; // share of the coins the creator put in the pool that it took back out at the pull
   checkedBy: "project owner" | "investigator" | "revenant";
   pullDigests: string[];
   pullCoinObjects: { id: string; role: string }[];
@@ -130,6 +131,15 @@ export type BoardData = {
   notes: string[];
 };
 
+// Exchange names found by reading the pull transaction (the same Cetus contract as the checked ones), for rugs saved without one.
+const EXCHANGE_FALLBACK = readJson<Record<string, string>>("data/pull-exchanges.json", {});
+
+function takenBackPct(c: RugCase): number | null {
+  const put = c.evidence.find((e) => e.kind === "liquidity_add")?.coinAmount;
+  const out = c.evidence.filter((e) => e.kind === "liquidity_remove").reduce((s, e) => s + e.coinAmount, 0);
+  return put && put > 0 && out > 0 ? Math.min(100, (out / put) * 100) : null;
+}
+
 const toRug = (c: RugCase): BoardRug => ({
   symbol: c.symbol ?? c.coinType.split("::").pop() ?? "?",
   coinType: c.coinType,
@@ -138,7 +148,8 @@ const toRug = (c: RugCase): BoardRug => ({
   pulledAt: c.firstRugAt,
   suiPutIn: c.suiPutIn,
   suiTaken: c.suiTaken,
-  exchange: c.dex ?? null,
+  exchange: c.dex ?? EXCHANGE_FALLBACK[c.symbol ?? ""] ?? null,
+  coinsTakenBackPct: takenBackPct(c),
   checkedBy: c.reviewStatus ? "revenant" : c.confirmedBy?.by === "investigator" ? "investigator" : c.confirmedBy ? "project owner" : "revenant",
   pullDigests: c.evidence.filter((e) => e.kind === "liquidity_remove" || e.kind === "sell").map((e) => e.digest),
   pullCoinObjects: (c.coinObjects ?? []).map((o) => ({ id: o.id, role: o.role })),
