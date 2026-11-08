@@ -87,34 +87,6 @@ function watchedFace(w: BoardWatched, links: BoardLink[]): CardFace {
   };
 }
 
-// The short story under "A real example", built from the real links and dates
-function exampleStory(chain: string[], items: Map<string, { rug?: BoardRug; watched?: BoardWatched }>): string {
-  const when = (n: string) => {
-    const it = items.get(n);
-    const at = it?.rug?.pulledAt ?? it?.watched?.pull?.at ?? null;
-    return at ? fmtDay(at) : null;
-  };
-  const tail = (n: string) => {
-    const it = items.get(n);
-    if (it?.watched && it.watched.status !== "pulled") return ", which is live now";
-    const d = when(n);
-    return d ? `, which was rug pulled on ${d}` : "";
-  };
-  const parts: string[] = [];
-  chain.slice(0, -1).forEach((n, i) => {
-    const next = chain[i + 1];
-    const last = i === chain.length - 2;
-    const d = when(n);
-    if (i === 0) {
-      parts.push(`${n} was rug pulled${d ? ` on ${d}` : ""}.`);
-      parts.push(`The money it took was sent to the wallet that launched ${next}${last ? tail(next) : ""}.`);
-    } else {
-      parts.push(`${n} was rug pulled${d ? ` on ${d}` : ""}, and that money was sent to the wallet that launched ${next}${last ? tail(next) : ""}.`);
-    }
-  });
-  return parts.join(" ");
-}
-
 export function CaseBoard() {
   const { state, reload } = useBoard();
   const [open, setOpen] = useState<string | null>(null);
@@ -166,15 +138,11 @@ export function CaseBoard() {
     <>
       {chain.length > 1 && (
         <section className={SECTION}>
-          {/* desktop: heading on the left, the text on the right, a thin rule underneath */}
-          <div className="flex flex-col gap-2 lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-0 lg:border-b lg:border-line lg:pb-6">
-            <h2 className={`${TITLE} lg:pr-10`}>A real example: AXIS, VETO and BUBBLES</h2>
-            <div className="flex flex-col gap-2 lg:border-l lg:border-transparent lg:pl-10">
-              <p className={`${BODY} max-w-[60ch] text-pretty lg:max-w-none`}>
-                A rug pull is when the people who made a coin take all the money out of its trading pool. The coin stays, but nobody can sell it for real money any more.
-              </p>
-              <p className="max-w-[60ch] text-pretty text-base leading-7 text-text lg:max-w-none">{exampleStory(chain, items)}</p>
-            </div>
+          <div className="flex flex-col gap-2">
+            <h2 className={TITLE}>Rugs we caught: AXIS, VETO and BUBBLES</h2>
+            <p className={`${BODY} max-w-[70ch] text-pretty`}>
+              A rug pull is when the creators empty a coin's trading pool, so nobody can sell it for real money anymore.
+            </p>
           </div>
 
           <div className="mt-6 flex flex-col lg:flex-row lg:items-stretch">
@@ -227,12 +195,10 @@ export function CaseBoard() {
 
       {rest.length > 0 && (
         <section className={SECTION}>
-          <div className="lg:grid lg:grid-cols-2 lg:gap-x-6 lg:border-b lg:border-line lg:pb-6">
-            <h2 className={`${TITLE} lg:pr-10`}>Other rug pulls Revenant remembers</h2>
-            <p className={`${BODY} mt-2 max-w-[60ch] text-pretty lg:mt-0 lg:max-w-none lg:border-l lg:border-transparent lg:pl-10`}>
-              We found no exact coin link between these five saved rugs. Similar tricks alone do not show that one person is behind them.
-            </p>
-          </div>
+          <h2 className={TITLE}>Other rug pulls Revenant remembers</h2>
+          <p className={`${BODY} mt-2 max-w-[70ch] text-pretty`}>
+            We found no exact coin link between these five saved rugs. Similar tricks alone do not show that one person is behind them.
+          </p>
 
           {/* A table: one row per rug, thin rules between the rows */}
           <div className="mt-6 border border-line bg-paper" role="table" aria-label="Other rug pulls">
