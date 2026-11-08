@@ -56,7 +56,6 @@ function rugFace(r: BoardRug, links: BoardLink[]): CardFace {
     ],
     wide: [
       ...(link ? [{ label: "Money trail", value: link }] : []),
-      ...(r.coinsTakenBackPct !== null ? [{ label: "Coins taken back", value: `${Math.round(r.coinsTakenBackPct)}% of the coins it put in` }] : []),
     ],
   };
 }
