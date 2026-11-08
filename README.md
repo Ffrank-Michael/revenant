@@ -11,7 +11,7 @@ Built for the Tatum x Walrus "Total Recall" hackathon.
 ## How it works
 
 1. You paste a token address on Sui.
-2. Revenant finds the wallet that launched the token and follows that wallet's money back, a few steps, until it reaches an exchange.
+2. Revenant finds the wallet that launched the token and follows that wallet's money back up to three real wallets, stopping early at an exchange or a very busy wallet.
 3. It checks the wallets and the exact SUI coins in that trail against the rug pulls it remembers.
 4. It shows a short verdict and the trail behind it.
 
@@ -25,7 +25,7 @@ Revenant reads the Sui chain through the Tatum Sui gateway (Sui Mainnet). Every 
 
 Each confirmed rug pull is saved as a memory on Walrus Mainnet, using the Walrus Memory SDK (`@mysten-incubation/memwal`) and the hosted relayer. Warnings are saved in a separate place. The app also builds an index from these memories, so it can look up an exact wallet address or SUI coin ID quickly. A saved copy of the index sits in `data/` as a fallback if Walrus is slow.
 
-Nothing is saved to Walrus without a person approving it.
+Rug pulls count as confirmed only after a person checks them on Suiscan. The watcher can save a pull on its own, marked as awaiting review.
 
 ## Environment variables
 
@@ -52,7 +52,6 @@ To check that the production build works, run `npm run build`.
 ## What it does not do yet
 
 - It does not scan for new tokens by itself. Someone has to paste a token address.
-- A watcher script exists (`scripts/watch-coin.ts`) that follows one token and notes when its pool is emptied, but it runs by hand and not on a schedule.
-- New rug pulls are saved by a person after checking them. Nothing is added automatically.
+- A watcher script exists (`scripts/watch-coin.ts`) that re-checks one token every few minutes and acts when its pool is emptied, but you start it by hand and it does not run on a schedule.
 
 The plan for automatic watching is in [ROADMAP.md](ROADMAP.md).
